@@ -18,3 +18,6 @@ Il nous faut :
 -une personne sur la classe emploi du temps ()
 -interface graphique ou texte ()
 -requêtes (Nathan)
+
+Objectif des deux premières semaines :
+-> Finir projet python
