@@ -5,13 +5,13 @@ Created on Wed Nov 24 08:05:04 2021
 @author: natha
 """
 
-from PySide6.QtCore import Signal
+from PyQt5.QtCore import pyqtSignal
 
 class Interface:
     
     def __init__(self):
-        self.requete = Signal(str)
-        self.reponse = Signal(str)
+        self.requete = pyqtSignal(str)
+        self.reponse = pyqtSignal(str)
         
     def emettre(self,text):
         self.reponse.emit(text)
