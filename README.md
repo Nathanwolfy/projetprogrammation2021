@@ -12,3 +12,8 @@ Définir les objets :
 -différents types de rendez-vous
 Comment stocker les données (d'abord dans les fichiers txt)
  Pour les profils, définir une classe Profil et deux classes qui en héritent Client et Docteur. Dedans ajouter les mails, noms, prenoms, date de naissance, etc.
+Il nous faut : 
+-une personne sur la classe profil (Ewen)
+-une personne sur la classe emploi du temps ()
+-interface graphique ou texte ()
+-requêtes (Nathan)
