@@ -4,3 +4,11 @@ Projet programmation 2021 : "DoctoLibre : création d'un logiciel libre pour la 
 Professeur référent : Cyril Allignol  Z-009    cyril.allignol@enac.fr
 
 Élèves : Vic-Éline Carré - Ewen Dagorn - Louis-Ferdinand Dartencet - Nathan Ledergerber
+
+Définir les objets :
+-emploi du temps 
+-profil docteur
+-profil usager
+-différents types de rendez-vous
+Comment stocker les données (d'abord dans les fichiers txt)
+ Pour les profils, définir une classe Profil et deux classes qui en héritent Client et Docteur. Dedans ajouter les mails, noms, prenoms, date de naissance, etc.
