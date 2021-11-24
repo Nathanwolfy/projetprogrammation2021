@@ -17,7 +17,7 @@ Il nous faut :
 -une personne sur la classe profil (Ewen)
 -une personne sur la classe emploi du temps ()
 -interface graphique ou texte ()
--requêtes (Nathan)
+\n-requêtes (Nathan)
 
-Objectif des deux premières semaines :
--> Finir projet python
+\nObjectif des deux premières semaines :
+\n-> Finir projet python
