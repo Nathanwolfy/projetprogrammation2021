@@ -21,9 +21,14 @@ class Docteur(Profil):
     
     def __init__(self):
         Profil.__init__(self)
+        self.metier = "metier"
+
+    def saisie(self, prenom, nom, mail, telephone, adresse, metier):
+        Profil.saisie(self, prenom, nom, mail, telephone, adresse)
+        self.metier = str(metier)
 
     def __repr__(self):
-        return "FICHE DOCTEUR : Docteur " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.adresse
+        return "FICHE DOCTEUR : Medecin " + str(self.metier) + " " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.adresse
 
 class Patient(Profil):
     
@@ -47,11 +52,9 @@ class Patient(Profil):
 if __name__ == "__main__" :
     
     doc1 = Docteur()
-    doc1.saisie("Vic-Eline", "Carré", "vic.carre@alumni.enac.fr", "0656849331", "87 rue de la vallée de Dana PARIS FRANCE 75 000")
+    doc1.saisie("Vic-Eline", "Carré", "vic.carre@alumni.enac.fr", "0656849331", "87 rue de la vallée de Dana PARIS FRANCE 75 000", "generaliste")
     print(doc1)
     
     patient1 = Patient()
     patient1.saisie("Nathan", "Le-Con", "nathan.ledergerbergerberger@gmail.com", "0655219874", "7 rue de la libération, STRASBOURG, 53 980, FRANCE", [27, 6, 2000])
     print(patient1)
-
-
