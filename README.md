@@ -7,7 +7,7 @@ Professeur référent : Cyril Allignol                         Z-009           c
 Élèves : Vic-Éline Carré - Ewen Dagorn - Louis-Ferdinand Dartencet - Nathan Ledergerber
 
 Définir les objets :
--emploi du temps 
+<br/>-emploi du temps 
 -profil docteur
 -profil usager
 -différents types de rendez-vous
