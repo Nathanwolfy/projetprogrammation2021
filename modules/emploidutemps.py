@@ -16,10 +16,17 @@ class Heure:
 
 class Edt:
     def __init__(self):
-        self.L = [[[0]]*18*4]*7 #[[#lundi [06:00, motif], [06:15, motif], ...], [#mardi [06:00], [0], ...], [], [], ...]
+        self.edt = [[[0]]*18*4]*7 #[[#lundi [06:00, motif], [06:15, motif], ...], [#mardi [06:00], [0], ...], [], [], ...]
     def is_empty(self, jour, heure_debut, motif):
-        horaire = Horaire(jour, heure_debut, motif)
-        if 
+        empty = True
+        L_heure, L_minute = heure_debut.split(':')
+        heure = L_heure[0]
+        minute = L_minute[0]
+        for j in jours:
+            if jour == jours[j]:
+                if self.edt[j][(heure-6)*4+minute] != 0:
+                    return False
+        
 
 
 
@@ -39,5 +46,4 @@ def load_edt(fichier):
                     edt[i][(heure_rdv-6)*4+minute] = heure_debut #[[[0], [0], ..., [08:00]]]
                     edt[i][(heure_rdv-6)*4+minute].append(motif) #[[[0], [0], ..., [08:00, motif]]]
     return edt
-
 
