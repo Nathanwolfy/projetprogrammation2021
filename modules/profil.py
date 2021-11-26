@@ -86,4 +86,4 @@ if __name__ == "__main__" :
     patient1.saisie("Nathan", "Le-Con", "nathan.ledergerbergerberger@gmail.com", "0655219874", "7 rue de la libération, STRASBOURG, 53 980, FRANCE", [27, 6, 2000])
     print(patient1)
 
-    print (est_majeur(patient1, [26, 6, 2018]))#ça fonctionne
+    print (est_majeur(patient1, [26, 6, 2020]))#ça fonctionne
