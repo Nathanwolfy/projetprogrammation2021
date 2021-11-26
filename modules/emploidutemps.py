@@ -34,13 +34,13 @@ def load_edt(fichier):
     edt = Edt()
     with open(fichier) as file:
         for horaire in file: #Lundi 22 01 2021 08 00 motif
-            horaire.split()
-            jour = horaire[0]
-            heure_rdv = int(horaire[4])
-            minute_rdv = int(horaire[5])
+            H = horaire.split()
+            jour = H[0]
+            heure_rdv = int(H[4])
+            minute_rdv = int(H[5])
             heure_debut = Heure(heure_rdv, minute_rdv)
             minute = minute_rdv//15 #06:15 -> minute = 1
-            motif = horaire[-1]
+            motif = H[-1]
             for i in range(7):
                 if jour == jours[i]:
                     edt[i][(heure_rdv-6)*4+minute] = heure_debut #[[[''], [''], ..., [08:00]]]
