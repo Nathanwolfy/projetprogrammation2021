@@ -95,6 +95,7 @@ def modifier_patient(mail):
                 indiceligne = lignes.index(texte)
         #En fait c'est presque plus rapide de supprimer tout et de refaire un
         #fichier avec TOUTES les lignes et voila je pense que c'est bien
+        #aussi ajouter dans la fonction recherche l'utilisation de lire_bdd_patient(l)
 
 
 if __name__ == "__main__" :
