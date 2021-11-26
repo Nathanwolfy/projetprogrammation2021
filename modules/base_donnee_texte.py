@@ -1,5 +1,17 @@
 import profil as p
 
+
+def lire_bdd_medecin(l):
+    """Cette fonction crée le medecin à partir de la liste split() de la base de 
+    donnée du document texte."""
+    doc = p.Docteur()
+    adresse = ""
+    for elt in l[5:]:
+        adresse = adresse + " " + elt
+    doc.saisie(l[1], l[2], l[3], l[4], adresse, l[0])
+    return doc
+    
+
 def liste_medecin():
     """cette fonction prends le document texte ou on met nos données en param
     le lit et retourne une liste exploitale de tous les docteurs"""
@@ -7,13 +19,21 @@ def liste_medecin():
     with open("medecins.txt", "r") as f:
         for line in f:
             l = line.split()
-            doc = p.Docteur()
-            adresse = ""
-            for elt in l[5:]:
-                adresse = adresse + " " + elt
-            doc.saisie(l[1], l[2], l[3], l[4], adresse, l[0])
+            doc = lire_bdd_medecin(l)
             liste_praticiens.append(doc)
     return liste_praticiens
+
+
+def lire_bdd_patient(l):
+    """Cette fonction crée le patient à partir de la liste split() de la base de 
+    donnée du document texte."""
+    patient = p.Patient()
+    adresse = ""
+    date = [ int(l[2]), int(l[3]), int(l[4]) ]
+    for elt in l[7:]:
+        adresse = adresse + " " + elt
+    patient.saisie(l[0], l[1], l[5], l[6], adresse, date)
+    return patient
 
 
 def liste_patient():
@@ -23,15 +43,11 @@ def liste_patient():
     with open("patients.txt", "r") as f:
         for line in f:
             l = line.split()
-            mec = p.Patient()
-            adresse = ""
-            date = [ int(l[2]), int(l[3]), int(l[4]) ]
-            for elt in l[7:]:
-                adresse = adresse + " " + elt
-            mec.saisie(l[0], l[1], l[5], l[6], adresse, date)
-            liste_patients.append(mec)
+            patient = lire_bdd_patient(l)
+            liste_patients.append(patient)
     return liste_patients
 
+#On a créé la liste patients et medecins à partir du document texte lesgo
 
 def recherche_patient(string):
     """Cette fonction permet de prendre une chaine de caract en parametre, et retourne parmis tous les 
@@ -57,10 +73,29 @@ def recherche_patient(string):
         
     
 def creer_patient(prenom, nom, jour, mois, annee, mail, telephone, adresse):
+    """Cette fonction créé un nouveau patient et rentre ses elements dans la base de donée"""
     fichier = open ("patients.txt", "a")
-    fichier.writelines("\n" + str(prenom) + " " + str(nom) + " " + str(jour) + " " + str(mois) + " " + str(annee) + " " + str(mail) + " " + str(telephone) + " " + str(adresse))
+    fichier.writelines(str(prenom) + " " + str(nom) + " " + str(jour) + " " + str(mois) + " " + str(annee) + " " + str(mail) + " " + str(telephone) + " " + str(adresse))
     fichier.close()
-    
+
+
+def supprimer_patient():
+    pass
+
+
+def modifier_patient(mail):
+    """but : modifier la ligne d'un patient à partir de son mail, qui est par définition
+    unique"""
+    indiceligne = 0
+    with open("patients.txt", "r") as f:
+        lignes = f.readlines()
+        for texte in lignes:
+            l = texte.split()
+            if l[5] == mail :
+                indiceligne = lignes.index(texte)
+        #En fait c'est presque plus rapide de supprimer tout et de refaire un
+        #fichier avec TOUTES les lignes et voila je pense que c'est bien
+
 
 if __name__ == "__main__" :
     
@@ -71,10 +106,14 @@ if __name__ == "__main__" :
     liste_malades = liste_patient()
     #for elt in liste_malades:
     #    print (elt)
+    #print(liste_malades)
     
-    fin_de_recherche = recherche_patient("frigiel")
-    print(fin_de_recherche)
+    fin_de_recherche = recherche_patient("25")
+    #print(fin_de_recherche)
     
     #creer_patient("joseph", "bellobitto", 5, 12, 2001, "jojo.bizarre@venture.com", "0684397515", "Lieu dit Le GENEPI, POILLEY, 76950, FRANCE")
     #ça fonctionne
-    creer_patient("edouard", "guehenno", 25, 2, 2019, "ed.pro@gmail.com", "0784943751", "77 avenue Charles de Gaulle, DIJON, 55200, FRANCE")
+    #creer_patient("frigiel", "fandefanta", 21, 3, 2009, "fantacoeurfrigiel@yahoo.fr", "07846951", "1 rue samantha Davies, SABLES-OLONNES, 45500, FRANCE")
+    
+    a = modifier_patient("frigieletfluffy@gmail.de")
+    print (a)
