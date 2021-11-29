@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 24 07:36:47 2021
-
-@author: natha
-"""
 jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 
 class Heure:
@@ -37,8 +31,8 @@ class Edt:
 def load_edt(fichier):
     edt = Edt()
     with open(fichier) as file:
-        heure_journee = file[0][4] # ? Heure du debut de la journee
-        minute_journee = file[0][5] # ? Minute du debut de la journee
+        heure_journee = int(file[0].split()[4]) # ? Heure du debut de la journee
+        minute_journee = int(file[0].split()[5]) # ? Minute du debut de la journee
         horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée
         heure_fin_journee = file[-1][4]
         minute_fin_journee = file[-1][5]
@@ -62,4 +56,3 @@ def load_edt(fichier):
                             minute_debut_journee += 15
                     edt[i][heure_debut] = motif
     return edt
-
