@@ -26,6 +26,17 @@ class Edt:
             if jour == jours[j]:
                 if self.edt[j][heure_debut] == '':
                     return False
+               
+class Rdv(Edt):
+    def __init__(self, edt):
+        super.__init__(edt)
+        self.rdv = {}
+    def nouveau_rdv(self, jour, horaire, motif): #horaire de la classe heure
+        for j in range(7):
+            if jour == jours[j]:
+                if self.edt.is_empty(jour, horaire):
+                    self.edt[j][horaire] = motif
+        return self.edt
         
 
 def load_edt(fichier):
