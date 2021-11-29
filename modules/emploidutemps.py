@@ -25,7 +25,7 @@ class Edt:
         for j in jours:
             if jour == jours[j]:
                 if self.edt[j][heure_debut] == '':
-                    return False
+                    return empty
                
 class Rdv(Edt):
     def __init__(self, edt):
