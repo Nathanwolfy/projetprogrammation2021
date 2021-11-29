@@ -31,12 +31,14 @@ class Edt:
 def load_edt(fichier):
     edt = Edt()
     with open(fichier) as file:
-        heure_journee = int(file[0].split()[4]) # ? Heure du debut de la journee
-        minute_journee = int(file[0].split()[5]) # ? Minute du debut de la journee
-        horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée
-        heure_fin_journee = file[-1][4]
-        minute_fin_journee = file[-1][5]
-        horaire_fin_boucle_while = Heure(heure_fin_journee, minute_fin_journee) #Heure de la fin de la journée
+        D = file[0].split() #première ligne de l'edt
+        heure_journee = int(D[4]) # ? Heure du debut de la journee, ex : 09
+        minute_journee = int(D[5]) # ? Minute du debut de la journee, ex : 30
+        horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée, ex : 09:30
+        F = file[-1].split() #dernière ligne de l'edt
+        heure_fin_journee = int(F[4]) # ? Heure de fin de la journée, ex : 20
+        minute_fin_journee = int(F)[5]) # ? Minute de fin de la journée, ex : 00
+        horaire_fin_boucle_while = Heure(heure_fin_journee, minute_fin_journee) #Heure de la fin de la journée, ex : 20:00
         for horaire in file: #Lundi 22 01 2021 8 00 motif
             H = horaire.split()
             jour = H[0]
