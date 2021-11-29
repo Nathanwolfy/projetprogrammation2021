@@ -1,0 +1,5 @@
+sur modifier un txt :
+
+https://webdevdesigner.com/q/replacing-text-in-a-file-with-python-8487/
+https://www.it-swarm-fr.com/fr/python/comment-modifier-un-fichier-texte/958398055/
+https://www.developpez.net/forums/d1850189/autres-langages/python/general-python/modifier-fichier-texte-python/
