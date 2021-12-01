@@ -79,7 +79,7 @@ def load_edt(fichier):
             motif = H[-1]
             for i in range(7):
                 if jour == jours[i]:
-                    while heure_debut.compare(horaire_debut_boucle_while):
+                    while horaire_debut_boucle_while.compare(heure_debut):
                         edt[i].jour[horaire_debut_boucle_while] = ''
                         if minute_journee == 45:
                             heure_journee += 1
