@@ -109,8 +109,9 @@ def supprimer_patient(mail):
             lignes = f.readlines()
         lignes.pop(indligne - 1)
         with open("patients.txt", "w") as f:
-            f.writelines(lignes.strip("\n"))
+            f.writelines(lignes)
 
+            
 """
 def supprimer_patient(mail):
     indligne = indice_ligne_patient(mail)
@@ -125,6 +126,32 @@ def supprimer_patient(mail):
                 if ligne != str(deleted_text) + "\n" :
                     f.write(ligne)
 """
+
+
+"""
+def supprimer_patient(mail):
+    indligne = indice_ligne_patient(mail)
+    old = ""
+    if indligne == -1:
+        return "le patient que vous essayez de supprimer n'existe pas encore sur doctobélix"
+    else :
+        with open("patients.txt", "r") as f:
+            lignes = f.readlines()
+        lignes.pop(indligne - 1)
+        for elt in lignes:
+            old += elt
+        l = old.split("\n")
+        #old = ""
+        #for elt in l:
+        #    old += elt
+        with open("patients.txt", "w") as f:
+            n = len(l)
+            for i in  range(n - 1):
+                f.write(l[i] + "\n")
+        with open("patients.txt", "a") as f:
+            f.write(l[n-1])
+"""
+
 
 def modifier_patient(prenom, nom, jour, mois, annee, mail, telephone, adresse):
     """but : modifier la ligne d'un patient à partir de son mail, qui est par définition
@@ -167,7 +194,7 @@ if __name__ == "__main__" :
     d = creer_patient("frigiel", "fandefanta", 21, 3, 2009, "fantacoeurfrigiel@yahoo.fr", "07846951", "1 rue samantha Davies, SABLES-OLONNES, 45500, FRANCE")
     #print(d)
     
-    e = supprimer_patient("fantacoeurfrigiel@yahoo.fr")  
+    #e = supprimer_patient("fantacoeurfrigiel@yahoo.fr")  
     #print(e)
     
     #d = modifier_patient("ed.pro@gmail.com")
