@@ -67,7 +67,7 @@ def load_edt(fichier):
                         if minute_journee == 45:
                             heure_journee += 1
                             minute_debut_journee = 0
-                            horaire_debut_boucle_while = Heure(heure_journee + 1, minute_journee)
+                            horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
                         else:
                             minute_debut_journee += 15
                     edt[i][heure_debut] = motif
