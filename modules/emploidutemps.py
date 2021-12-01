@@ -26,7 +26,7 @@ class Edt:
             if jour == jours[j]:
                 if self.edt[j][heure_debut] == '':
                     return empty
-               
+
 class Rdv(Edt):
     def __init__(self, edt):
         super.__init__(edt)
@@ -39,19 +39,22 @@ class Rdv(Edt):
         return self.edt
         
 
+
+
 def load_edt(fichier):
     edt = Edt()
     with open(fichier) as file:
-        D = file[0].split() #première ligne de l'edt
-        heure_journee = int(D[4]) # ? Heure du debut de la journee, ex : 09
-        minute_journee = int(D[5]) # ? Minute du debut de la journee, ex : 30
-        horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée, ex : 09:30
-        F = file[-1].split() #dernière ligne de l'edt
-        heure_fin_journee = int(F[4]) # ? Heure de fin de la journée, ex : 20
-        minute_fin_journee = int(F)[5]) # ? Minute de fin de la journée, ex : 00
-        horaire_fin_boucle_while = Heure(heure_fin_journee, minute_fin_journee) #Heure de la fin de la journée, ex : 20:00
-        for horaire in file: #Lundi 22 01 2021 8 00 motif
+        horaire_fin_boucle_while = Heure(23, 45) 
+        for (i, horaire) in enumerate(file): #Lundi 22 01 2021 8 00 motif
             H = horaire.split()
+            if i == 0:
+                heure_journee = int(H[4]) # Heure du début de la journée
+                minute_journee = int(H[5]) # Minute du début de la journée
+                horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée
+            if i == -1 : # je ne sais pas l'indice de la dernière ligne
+                heure_fin_journee = int(H[4]) # Heure de la fin de la journée
+                minute_fin_journee = int(H[5]) # Minute de la fin de la journée
+                horaire_fin_boucle_while = Heure(heure_fin_journee, minute_fin_journee) # Heure de la fin de la journée du fichier
             jour = H[0]
             heure_rdv = int(H[4])
             minute_rdv = int(H[5])
@@ -69,3 +72,4 @@ def load_edt(fichier):
                             minute_debut_journee += 15
                     edt[i][heure_debut] = motif
     return edt
+
