@@ -109,9 +109,22 @@ def supprimer_patient(mail):
             lignes = f.readlines()
         lignes.pop(indligne - 1)
         with open("patients.txt", "w") as f:
-            for i in range(len(lignes)):
-                f.write(lignes[i])
-    #Régler le problème du sautage de ligne et jpense il va falloir faire ça d'urgence mdr
+            f.writelines(lignes.strip("\n"))
+
+"""
+def supprimer_patient(mail):
+    indligne = indice_ligne_patient(mail)
+    if indligne == -1:
+        return "le patient que vous essayez de supprimer n'existe pas encore sur doctobélix"
+    else :
+        with open("patients.txt", "r") as f:
+            lignes = f.readlines()
+        deleted_text = lignes.pop(indligne - 1)
+        with open("patients.txt", "w") as f:
+            for ligne in lignes:
+                if ligne != str(deleted_text) + "\n" :
+                    f.write(ligne)
+"""
 
 def modifier_patient(prenom, nom, jour, mois, annee, mail, telephone, adresse):
     """but : modifier la ligne d'un patient à partir de son mail, qui est par définition
@@ -130,7 +143,7 @@ def modifier_patient(prenom, nom, jour, mois, annee, mail, telephone, adresse):
 
 if __name__ == "__main__" :
     
-    liste_praticiens = liste_medecin()
+    liste_paticien = liste_medecin()
     #for elt in liste_praticiens:
     #    print (elt)
 
@@ -151,10 +164,10 @@ if __name__ == "__main__" :
     
     #creer_patient("joseph", "bellobitto", 5, 12, 2001, "jojo.bizarre@venture.com", "0684397515", "Lieu dit Le GENEPI, POILLEY, 76950, FRANCE")
     #ça fonctionne
-    #d = creer_patient("frigiel", "fandefanta", 21, 3, 2009, "fantacoeurfrigiel@yahoo.fr", "07846951", "1 rue samantha Davies, SABLES-OLONNES, 45500, FRANCE")
+    d = creer_patient("frigiel", "fandefanta", 21, 3, 2009, "fantacoeurfrigiel@yahoo.fr", "07846951", "1 rue samantha Davies, SABLES-OLONNES, 45500, FRANCE")
     #print(d)
     
-    #e = supprimer_patient("fantacoeurfrigiel@yahoo.fr")  
+    e = supprimer_patient("fantacoeurfrigiel@yahoo.fr")  
     #print(e)
     
     #d = modifier_patient("ed.pro@gmail.com")
