@@ -40,8 +40,9 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
                 return True
     def nouveau_rdv(self, le_jour, horaire, motif): #horaire de la classe heure
         if self.nom_jour == le_jour.nom_jour and self.nb_jour == le_jour.nb_jour and self.mois == le_jour.mois:
-            self.jour[horaire] = motif
-            return self.rdv
+            if self.pas_de_rdv(le_jour, horaire):
+                self.jour[horaire] = motif
+                return self.rdv
     def __repr__(self):
         return str(self.jour)
 
