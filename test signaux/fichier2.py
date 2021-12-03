@@ -5,7 +5,6 @@ Created on Wed Nov 24 07:51:26 2021
 @author: nathanwolfy
 """
 
-from PySide6.QtCore import Signal as Signal
 from communication import Interface
 
 def connexion(text):
@@ -14,7 +13,7 @@ def connexion(text):
 
 interface = Interface()
 
-interface.reponse.connect(lambda text : text)
+interface.reponse.connect(lambda text : connexion(text))
 
 while True:
     pass
