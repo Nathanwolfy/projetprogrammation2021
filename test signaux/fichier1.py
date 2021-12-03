@@ -9,4 +9,5 @@ from communication import Interface
 
 interface = Interface()
 
-interface.emettre('hi')
+while True:
+    interface.emettre('hi')
