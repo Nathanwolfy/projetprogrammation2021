@@ -8,13 +8,13 @@ Created on Wed Nov 24 07:51:26 2021
 from PySide6.QtCore import Signal as Signal
 from communication import Interface
 
-def connexion():
-    print ("hi it's me fichier2")
+def connexion(text):
+    print(text)
     
 
 interface = Interface()
 
-interface.reponse.connect(connexion)
+interface.reponse.connect(lambda text : text)
 
 while True:
     pass
