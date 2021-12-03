@@ -17,10 +17,10 @@ class Interface(QObject):
     def __init__(self):
         super().__init__()
 
-    def emettre_reponse(self,text):
+    def emettre(self,text):
         self.reponse.emit(text)
         
 
 if __name__ == '__main__':
     interface = Interface()
-    interface.emettre('hi') 
+    interface.emettre('hi')

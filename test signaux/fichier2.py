@@ -15,3 +15,6 @@ def connexion():
 interface = Interface()
 
 interface.reponse.connect(connexion)
+
+while True:
+    pass
