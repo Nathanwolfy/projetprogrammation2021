@@ -9,15 +9,17 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
 class Interface(QObject):
     
-    # Signal pour envoyer une requete
+    # Signal pour recevoir une requete
     requete = pyqtSignal(str)
-    # Signal pour recevoir une reponse
+    # Signal pour envoyer une reponse
     reponse = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
 
     def emettre(self,text):
+        ''' (str) -> None
+        Permet d'envoyer une réponse text via le signal self.reponse'''
         self.reponse.emit(text)
         
 
@@ -25,3 +27,5 @@ if __name__ == '__main__':
     interface = Interface()
     interface.reponse.connect(lambda text: print(text))
     interface.emettre('hi')
+    
+    #print(help(Interface.emettre))
