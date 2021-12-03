@@ -23,4 +23,5 @@ class Interface(QObject):
 
 if __name__ == '__main__':
     interface = Interface()
+    interface.reponse.connect(lambda text: print(text))
     interface.emettre('hi')

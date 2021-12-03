@@ -8,6 +8,3 @@ Created on Wed Nov 24 07:50:48 2021
 from communication import Interface
 
 interface = Interface()
-
-while True:
-    interface.emettre('hi')

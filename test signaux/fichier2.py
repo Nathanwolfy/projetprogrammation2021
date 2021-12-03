@@ -14,6 +14,3 @@ def connexion(text):
 interface = Interface()
 
 interface.reponse.connect(lambda text : connexion(text))
-
-while True:
-    pass
