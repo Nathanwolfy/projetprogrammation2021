@@ -34,5 +34,5 @@ if __name__ == '__main__':
 '''Idées pour faire fonctionner plusieurs scripts à la fois: 
 - Difficulté de python sortir du modèle 'un seul fichier' -> réseau XML-RPC ? xmlrpclib
 - POSH
-- voir du côté des "socket"
+- voir du côté des "socket" 
 '''
