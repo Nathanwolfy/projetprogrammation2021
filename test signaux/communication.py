@@ -27,5 +27,12 @@ if __name__ == '__main__':
     interface = Interface()
     interface.reponse.connect(lambda text: print(text))
     interface.emettre('hi')
-    
+
     #print(help(Interface.emettre))
+
+
+'''Idées pour faire fonctionner plusieurs scripts à la fois: 
+- Difficulté de python sortir du modèle 'un seul fichier' -> réseau XML-RPC ? xmlrpclib
+- POSH
+- voir du côté des "socket"
+'''
