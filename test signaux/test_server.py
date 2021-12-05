@@ -18,3 +18,10 @@ while True:
     print(data)
 conn.close() #on ferme la connexion
 socket.close() #on ferme le socket
+
+
+
+
+
+# pour mettre en place des threads pour plusieurs clients : https://www.youtube.com/watch?v=5FqzL9LJkXA
+# vidéo sur les threads : https://www.youtube.com/watch?v=vdjZvxAI5d4
