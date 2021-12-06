@@ -4,7 +4,7 @@ import threading
 
 class ThreadForClient(threading.Thread):
     def __init__(self,conn):
-        super().__init__(self)
+        threading.Thread.__init__(self)
         self.conn = conn
 
     def run(self):
