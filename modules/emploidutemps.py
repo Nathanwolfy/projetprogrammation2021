@@ -1,4 +1,14 @@
 jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+nb_jours_mois = {}
+for i in range(len(mois)): #{"Janvier" : 31, "Février" : 28, ...}
+    if i%2 == 0:
+        nb_jours_mois[mois[i]] = 31
+    else:
+        if mois[i] == "Février":
+            nb_jours_mois[mois[i]] = 28 #2022 n'est pas une année bissextile
+        else:
+            nb_jours_mois[mois[i]] = 30
 
 class Heure:
     def __init__(self, heure, minute):
@@ -34,15 +44,13 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
         self.nb_jour = nb_jour
         self.mois = mois
         self.jour = {}
-    def pas_de_rdv(self, le_jour, heure_debut): #le_jour de la classe Jour
-        if self.nom_jour == le_jour.nom_jour and self.nb_jour == le_jour.nb_jour and self.mois == le_jour.mois:
-            if self.jour[heure_debut] == '':
-                return True
-    def nouveau_rdv(self, le_jour, horaire, motif): #horaire de la classe heure
-        if self.nom_jour == le_jour.nom_jour and self.nb_jour == le_jour.nb_jour and self.mois == le_jour.mois:
-            if self.pas_de_rdv(le_jour, horaire):
-                self.jour[horaire] = motif
-                return self.rdv
+    def pas_de_rdv(self, heure_debut):
+        if self.jour[heure_debut] == '':
+            return True
+    def nouveau_rdv(self, horaire, motif): #horaire de la classe heure
+        if self.pas_de_rdv(horaire):
+            self.jour[horaire] = motif
+            return self.rdv
     def __repr__(self):
         return str(self.jour)
 
@@ -55,10 +63,33 @@ class Edt(Jour): # Une semaine
         super.__init__()
         self.semaine = semaine
         self.edt = [self.jour for i in range(7)] #[{#lundi 06:00 : motif, 06:15 : motif, ...}, {#mardi 06:00 : motif, ...}, ...]
+        
+class Edt: # Une semaine, juste besoin du lundi
+    def __init__(self, lundi, nb_lundi, mois_lundi): #ex : Lundi 2 Janvier
+        Lundi = Jour(lundi, nb_lundi, mois_lundi)
+        Liste_jours_de_la_semaine = []
+        Liste_jours_de_la_semaine.append(Lundi)
+        nb_jour = nb_lundi
+        for m in mois:
+            if m == mois_lundi:
+               indice_mois = mois.index(m) 
+        for i in range(6): #[Lundi 2 Janvier, Mardi 3 Janvier, Mercredi 4 Janvier, ...]
+            if nb_jour < nb_jours_mois[mois_lundi]:
+                nb_jour += 1
+                Liste_jours_de_la_semaine.append(Jour(jours[i], nb_jour, mois_lundi))
+            else:
+                if mois_lundi == "Décembre":
+                    mois_lundi = "Janvier"
+                else:
+                    indice_mois += 1
+                    mois_lundi = mois[indice_mois]
+                nb_jour = 1
+                Liste_jours_de_la_semaine.append(Jour(jours[i], nb_jour, mois_lundi))
+        self.edt = [Liste_jours_de_la_semaine[i].jour for i in range(7)] #[{#lundi 06:00 : motif, 06:15 : motif, ...}, {#mardi 06:00 : motif, ...}, ...]
     def is_empty(self, le_jour, heure_debut):
         for j in jours:
             if le_jour == jours[j]:
-                if self.edt[j].pas_de_rdv(le_jour, heure_debut):
+                if self.edt[j].pas_de_rdv(heure_debut):
                     return True
     def __repr__(self):
         return str(self.edt)
