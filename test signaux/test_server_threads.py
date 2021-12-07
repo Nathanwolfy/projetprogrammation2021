@@ -16,8 +16,8 @@ class ThreadForClient(threading.Thread):
 
 host, port = ('',5566)
 
-socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #création du socket avec constante
-socket.bind((host, port)) #on associe le socket à l'adresse et au port
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Création du socket
+socket.bind((host, port)) #On associe le socket à l'adresse et au port
 
 print('server is booted')
 

@@ -47,7 +47,8 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
         return str(self.jour)
 
 class Semaine(Jour):
-    def __init__(self, )
+    def __init__(self, ):
+        pass
 
 class Edt(Jour): # Une semaine
     def __init__(self, semaine): # numéro de la semaine, ex : semaine 14 = 14
