@@ -77,7 +77,7 @@ class Edt: # Une semaine, juste besoin du lundi
                     mois_lundi += 1
                 nb_jour = 1
                 Liste_jours_de_la_semaine.append(Jour(jours[i], nb_jour, mois_lundi))
-        self.edt = [Liste_jours_de_la_semaine[i].jour for i in range(7)] #[{#lundi 06:00 : motif, 06:15 : motif, ...}, {#mardi 06:00 : motif, ...}, ...]
+        self.edt = [Liste_jours_de_la_semaine[i] for i in range(7)] #[{#lundi 06:00 : motif, 06:15 : motif, ...}, {#mardi 06:00 : motif, ...}, ...]
     def un_jour_de_edt(self, i):
         return self.edt[i]
     def modifier(self, i, heure, motif):
@@ -110,7 +110,7 @@ def load_edt(fichier):
             for i in range(7):
                 if jour == jours[i]:
                     while horaire_debut_boucle_while.compare(heure_debut): #hor_deb_bou_whi < heure_debut
-                        edt[i][horaire_debut_boucle_while] = ''
+                        edt.modifier(i, horaire_debut_boucle_while, '')
                         if minute_journee == 45:
                             heure_journee += 1
                             minute_debut_journee = 0
