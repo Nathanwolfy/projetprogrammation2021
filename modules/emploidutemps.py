@@ -16,18 +16,16 @@ class Heure:
     def __init__(self, heure, minute):
         self.heure = heure
         self.minute = minute
-    def compare(self, horaire): #compare deux horaires de la classe Heure
+    def compare(self, horaire): #compare deux horaires de la classe Heure (<=)
         horaire_heure = horaire.heure
         horaire_minute = horaire.minute
-        if self.heure < horaire_heure:
-            return True
-        elif self.heure > horaire_heure:
-            return False
-        else:
-            if self.minute < horaire_minute:
+        if self.heure <= horaire_heure:
+            if self.minute <= horaire_minute:
                 return True
             else:
                 return False
+        elif self.heure > horaire_heure:
+            return False
     def __repr__(self):
         if self.heure < 10:
             if self.minute < 10:
@@ -54,7 +52,7 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
             return True
     def nouveau_rdv(self, horaire, motif): #horaire de la classe heure
         if self.pas_de_rdv(horaire):
-            self.jour[horaire] = motif
+            self.ajouter(horaire, motif)
             return self.rdv
     def __repr__(self):
         return str(self.jour)
@@ -98,7 +96,6 @@ def load_edt(fichier):
             H = horaire.split()
             if i == 0:
                 edt = Edt(H[0], int(H[1]), int(H[2]), int(H[3]))
-                print(edt)
                 heure_journee = int(H[4]) # Heure du début de la journée
                 minute_journee = int(H[5]) # Minute du début de la journée
                 horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée
@@ -106,19 +103,22 @@ def load_edt(fichier):
             heure_rdv = int(H[4])
             minute_rdv = int(H[5])
             heure_debut = Heure(heure_rdv, minute_rdv) # Heure du rdv
+            print(heure_debut)
             motif = H[-1]
+            print(horaire_debut_boucle_while)
             for i in range(7):
                 if jour == jours[i]:
-                    while horaire_debut_boucle_while.compare(heure_debut): #hor_deb_bou_whi < heure_debut
+                    while horaire_debut_boucle_while.compare(heure_debut): #hor_deb_bou_whi <= heure_debut
                         edt.modifier(i, horaire_debut_boucle_while, '')
+                        print(edt)
                         if minute_journee == 45:
                             heure_journee += 1
-                            minute_debut_journee = 0
+                            minute_journee = 0
                             horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
                         else:
-                            minute_debut_journee += 15
+                            minute_journee += 15
                             horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                    if edt.is_empty(jour, horaire_debut_boucle_while):
+                    if edt.is_empty(jour, heure_debut):
                         edt.modifier(i, heure_debut, motif)
                     print(edt)
     return edt
