@@ -4,6 +4,9 @@ Il détaille dans la méthode 'run' toutes les actions que le serveur devra effe
 Du côté client seule la réception de la requête de choix sera identique entre patient et docteur.
 '''
 
+#TODO Trouver comment envoyer tout type de données.
+#TODO On pourra imaginer un client patient/docteur unique à l'avenir
+
 import threading
 
 FORMAT = 'utf-8'
@@ -17,11 +20,12 @@ class ThreadForServer(threading.Thread):
 
     def initialisation_choix_client(self): #On lance la requête pour connaître le choix du client souhaité
         code_initialisation_choix_client = '01gINITCHOIX'.encode(FORMAT) 
-        self.conn.send(code_initialisation_choix_client)
+        self.conn.sendall(code_initialisation_choix_client)
 
     def run(self): #Actions à faire au démarrage du Thread
         self.initialisation_choix_client() #On initialise la demande de choix du client
         choix_client = self.conn.recv(8)
+        choix_client = choix_client.decode(FORMAT)
 
         if choix_client == 'docteur':
             pass
