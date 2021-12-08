@@ -11,6 +11,7 @@ class ThreadForClient(threading.Thread):
         data = self.conn.recv(1024)
         data = data.decode("utf8")
         print(data)
+        self.conn.send('hi from server'.encode('utf8'))
 
 #----------------
 

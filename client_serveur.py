@@ -1,5 +1,5 @@
 import socket
-from modules.thread_for_client import ThreadForClient
+from modules.thread_for_server import ThreadForServer
 
 host, port = ('',5566)
 
@@ -12,7 +12,7 @@ while True:
     conn, address = socket.accept() #On accepte les connexions
     print(f'client : {conn} is connected')
 
-    threadclient = ThreadForClient(conn) #Création d'un thread par nouvelle connexion
+    threadclient = ThreadForServer(conn) #Création d'un thread par nouvelle connexion
     threadclient.start()
 
 conn.close() #On ferme la connexion
