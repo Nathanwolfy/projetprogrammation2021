@@ -25,7 +25,9 @@
 <br/> -requêtes (Nathan) : done
 <br/> 
 <br/>Prochains objectifs :
-<br/> 
-<br/> 
+<br/>-coder client serveur
+<br/>-coder client patient
+<br/>-coder client docteur
+<br/>-discriminer patient ou docteur à l'aide des requêtes, savoir reconnaître les patients, pouvoir modifier les données rentrées après coup et mettre en place une manière de revenir à l'étape précédente pendant leur saisie
 <br/> Objectif des deux premières semaines :
 <br/> -> Finir projet python
