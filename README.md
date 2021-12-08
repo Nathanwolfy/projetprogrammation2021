@@ -16,12 +16,16 @@
 <br/> 
 <br/> Comment stocker les données (d'abord dans les fichiers txt)
 <br/> Pour les profils, définir une classe Profil et deux classes qui en héritent Client et Docteur. Dedans ajouter les mails, noms, prenoms, date de naissance, etc.
+<br/>
 <br/> Il nous faut : 
 <br/> 
 <br/> -une personne sur la classe profil (Ewen)
-<br/> -une personne sur la classe emploi du temps ()
-<br/> -interface graphique ou texte ()
-<br/> -requêtes (Nathan)
+<br/> -une personne sur la classe emploi du temps (Vic)
+<br/> -interface graphique ou texte (Louis)
+<br/> -requêtes (Nathan) : done
+<br/> 
+<br/>Prochains objectifs :
+<br/> 
 <br/> 
 <br/> Objectif des deux premières semaines :
 <br/> -> Finir projet python
