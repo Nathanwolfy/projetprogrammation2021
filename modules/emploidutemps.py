@@ -1,16 +1,14 @@
 jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 mois = [i for i in range(1, 13)] #[1 #Janvier, 2 #Février, ...]
 def nb_jours_dans_un_mois(mois, annee): 
-    if mois%2 == 0:
-        return 31
-    else:
-        if mois == 2: #Février
-            if annee % 4 == 0:
-                return 29 #année bissextile
-            else:
-                return 28 #année non bissextile
+    if mois == 2: #Février
+        if annee % 4 == 0:
+            return 29 #année bissextile
         else:
-            return 30
+            return 28 #année non bissextile
+    elif mois%2 == 0:
+        return 31
+    return 30
 
 class Heure:
     def __init__(self, heure, minute):
@@ -24,7 +22,7 @@ class Heure:
                 return True
             else:
                 return False
-        elif self.heure > horaire_heure:
+        else:
             return False
     def __repr__(self):
         if self.heure < 10:
