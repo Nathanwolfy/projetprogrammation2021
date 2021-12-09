@@ -23,13 +23,16 @@ class ThreadForServer(threading.Thread):
         self.conn.sendall(code_initialisation_choix_client)
 
     def run(self): #Actions à faire au démarrage du Thread
+        print('client connecté')
         self.initialisation_choix_client() #On initialise la demande de choix du client
         choix_client = self.conn.recv(8)
         choix_client = choix_client.decode(FORMAT)
-
-        if choix_client == 'docteur':
+        print(choix_client)
+        while True:
             pass
-        elif choix_client == 'patient':
+        if choix_client == 'X1patient':
+            pass
+        elif choix_client == 'X2docteur':
             pass
         else:
             raise NotImplementedError
