@@ -14,3 +14,5 @@ print('Connecté au serveur...')
 
 choix_client = 'patient'.encode(FORMAT)
 socket.sendall(choix_client)
+
+#ceci est un commentaire
