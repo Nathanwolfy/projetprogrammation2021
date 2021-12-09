@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\Users\Dartencet\Desktop\ProjetInfo\co.ui'
+# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\ProjetInfo\co.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.1
 #
@@ -8,44 +8,56 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-app = QtWidgets()
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(720, 570)
-        self.buttonBox = QtWidgets.QDialogButtonBox(Form)
-        self.buttonBox.setGeometry(QtCore.QRect(370, 530, 193, 28))
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Cancel|QtWidgets.QDialogButtonBox.StandardButton.Ok)
-        self.buttonBox.setObjectName("buttonBox")
-        self.label = QtWidgets.QLabel(Form)
-        self.label.setGeometry(QtCore.QRect(220, 160, 471, 41))
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(220, 310, 471, 41))
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(Form)
-        self.label_3.setGeometry(QtCore.QRect(224, 60, 461, 61))
-        self.label_3.setObjectName("label_3")
-        self.label_4 = QtWidgets.QLabel(Form)
-        self.label_4.setGeometry(QtCore.QRect(30, 20, 171, 71))
-        self.label_4.setObjectName("label_4")
-        self.NomPrenomEdit_2 = QtWidgets.QLineEdit(Form)
-        self.NomPrenomEdit_2.setGeometry(QtCore.QRect(220, 240, 241, 31))
-        self.NomPrenomEdit_2.setObjectName("NomPrenomEdit_2")
-        self.MdpEdit_2 = QtWidgets.QLineEdit(Form)
-        self.MdpEdit_2.setGeometry(QtCore.QRect(220, 390, 241, 31))
-        self.MdpEdit_2.setObjectName("MdpEdit_2")
+        self.validationConnexion = QtWidgets.QDialogButtonBox(Form)
+        self.validationConnexion.setGeometry(QtCore.QRect(390, 480, 193, 28))
+        self.validationConnexion.setMouseTracking(True)
+        self.validationConnexion.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Cancel|QtWidgets.QDialogButtonBox.StandardButton.Ok)
+        self.validationConnexion.setObjectName("validationConnexion")
+        self.labelNomPrenom = QtWidgets.QLabel(Form)
+        self.labelNomPrenom.setGeometry(QtCore.QRect(340, 160, 351, 41))
+        self.labelNomPrenom.setObjectName("labelNomPrenom")
+        self.labelMdP = QtWidgets.QLabel(Form)
+        self.labelMdP.setGeometry(QtCore.QRect(340, 310, 351, 41))
+        self.labelMdP.setObjectName("labelMdP")
+        self.labelConnexion = QtWidgets.QLabel(Form)
+        self.labelConnexion.setGeometry(QtCore.QRect(290, 60, 381, 61))
+        self.labelConnexion.setObjectName("labelConnexion")
+        self.Brand_Label = QtWidgets.QLabel(Form)
+        self.Brand_Label.setGeometry(QtCore.QRect(30, 20, 171, 71))
+        self.Brand_Label.setObjectName("Brand_Label")
+        self.NomPrenom_LineEdit = QtWidgets.QLineEdit(Form)
+        self.NomPrenom_LineEdit.setGeometry(QtCore.QRect(340, 240, 241, 31))
+        self.NomPrenom_LineEdit.setObjectName("NomPrenom_LineEdit")
+        self.Mdp_LineEdit = QtWidgets.QLineEdit(Form)
+        self.Mdp_LineEdit.setGeometry(QtCore.QRect(340, 390, 241, 31))
+        self.Mdp_LineEdit.setObjectName("Mdp_LineEdit")
+        self.InscriptionButton = QtWidgets.QPushButton(Form)
+        self.InscriptionButton.setGeometry(QtCore.QRect(70, 344, 161, 28))
+        self.InscriptionButton.setObjectName("InscriptionButton")
+        self.Retour_commandLinkButton = QtWidgets.QCommandLinkButton(Form)
+        self.Retour_commandLinkButton.setGeometry(QtCore.QRect(0, 520, 222, 48))
+        self.Retour_commandLinkButton.setObjectName("Retour_commandLinkButton")
+        self.Inscriptionlabel = QtWidgets.QLabel(Form)
+        self.Inscriptionlabel.setGeometry(QtCore.QRect(50, 260, 201, 31))
+        self.Inscriptionlabel.setObjectName("Inscriptionlabel")
 
         self.retranslateUi(Form)
+        self.validationConnexion.clicked['QAbstractButton*'].connect(self.NomPrenom_LineEdit.copy) # type: ignore
+        self.validationConnexion.clicked['QAbstractButton*'].connect(self.Mdp_LineEdit.copy) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Nom et Prenom :</span></p></body></html>"))
-        self.label_2.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Mot de Passe : </span></p></body></html>"))
-        self.label_3.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">CONNEXION</span></p></body></html>"))
-        self.label_4.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
-
-app.exec()
+        self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Nom et Prenom :</span></p></body></html>"))
+        self.labelMdP.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Mot de Passe : </span></p></body></html>"))
+        self.labelConnexion.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">CONNEXION</span></p></body></html>"))
+        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.InscriptionButton.setText(_translate("Form", "Créer un compte"))
+        self.Retour_commandLinkButton.setText(_translate("Form", "Retour"))
+        self.Inscriptionlabel.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Inscription</span></p></body></html>"))

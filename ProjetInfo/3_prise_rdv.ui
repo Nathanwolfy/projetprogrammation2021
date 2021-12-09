@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>545</width>
+    <height>437</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="Localisation_Label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>211</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Localisation (Ville) :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Brand_Label">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>0</y>
+     <width>171</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;&quot;&gt;DoctObélix&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Localisation_LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>130</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TypePraticien_Label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>240</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Type de Praticien :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="Praticien_comboBox">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>240</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Addictologue</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Allergologue‎ </string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Cancérologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Cardiologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Dentiste</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Dermatologue</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Médecin généraliste</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Neurologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Ophtalmologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Pédiatre‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Pneumologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Psychiatre‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Radiologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Rhumatologue‎</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Vétérinaire‎</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="RdV_Label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>310</y>
+     <width>171</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Type de Rendez-Vous :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="RdV_comboBox">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>320</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QCommandLinkButton" name="Retour_commandLinkButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>390</y>
+     <width>222</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Retour</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
