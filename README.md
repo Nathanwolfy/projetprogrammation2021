@@ -30,5 +30,6 @@
 <br/>-coder client docteur
 <br/>-discriminer patient ou docteur à l'aide des requêtes, savoir reconnaître les patients, pouvoir modifier les données rentrées après coup et mettre en place une manière de revenir à l'étape précédente pendant leur saisie
 <br/>-voir si on peut envoyer des données autres que des string avec le codage utf-8 ?
+<br/> mutualiser les bdd et les mettre à jour si sur différents appareils
 <br/> Objectif des deux premières semaines :
 <br/> -> Finir projet python
