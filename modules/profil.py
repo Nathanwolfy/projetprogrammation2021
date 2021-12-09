@@ -54,7 +54,7 @@ class Patient(Profil):
         return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nRésidant au : " + self.adresse
 
 
-def est_majeur(patient, jour):#Prends en entrée une liste [jour, mois, année]
+def est_majeur(patient, jour):#Prends en entrée une liste [jour, mois, année] #TODO à faire en tant que méthode
     """Cette fonction retourne True le patient est majeur le jour indiqué et
     False si c'est pas le cas"""
     date_majeur = patient.date

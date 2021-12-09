@@ -123,5 +123,5 @@ def load_edt(fichier):
 
 if __name__ == '__main__':
 
-    edt = load_edt('Test_edt.txt')
+    edt = load_edt('rendez-vous.txt')
     print(edt)
