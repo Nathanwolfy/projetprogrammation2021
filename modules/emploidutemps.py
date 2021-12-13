@@ -76,6 +76,9 @@ class Edt: # Une semaine, juste besoin du lundi
     
     def __init__(self, lundi, nb_lundi, mois_lundi, annee): #ex : Lundi 2 Janvier (=01)
         self.annee = annee
+        self.lundi = lundi
+        self.nb_lundi = nb_lundi
+        self.mois_lundi = mois_lundi
         Lundi = Jour(lundi, nb_lundi, mois_lundi)
         Liste_jours_de_la_semaine = []
         Liste_jours_de_la_semaine.append(Lundi)
@@ -165,5 +168,7 @@ def edt_creneaux_libres(edt): #edt de la classe Edt
 
 if __name__ == '__main__':
 
+    edt = load_edt('Test_edt2.txt')
+    print(edt)
     edt = load_edt('Test_edt2.txt')
     print(edt)
