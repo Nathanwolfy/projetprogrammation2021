@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>545</width>
-    <height>437</height>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -170,7 +170,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QCommandLinkButton" name="Retour_commandLinkButton">
+  <widget class="QCommandLinkButton" name="C_Retour_commandLinkButton">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -185,5 +185,70 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>C_Retour_commandLinkButton</sender>
+   <signal>released()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Localisation_LineEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>Praticien_comboBox</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Praticien_comboBox</sender>
+   <signal>activated(QString)</signal>
+   <receiver>RdV_comboBox</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>330</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RdV_comboBox</sender>
+   <signal>activated(QString)</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>330</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

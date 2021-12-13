@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
-    <height>335</height>
+    <width>400</width>
+    <height>331</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,5 +54,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>DoctorButton</sender>
+   <signal>released()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PatientButton</sender>
+   <signal>released()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>300</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
