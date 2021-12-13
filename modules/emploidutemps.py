@@ -149,19 +149,10 @@ def edt_creneaux_libres(edt): #edt de la classe Edt
     for j in range(7):
         edt_creneaux_vides = Edt(edt.lundi, edt.nb_lundi, edt.mois_lundi, edt.annee)
         els = list(edt.un_jour_de_edt(j).items()) #convertit dictionnaire en list, {"avion": "plane", "blabla": "pomme"} -> [("avion", "plane"), ("blabla", "pomme")]
-        heure_debut = els[0][0] 
-        heure = heure_debut.heure
-        minute = heure_debut.minute
         for i in range(len(els)):
+            heure_debut = els[i][0] 
             if els[i][1] == '':
-                edt_creneaux_vides.modifier(j, heure_debut, '')
-            if minute == 45:
-                heure += 1
-                minute = 0
-                heure_debut = Heure(heure, minute)
-            else:
-                minute += 15
-                heure_debut = Heure(heure, minute)
+                edt_creneaux_vides.modifier(j, heure_debut, '') 
     return edt_creneaux_vides
         
         
