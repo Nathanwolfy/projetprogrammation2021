@@ -24,6 +24,7 @@ choix_client = 'XXp' # ou 'XXd' # #Récupérer le choix_client à l'aide de l'in
 choix_client_encode = choix_client.encode(FORMAT)
 
 if choix_client == 'XXp':
+    message = input()
     socket.sendall(choix_client_encode)
     patient.client_patient(socket)
 elif choix_client == 'XXd':
