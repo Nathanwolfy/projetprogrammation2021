@@ -156,9 +156,9 @@ def edt_creneaux_libres(edt): #edt de la classe Edt
             if els[i][1] == '':
                 edt_creneaux_vides.modifier(j, heure_debut, '')
             if minute == 45:
-                            heure += 1
-                            minute = 0
-                            heure_debut = Heure(heure, minute)
+                heure += 1
+                minute = 0
+                heure_debut = Heure(heure, minute)
             else:
                 minute += 15
                 heure_debut = Heure(heure, minute)
@@ -168,7 +168,5 @@ def edt_creneaux_libres(edt): #edt de la classe Edt
 
 if __name__ == '__main__':
 
-    edt = load_edt('Test_edt2.txt')
-    print(edt)
     edt = load_edt('Test_edt2.txt')
     print(edt)
