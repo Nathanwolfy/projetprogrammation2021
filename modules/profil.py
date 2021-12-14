@@ -54,26 +54,26 @@ class Patient(Profil):
         return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nRésidant au : " + self.adresse
 
 
-def est_majeur(patient, jour):#Prends en entrée une liste [jour, mois, année] #TODO à faire en tant que méthode
-    """Cette fonction retourne True le patient est majeur le jour indiqué et
-    False si c'est pas le cas"""
-    date_majeur = patient.date
-    date_majeur[2] += 18
-        
-    if jour[2] > date_majeur[2] :
-        return True
-    elif jour[2] < date_majeur[2] :
-        return False
-        
-    elif jour[1] > date_majeur[1] :
-        return True
-    elif jour[1] < date_majeur[1] :
-        return False
-        
-    elif jour[0] >= date_majeur[0] :
-        return True
-    else :
-        return False
+    def est_majeur(self, jour):
+        """Cette fonction retourne True le patient est majeur le jour indiqué et
+        False si c'est pas le cas"""
+        date_majeur = self.date
+        date_majeur[2] += 18
+            
+        if jour[2] > date_majeur[2] :
+            return True
+        elif jour[2] < date_majeur[2] :
+            return False
+            
+        elif jour[1] > date_majeur[1] :
+            return True
+        elif jour[1] < date_majeur[1] :
+            return False
+            
+        elif jour[0] >= date_majeur[0] :
+            return True
+        else :
+            return False
 
 
 if __name__ == "__main__" :
@@ -85,5 +85,5 @@ if __name__ == "__main__" :
     patient1 = Patient()
     patient1.saisie("Nathan", "Le-Con", "nathan.ledergerbergerberger@gmail.com", "0655219874", "7 rue de la libération, STRASBOURG, 53 980, FRANCE", [27, 6, 2000])
     print(patient1)
-
-    print (est_majeur(patient1, [26, 6, 2020]))#ça fonctionne
+    
+    print( patient1.est_majeur([26, 7, 2019]) )
