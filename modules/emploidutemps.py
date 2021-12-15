@@ -73,6 +73,9 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
             self.ajouter(horaire, motif)
             return self.rdv
     
+    def convert_list(self):
+        return self.jour.items()
+
     def __repr__(self):
         return str(self.jour)
 
@@ -133,8 +136,6 @@ def load_edt(fichier):
             for j in range(7):
                 if jour == jours[j]:
                     while horaire_debut_boucle_while.compare(heure_debut): #hor_deb_bou_whi <= heure_debut
-                        if heure_debut.meme_heure(horaire_debut_boucle_while) == False:
-                            edt.modifier(j, horaire_debut_boucle_while, '')
                         if minute_journee == 45:
                             heure_journee += 1
                             minute_journee = 0
@@ -146,9 +147,9 @@ def load_edt(fichier):
     return edt
 
 def edt_creneaux_libres(edt): #edt de la classe Edt
+    edt_creneaux_vides = Edt(edt.lundi, edt.nb_lundi, edt.mois_lundi, edt.annee)
     for j in range(7):
-        edt_creneaux_vides = Edt(edt.lundi, edt.nb_lundi, edt.mois_lundi, edt.annee)
-        els = list(edt.un_jour_de_edt(j).items()) #convertit dictionnaire en list, {"avion": "plane", "blabla": "pomme"} -> [("avion", "plane"), ("blabla", "pomme")]
+        els = list(edt.un_jour_de_edt(j).convert_list()) #convertit dictionnaire en list, {"avion": "plane", "blabla": "pomme"} -> [("avion", "plane"), ("blabla", "pomme")]
         for i in range(len(els)):
             heure_debut = els[i][0] 
             if els[i][1] == '':
@@ -159,3 +160,5 @@ if __name__ == '__main__':
 
     edt = load_edt('Test_edt2.txt')
     print(edt)
+    edt_libre = edt_creneaux_libres(edt)
+    print(edt_libre)
