@@ -50,12 +50,12 @@ def liste_patient():
 
 if __name__ == "__main__" :
     
-"""
+    """
     liste_paticiens = liste_medecin()
     print(liste_paticiens)
-"""
+    """
 
-"""
+    """
     liste_malades = liste_patient()
     print(liste_malades)
-"""
+    """
