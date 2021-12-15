@@ -1,3 +1,7 @@
+from PyQt6 import QtCore, QtGui, QtWidgets
+from 1_choix_doc_user.py import *
+
+
 def main():
     #Création de l'application, en passant en argumant argv (vecteur contenant dans les arguments en ligne de commande)
     app = QtWidgets.QApplication(sys.argv)
