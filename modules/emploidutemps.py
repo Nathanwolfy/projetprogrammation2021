@@ -12,13 +12,13 @@ def nb_jours_dans_un_mois(mois, annee):
     return 30
 
 
-class Heure:
+class Heure: 
 
     def __init__(self, heure, minute):
         self.heure = heure
         self.minute = minute
     
-    def compare(self, horaire): #compare deux horaires de la classe Heure (<=)
+    def compare(self, horaire): #compare deux horaires de la classe Heure (<)
         horaire_heure = horaire.heure
         horaire_minute = horaire.minute
         if self.heure <= horaire_heure:
@@ -29,7 +29,11 @@ class Heure:
         else:
             return False
     
-    def __repr__(self):
+    def meme_heure(self, horaire):
+        if self.heure == horaire.heure and self.minute == horaire.minute:
+            return True
+    
+    def __repr__(self): #Heure(8, 0) -> 08:00
         if self.heure < 10:
             if self.minute < 10:
                 return '0' + str(self.heure) + ':' + '0' + str(self.minute)
@@ -56,10 +60,11 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
 
     def ajouter(self, horaire, motif):
         self.jour[horaire] = motif
-        return self.jour
-    
+        return self.jour 
+
     def pas_de_rdv(self, heure_debut):
         print(self.jour)
+        print(heure_debut)
         if self.jour[heure_debut] == '':
             return True
     
@@ -104,8 +109,6 @@ class Edt: # Une semaine, juste besoin du lundi
         return self.edt
     
     def is_empty(self, i, heure_debut):
-        if self.un_jour_de_edt(i).un_horaire(heure_debut) == '':
-            return ""
         if self.un_jour_de_edt(i).pas_de_rdv(heure_debut):
             return True
     
@@ -126,13 +129,12 @@ def load_edt(fichier):
             heure_rdv = int(H[4])
             minute_rdv = int(H[5])
             heure_debut = Heure(heure_rdv, minute_rdv) # Heure du rdv
-            print(heure_debut)
             motif = H[-1]
             for j in range(7):
                 if jour == jours[j]:
                     while horaire_debut_boucle_while.compare(heure_debut): #hor_deb_bou_whi <= heure_debut
-                        edt.modifier(j, horaire_debut_boucle_while, '')
-                        print(edt)
+                        if heure_debut.meme_heure(horaire_debut_boucle_while) == False:
+                            edt.modifier(j, horaire_debut_boucle_while, '')
                         if minute_journee == 45:
                             heure_journee += 1
                             minute_journee = 0
@@ -140,9 +142,7 @@ def load_edt(fichier):
                         else:
                             minute_journee += 15
                             horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                    if edt.is_empty(j, heure_debut):
-                        edt.modifier(j, heure_debut, motif)
-                    print(edt)
+                    edt.modifier(j, heure_debut, motif)
     return edt
 
 def edt_creneaux_libres(edt): #edt de la classe Edt
@@ -153,9 +153,7 @@ def edt_creneaux_libres(edt): #edt de la classe Edt
             heure_debut = els[i][0] 
             if els[i][1] == '':
                 edt_creneaux_vides.modifier(j, heure_debut, '') 
-    return edt_creneaux_vides
-        
-        
+    return edt_creneaux_vides      
 
 if __name__ == '__main__':
 
