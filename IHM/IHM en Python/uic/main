@@ -1,5 +1,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from 1_choix_doc_user.py import *
+import 1_choix_doc_user
+
 
 
 def main():
