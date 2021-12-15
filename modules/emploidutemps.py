@@ -146,19 +146,32 @@ def load_edt(fichier):
                     edt.modifier(j, heure_debut, motif)
     return edt
 
-def edt_creneaux_libres(edt): #edt de la classe Edt
+def edt_creneaux_libres(edt, heure_debut, heure_fin): #edt de la classe Edt, heure_debut = heure début de la journée arbitraire, heure_fin = heure fin journée arbitraire
     edt_creneaux_vides = Edt(edt.lundi, edt.nb_lundi, edt.mois_lundi, edt.annee)
     for j in range(7):
         els = list(edt.un_jour_de_edt(j).convert_list()) #convertit dictionnaire en list, {"avion": "plane", "blabla": "pomme"} -> [("avion", "plane"), ("blabla", "pomme")]
+        if len(els) == 0:
+            for i in range():
         for i in range(len(els)):
-            heure_debut = els[i][0] 
-            if els[i][1] == '':
-                edt_creneaux_vides.modifier(j, heure_debut, '') 
+            heure_debut = els[i][0]
+            horaire_debut_boucle_while = heure_debut #La journée commence à 8h
+            heure_journee = heure_debut.heure
+            minute_journee = heure_debut.minute
+            while horaire_debut_boucle_while.compare(heure_debut) and horaire_debut_boucle_while.compare(heure_fin):
+                if not horaire_debut_boucle_while.meme_heure(heure_debut):
+                    edt_creneaux_vides.modifier(j, horaire_debut_boucle_while, '')
+                if minute_journee == 45:
+                    heure_journee += 1
+                    minute_journee = 0
+                    horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
+                else:
+                    minute_journee += 15
+                    horaire_debut_boucle_while = Heure(heure_journee, minute_journee) 
     return edt_creneaux_vides      
 
 if __name__ == '__main__':
 
     edt = load_edt('Test_edt2.txt')
     print(edt)
-    edt_libre = edt_creneaux_libres(edt)
+    edt_libre = edt_creneaux_libres(edt, Heure(8, 0), Heure(22, 0))
     print(edt_libre)
