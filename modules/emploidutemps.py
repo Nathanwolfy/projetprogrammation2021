@@ -151,22 +151,27 @@ def edt_creneaux_libres(edt, heure_debut, heure_fin): #edt de la classe Edt, heu
     for j in range(7):
         els = list(edt.un_jour_de_edt(j).convert_list()) #convertit dictionnaire en list, {"avion": "plane", "blabla": "pomme"} -> [("avion", "plane"), ("blabla", "pomme")]
         if len(els) == 0:
-            for i in range():
-        for i in range(len(els)):
-            heure_debut = els[i][0]
+            for heure in range(heure_debut.heure, heure_fin.heure):
+                for minute in range(0, 46, 15):
+                    heure_rdv = Heure(heure, minute)
+                    edt_creneaux_vides.modifier(j, heure_rdv, '')
+        else:
             horaire_debut_boucle_while = heure_debut #La journée commence à 8h
-            heure_journee = heure_debut.heure
-            minute_journee = heure_debut.minute
-            while horaire_debut_boucle_while.compare(heure_debut) and horaire_debut_boucle_while.compare(heure_fin):
-                if not horaire_debut_boucle_while.meme_heure(heure_debut):
-                    edt_creneaux_vides.modifier(j, horaire_debut_boucle_while, '')
-                if minute_journee == 45:
-                    heure_journee += 1
-                    minute_journee = 0
-                    horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                else:
-                    minute_journee += 15
-                    horaire_debut_boucle_while = Heure(heure_journee, minute_journee) 
+            for i in range(len(els)):
+                print(horaire_debut_boucle_while)
+                heure_rdv = els[i][0]
+                heure_journee = heure_debut.heure
+                minute_journee = heure_debut.minute
+                while horaire_debut_boucle_while.compare(heure_rdv) and horaire_debut_boucle_while.compare(heure_fin):
+                    if not horaire_debut_boucle_while.meme_heure(heure_debut):
+                        edt_creneaux_vides.modifier(j, horaire_debut_boucle_while, '')
+                    if minute_journee == 45:
+                        heure_journee += 1
+                        minute_journee = 0
+                        horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
+                    else:
+                        minute_journee += 15
+                        horaire_debut_boucle_while = Heure(heure_journee, minute_journee) 
     return edt_creneaux_vides      
 
 if __name__ == '__main__':
