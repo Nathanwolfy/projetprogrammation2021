@@ -1,0 +1,42 @@
+from PyQt6 import QtCore, QtGui, QtWidgets
+import sys
+import Achoixdocuser
+import Bconnexionouinscription
+import Cpriserdv
+import DEdTPraticiens
+
+
+def main():
+    #Création de l'application, en passant en argumant argv (vecteur contenant dans les arguments en ligne de commande)
+    app = QtWidgets.QApplication(sys.argv)
+    #Création de la fenêtre
+    widget = QtWidgets.QWidget()
+    #Création de notre widget custom, en le parentant à la fenêtre
+    mycustomwidget = Achoixdocuser.Ui_Form()
+    mycustomwidget.setupUi(widget)
+    #On montre la fenêtre
+    widget.show()
+    #On execute la mainloop
+    app.exec()
+
+    app.exec()
+    widget = QtWidgets.QWidget()
+    mycustomwidget = Achoixdocuser.Ui_Form()
+    mycustomwidget.setupUi(widget)
+    widget.show()
+    app.exec()
+
+
+if __name__=="__main__":
+    main()
+
+
+"""
+def affiche(texte):
+    print(texte)
+    f = texte
+        
+    self.PatientButton.released.connect(lambda: affiche("Patient"))
+    self.DoctorButton.released.connect(lambda: affiche("Doctor"))
+        
+"""
