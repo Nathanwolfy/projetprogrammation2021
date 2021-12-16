@@ -17,33 +17,32 @@ class Heure:
     def __init__(self, heure, minute):
         self.heure = heure
         self.minute = minute
-    
+        if self.heure < 10: #pour faciliter l'accession à la chaine de caractère et faire l'égalité de deux heures
+            if self.minute < 10:
+                self.repr = '0' + str(self.heure) + ':' + '0' + str(self.minute)
+            else:
+                self.repr = '0' + str(self.heure) + ':' + str(self.minute)
+        else:
+            if self.minute < 10: 
+                self.repr = str(self.heure) + ':' + '0' + str(self.minute)
+            else:
+                self.repr = str(self.heure) + ':' + str(self.minute)
+
     def compare(self, horaire): #compare deux horaires de la classe Heure (<)
         horaire_heure = horaire.heure
         horaire_minute = horaire.minute
-        if self.heure <= horaire_heure:
+        if self.heure == horaire_heure:
             if self.minute <= horaire_minute:
                 return True
             else:
                 return False
+        elif self.heure < horaire_heure:
+            return True
         else:
             return False
-    
-    def meme_heure(self, horaire):
-        if self.heure == horaire.heure and self.minute == horaire.minute:
-            return True
-    
+
     def __repr__(self): #Heure(8, 0) -> 08:00
-        if self.heure < 10:
-            if self.minute < 10:
-                return '0' + str(self.heure) + ':' + '0' + str(self.minute)
-            else:
-                return '0' + str(self.heure) + ':' + str(self.minute)
-        else:
-            if self.minute < 10: 
-                return str(self.heure) + ':' + '0' + str(self.minute)
-            else:
-                return str(self.heure) + ':' + str(self.minute)
+        return self.repr
 
 
 class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
@@ -55,7 +54,6 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
         self.jour = {}
     
     def un_horaire(self, horaire):
-        print(self.jour)
         return self.jour[horaire]
 
     def ajouter(self, horaire, motif):
@@ -63,8 +61,6 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
         return self.jour 
 
     def pas_de_rdv(self, heure_debut):
-        print(self.jour)
-        print(heure_debut)
         if self.jour[heure_debut] == '':
             return True
     
@@ -143,36 +139,26 @@ def load_edt(fichier):
                         else:
                             minute_journee += 15
                             horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                    edt.modifier(j, heure_debut, motif)
+                    edt.modifier(j, heure_debut.repr, motif) #plus de la classe Heure, seulement la représentation, pour pouvoir y accéder après
     return edt
 
-def edt_creneaux_libres(edt, heure_debut, heure_fin): #edt de la classe Edt, heure_debut = heure début de la journée arbitraire, heure_fin = heure fin journée arbitraire
+
+def edt_creneaux_libres(edt, heure_debut, heure_fin):
     edt_creneaux_vides = Edt(edt.lundi, edt.nb_lundi, edt.mois_lundi, edt.annee)
-    for j in range(7):
-        els = list(edt.un_jour_de_edt(j).convert_list()) #convertit dictionnaire en list, {"avion": "plane", "blabla": "pomme"} -> [("avion", "plane"), ("blabla", "pomme")]
-        if len(els) == 0:
-            for heure in range(heure_debut.heure, heure_fin.heure):
-                for minute in range(0, 46, 15):
-                    heure_rdv = Heure(heure, minute)
-                    edt_creneaux_vides.modifier(j, heure_rdv, '')
-        else:
-            horaire_debut_boucle_while = heure_debut #La journée commence à 8h
-            for i in range(len(els)):
-                print(horaire_debut_boucle_while)
-                heure_rdv = els[i][0]
-                heure_journee = heure_debut.heure
-                minute_journee = heure_debut.minute
-                while horaire_debut_boucle_while.compare(heure_rdv) and horaire_debut_boucle_while.compare(heure_fin):
-                    if not horaire_debut_boucle_while.meme_heure(heure_debut):
-                        edt_creneaux_vides.modifier(j, horaire_debut_boucle_while, '')
-                    if minute_journee == 45:
-                        heure_journee += 1
-                        minute_journee = 0
-                        horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                    else:
-                        minute_journee += 15
-                        horaire_debut_boucle_while = Heure(heure_journee, minute_journee) 
-    return edt_creneaux_vides      
+    for jour in range(7):
+        for heure in range(heure_debut.heure, heure_fin.heure):
+            for minute in range(0, 46, 15):
+                heure_rdv = Heure(heure, minute)
+                try:
+                    edt.un_jour_de_edt(jour).un_horaire(heure_rdv.repr)
+                except KeyError:
+                    edt_creneaux_vides.modifier(jour, heure_rdv.repr, '')
+        try:
+            edt.un_jour_de_edt(jour).un_horaire(heure_fin.repr)
+        except KeyError:
+            edt_creneaux_vides.modifier(jour, heure_fin.repr, '')
+    return edt_creneaux_vides
+
 
 if __name__ == '__main__':
 
@@ -180,3 +166,4 @@ if __name__ == '__main__':
     print(edt)
     edt_libre = edt_creneaux_libres(edt, Heure(8, 0), Heure(22, 0))
     print(edt_libre)
+    print(edt_libre.un_jour_de_edt(0))
