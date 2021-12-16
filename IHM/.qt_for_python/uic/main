@@ -4,11 +4,12 @@ import Achoixdocuser
 import Bconnexionouinscription
 import Cpriserdv
 import DEdTPraticiens
+import fonctions
 
 
 def main():
     #Création de l'application, en passant en argumant argv (vecteur contenant dans les arguments en ligne de commande)
-    app = QtWidgets.QApplication(sys.argv)
+    app1 = QtWidgets.QApplication(sys.argv)
     #Création de la fenêtre
     widget = QtWidgets.QWidget()
     #Création de notre widget custom, en le parentant à la fenêtre
@@ -17,8 +18,27 @@ def main():
     #On montre la fenêtre
     widget.show()
     #On execute la mainloop
-    app.exec()
+    app1.exec()
+    print(fonctions.metier)
+    #on a ici le signal pour le métier du client que l'on peut ensuoite comparer dans une base de donnée
 
+    app2 = QtWidgets.QApplication(sys.argv)
+    widget = QtWidgets.QWidget()
+    mycustomwidget = Bconnexionouinscription.Ui_Form()
+    mycustomwidget.setupUi(widget)
+    widget.show()
+    app2.exec()       
+
+
+
+
+
+if __name__=="__main__":
+    main()
+
+
+
+"""
     app.exec()
     widget = QtWidgets.QWidget()
     mycustomwidget = Achoixdocuser.Ui_Form()
@@ -26,16 +46,8 @@ def main():
     widget.show()
     app.exec()
 
+    print(fonctions.metier)
 
-if __name__=="__main__":
-    main()
-
-
-"""
-def affiche(texte):
-    print(texte)
-    f = texte
-        
     self.PatientButton.released.connect(lambda: affiche("Patient"))
     self.DoctorButton.released.connect(lambda: affiche("Doctor"))
         

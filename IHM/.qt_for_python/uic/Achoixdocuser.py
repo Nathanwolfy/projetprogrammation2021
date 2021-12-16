@@ -8,12 +8,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-
-
-def affiche(texte):
-    print(texte)
-    f = texte
-
+import fonctions
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -32,8 +27,8 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
-        self.PatientButton.released.connect(lambda: affiche("Patient"))
-        self.DoctorButton.released.connect(lambda: affiche("Doctor"))
+        self.PatientButton.released.connect(lambda: fonctions.affiche("Patient"))
+        self.DoctorButton.released.connect(lambda: fonctions.affiche("Doctor"))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
