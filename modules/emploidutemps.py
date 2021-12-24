@@ -1,5 +1,5 @@
-jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-mois = [i for i in range(1, 13)] #[1 #Janvier, 2 #Février, ...]
+JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+MOIS = [i for i in range(1, 13)] #[1 #Janvier, 2 #Février, ...]
 
 def nb_jours_dans_un_mois(mois, annee): 
     if mois == 2: #Février
@@ -32,7 +32,7 @@ class Heure:
         horaire_heure = horaire.heure
         horaire_minute = horaire.minute
         if self.heure == horaire_heure:
-            if self.minute <= horaire_minute:
+            if self.minute < horaire_minute:
                 return True
             else:
                 return False
@@ -60,14 +60,14 @@ class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
         self.jour = {}
     
     def un_horaire(self, horaire):
-        return self.jour[horaire]
+        return self.jour[horaire.repr]
 
     def ajouter(self, horaire, motif): #motif de la classe Motif
-        self.jour[horaire] = motif
+        self.jour[horaire.repr] = motif
         return self.jour 
 
     def pas_de_rdv(self, heure_debut):
-        if self.jour[heure_debut] == '':
+        if self.jour[heure_debut.repr] == '':
             return True
     
     def nouveau_rdv(self, horaire, motif): #horaire de la classe Heure
@@ -96,14 +96,14 @@ class Edt: # Une semaine, juste besoin du lundi
         for i in range(6): #[Lundi 2 Janvier, Mardi 3 Janvier, Mercredi 4 Janvier, ...]
             if nb_jour < nb_jours_dans_un_mois(mois_lundi, self.annee):
                 nb_jour += 1
-                Liste_jours_de_la_semaine.append(Jour(jours[i], nb_jour, mois_lundi))
+                Liste_jours_de_la_semaine.append(Jour(JOURS[i], nb_jour, mois_lundi))
             else:
                 if mois_lundi == 12:
                     mois_lundi = 1
                 else:
                     mois_lundi += 1
                 nb_jour = 1
-                Liste_jours_de_la_semaine.append(Jour(jours[i], nb_jour, mois_lundi))
+                Liste_jours_de_la_semaine.append(Jour(JOURS[i], nb_jour, mois_lundi))
         self.edt = [Liste_jours_de_la_semaine[i] for i in range(7)] #[{#lundi 06:00 : motif, 06:15 : motif, ...}, {#mardi 06:00 : motif, ...}, ...]
     
     def un_jour_de_edt(self, i):
@@ -113,85 +113,40 @@ class Edt: # Une semaine, juste besoin du lundi
         self.un_jour_de_edt(i).ajouter(heure, motif)
         return self.edt
     
-    def is_empty(self, i, heure_debut):
-        if self.un_jour_de_edt(i).pas_de_rdv(heure_debut):
-            return True
+    def edt_creneaux_libres(self, heure_debut, heure_fin):
+        edt_creneaux_vides = Edt(self.lundi, self.nb_lundi, self.mois_lundi, self.annee)
+        Liste_heure = []
+        for jour in range(7):
+            for heure in range(heure_debut.heure, heure_fin.heure):
+                for minute in range(0, 46, 15):
+                    heure_rdv = Heure(heure, minute)
+                    try:
+                        motif = self.un_jour_de_edt(jour).un_horaire(heure_rdv)
+                        duree_rdv = motif.duree
+                        duree_boucle = duree_rdv // 15
+                        Liste_heure = []
+                        heure_i = heure_rdv
+                        for i in range(duree_boucle-1):
+                            if heure_i.minute == 45:
+                                heure_i.heure += 1
+                                heure_i.minute = 0
+                                heure_i = Heure(heure_i.heure, heure_i.minute)
+                            else:
+                                heure_i.minute += 15
+                                heure_i = Heure(heure_i.heure, heure_i.minute)
+                            Liste_heure.append(heure_i.repr)
+                    except KeyError:
+                        duree_plus_15_min = False
+                        for i in range(len(Liste_heure)):
+                            if heure_rdv.repr == Liste_heure[i]:
+                                duree_plus_15_min = True
+                        if duree_plus_15_min == False:
+                            edt_creneaux_vides.modifier(jour, heure_rdv, '')
+            try:
+                self.un_jour_de_edt(jour).un_horaire(heure_fin)
+            except KeyError:
+                edt_creneaux_vides.modifier(jour, heure_fin, '')
+        return edt_creneaux_vides
     
     def __repr__(self):
         return str(self.edt)
-
-
-def load_edt(fichier):
-    with open(fichier) as file:
-        for (i, horaire) in enumerate(file): #Lundi 22 01 2021 8 00 motif 15
-            H = horaire.split()
-            if i == 0:
-                edt = Edt(H[0], int(H[1]), int(H[2]), int(H[3]))
-                heure_journee = int(H[4]) # Heure du début de la journée
-                minute_journee = int(H[5]) # Minute du début de la journée
-                horaire_debut_boucle_while = Heure(heure_journee, minute_journee)  #Heure du début de la journée
-            jour = H[0]
-            heure_rdv = int(H[4])
-            minute_rdv = int(H[5])
-            heure_debut = Heure(heure_rdv, minute_rdv) # Heure du rdv
-            motif = Motif(H[6], int(H[-1]))
-            for j in range(7):
-                if jour == jours[j]:
-                    while horaire_debut_boucle_while.compare(heure_debut): #hor_deb_bou_whi <= heure_debut
-                        if minute_journee == 45:
-                            heure_journee += 1
-                            minute_journee = 0
-                            horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                        else:
-                            minute_journee += 15
-                            horaire_debut_boucle_while = Heure(heure_journee, minute_journee)
-                    edt.modifier(j, heure_debut.repr, motif) #plus de la classe Heure, seulement la représentation, pour pouvoir y accéder après
-    return edt
-
-
-def edt_creneaux_libres(edt, heure_debut, heure_fin):
-    edt_creneaux_vides = Edt(edt.lundi, edt.nb_lundi, edt.mois_lundi, edt.annee)
-    Liste_heure = []
-    for jour in range(7):
-        for heure in range(heure_debut.heure, heure_fin.heure):
-            for minute in range(0, 46, 15):
-                heure_rdv = Heure(heure, minute)
-                try:
-                    motif = edt.un_jour_de_edt(jour).un_horaire(heure_rdv.repr)
-                    duree_rdv = motif.duree
-                    duree_boucle = duree_rdv // 15
-                    Liste_heure = []
-                    heure_i = heure_rdv
-                    for i in range(duree_boucle-1):
-                        if heure_i.minute == 45:
-                            heure_i.heure += 1
-                            heure_i.minute = 0
-                            heure_i = Heure(heure_i.heure, heure_i.minute)
-                        else:
-                            heure_i.minute += 15
-                            heure_i = Heure(heure_i.heure, heure_i.minute)
-                        Liste_heure.append(heure_i.repr)
-                except KeyError:
-                    duree_plus_15_min = False
-                    for i in range(len(Liste_heure)):
-                        if heure_rdv.repr == Liste_heure[i]:
-                            duree_plus_15_min = True
-                    if duree_plus_15_min == False:
-                        edt_creneaux_vides.modifier(jour, heure_rdv.repr, '')
-        try:
-            edt.un_jour_de_edt(jour).un_horaire(heure_fin.repr)
-        except KeyError:
-            edt_creneaux_vides.modifier(jour, heure_fin.repr, '')
-    return edt_creneaux_vides
-
-
-def ajouter_rdv(fichier, heure_rdv, motif, duree_rdv):
-    file = open(fichier)
-
-if __name__ == '__main__':
-
-    edt = load_edt('Test_edt2.txt')
-    print(edt)
-    edt_libre = edt_creneaux_libres(edt, Heure(8, 0), Heure(22, 0))
-    print(edt_libre)
-    print(edt_libre.un_jour_de_edt(0))
