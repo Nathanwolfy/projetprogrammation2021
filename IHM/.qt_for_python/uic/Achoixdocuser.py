@@ -29,6 +29,8 @@ class Ui_Form(object):
         self.PatientButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(lambda: fonctions.affiche("Patient"))
         self.DoctorButton.released.connect(lambda: fonctions.affiche("Doctor"))
+        self.PatientButton.released.connect(lambda: fonctions.connection("continue"))
+        self.DoctorButton.released.connect(lambda: fonctions.connection("continue"))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):

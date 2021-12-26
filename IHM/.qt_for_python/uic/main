@@ -6,14 +6,35 @@ import Cpriserdv
 import DEdTPraticiens
 import fonctions
 
+a = Achoixdocuser
+b = Bconnexionouinscription
+c = Cpriserdv
+d = DEdTPraticiens
+f = fonctions
+
+seq={1:a, 2:b, 2:c, 3:c, 4:d}
+
+#fonction qui pour un entier donné renvoie l'IHM lié à ce même entier
+def sequence(i):
+    appS = QtWidgets.QApplication(sys.argv)
+    widget = QtWidgets.QWidget()
+    mycustomwidget = seq[i].Ui_Form()
+    mycustomwidget.setupUi(widget)
+    widget.show()
+    appS.exec()       
+    print(fonctions.n)
+
+
 
 def main():
+    i = 2
+    
     #Création de l'application, en passant en argumant argv (vecteur contenant dans les arguments en ligne de commande)
     app1 = QtWidgets.QApplication(sys.argv)
     #Création de la fenêtre
     widget = QtWidgets.QWidget()
     #Création de notre widget custom, en le parentant à la fenêtre
-    mycustomwidget = Achoixdocuser.Ui_Form()
+    mycustomwidget = a.Ui_Form()
     mycustomwidget.setupUi(widget)
     #On montre la fenêtre
     widget.show()
@@ -24,10 +45,27 @@ def main():
 
     app2 = QtWidgets.QApplication(sys.argv)
     widget = QtWidgets.QWidget()
-    mycustomwidget = Bconnexionouinscription.Ui_Form()
+    mycustomwidget = b.Ui_Form()
     mycustomwidget.setupUi(widget)
     widget.show()
     app2.exec()       
+    print(fonctions.n)
+    print(fonctions.identifiant)
+    print(fonctions.motdepass)
+
+if __name__=="__main__":
+    main()
+
+"""
+    clock = True
+
+    while clock==True :
+        if fonctions.n == "back":
+            i = i-1
+            sequence(i)
+        else :
+            i = i+1
+            sequence(i)
 
 
 
@@ -38,7 +76,6 @@ if __name__=="__main__":
 
 
 
-"""
     app.exec()
     widget = QtWidgets.QWidget()
     mycustomwidget = Achoixdocuser.Ui_Form()

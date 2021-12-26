@@ -55,6 +55,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
+        self.C_Retour_commandLinkButton.released.connect(lambda: fonctions.connection("back"))
         self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
         self.Praticien_comboBox.activated['QString'].connect(self.RdV_comboBox.show) # type: ignore
         self.RdV_comboBox.activated['QString'].connect(Form.close) # type: ignore
