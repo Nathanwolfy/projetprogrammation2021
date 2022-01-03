@@ -15,19 +15,10 @@ f = fonctions
 seq={1:a, 2:b, 2:c, 3:c, 4:d}
 
 #fonction qui pour un entier donné renvoie l'IHM lié à ce même entier
-def sequence(i):
-    appS = QtWidgets.QApplication(sys.argv)
-    widget = QtWidgets.QWidget()
-    mycustomwidget = seq[i].Ui_Form()
-    mycustomwidget.setupUi(widget)
-    widget.show()
-    appS.exec()       
-    print(fonctions.n)
 
 
 
 def main():
-    i = 2
     
     #Création de l'application, en passant en argumant argv (vecteur contenant dans les arguments en ligne de commande)
     app1 = QtWidgets.QApplication(sys.argv)
@@ -45,7 +36,7 @@ def main():
 
     app2 = QtWidgets.QApplication(sys.argv)
     widget = QtWidgets.QWidget()
-    mycustomwidget = b.Ui_Form()
+    mycustomwidget = d.Ui_Form()
     mycustomwidget.setupUi(widget)
     widget.show()
     app2.exec()       
@@ -57,15 +48,6 @@ if __name__=="__main__":
     main()
 
 """
-    clock = True
-
-    while clock==True :
-        if fonctions.n == "back":
-            i = i-1
-            sequence(i)
-        else :
-            i = i+1
-            sequence(i)
 
 
 

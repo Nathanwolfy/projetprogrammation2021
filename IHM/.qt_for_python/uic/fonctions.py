@@ -34,7 +34,6 @@ def connection(commande):
 
 
 
-
 """
         self.retranslateUi(Form)
         self.DoctorButton.released.connect(Form.close) # type: ignore

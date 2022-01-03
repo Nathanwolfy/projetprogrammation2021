@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
 import fonctions
+import launcher
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -31,6 +33,7 @@ class Ui_Form(object):
         self.DoctorButton.released.connect(lambda: fonctions.affiche("Doctor"))
         self.PatientButton.released.connect(lambda: fonctions.connection("continue"))
         self.DoctorButton.released.connect(lambda: fonctions.connection("continue"))
+ #       self.DoctorButton.released.connect(lambda: launcher.sequence("continue"))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
