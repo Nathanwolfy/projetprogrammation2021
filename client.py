@@ -20,17 +20,16 @@ while True: #Attente pour l'initialisation
     time.sleep(0.1)
 
 #Afficher l'interface Qt de choix
-choix_client = 'XXp' # ou 'XXd' # #Récupérer le choix_client à l'aide de l'interface Qt
+choix_client = str(input('Choix du client ? XXp pour patient / XXd pour docteur : ')) #'XXp' ou 'XXd' #TODO #Récupérer le choix_client à l'aide de l'interface Qt
 choix_client_encode = choix_client.encode(FORMAT)
 
 if choix_client == 'XXp':
-    message = input()
     socket.sendall(choix_client_encode)
     patient.client_patient(socket)
 elif choix_client == 'XXd':
     socket.sendall(choix_client_encode)
     docteur.client_docteur(socket)
 else:
-    pass #Erreur ?
+    raise NotImplementedError
 
-time.sleep(10)
+time.sleep(2)
