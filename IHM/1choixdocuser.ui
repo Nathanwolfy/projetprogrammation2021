@@ -52,6 +52,19 @@
     <string>Patient</string>
    </property>
   </widget>
+  <widget class="QCommandLinkButton" name="A_Retour_commandLinkButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>287</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
