@@ -15,6 +15,7 @@ def client_patient(socket):
     if confirmation_serveur == '02pINITCONN':
         print("Lancement de l'interface de connexion patient ...")
         launcher.sequence('IIg',[0,0])
+        time.sleep(10)
         #TODO Proposer la création d'un identifiant de connexion
         identifiant_patient = fonctions.Bidentifiant()
         motdepasse_patient = fonctions.Bmotdepass() #Comment encrypter les mots de passe ?
