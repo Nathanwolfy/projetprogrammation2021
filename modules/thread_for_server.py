@@ -8,6 +8,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 #TODO On pourra imaginer un client patient/docteur unique à l'avenir
 
 import threading
+from .modules_sqlite import exploitation_sql_patient
 
 FORMAT = 'utf-8'
 
@@ -40,12 +41,15 @@ class ThreadForServer(threading.Thread):
                 clef_connexion = self.conn.recv(64)
                 clef_connexion = clef_connexion.decode(FORMAT).split(" ")
                 identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
+                
+                clef_valide = exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,motdepasse_patient) #On vérifie que la clef de connexion est valide
+                print(clef_valide)
             
             else:
                 raise NotImplementedError
 
             #On doit vérifier que la clef de connexion soit valide
-            
+
 
 
         elif choix_client == 'XXd':
