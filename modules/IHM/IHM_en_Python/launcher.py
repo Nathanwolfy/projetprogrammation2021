@@ -17,7 +17,4 @@ def sequence(i, arg):
     mycustomwidget = seq[i].Ui_Form(arg)
     mycustomwidget.setupUi(widget)
     widget.show()
-    appS.exec()  
-
-
-
+    appS.exec()
