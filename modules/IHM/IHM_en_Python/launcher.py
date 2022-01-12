@@ -1,12 +1,12 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-import Achoixdocuser
-import Bconnexionouinscription
-import Cpriserdv
-import DEdTPraticiens
-import InscriptionDoc
-import InscriptionPat
-import fonctions
+from . import Achoixdocuser
+from . import Bconnexionouinscription
+from . import Cpriserdv
+from . import DEdTPraticiens
+from . import InscriptionDoc
+from . import InscriptionPat
+from . import fonctions
 
 Yp = InscriptionPat
 Yd = InscriptionDoc

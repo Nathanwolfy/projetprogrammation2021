@@ -8,8 +8,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-import fonctions
-import launcher
+from . import fonctions
 
 
 class Ui_Form(object):
