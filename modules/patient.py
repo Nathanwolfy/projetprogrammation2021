@@ -11,6 +11,7 @@ def client_patient(socket):
 
     confirmation_serveur = socket.recv(32)
     confirmation_serveur.decode(FORMAT)
+    print(confirmation_serveur)
 
     if confirmation_serveur == '02pINITCONN':
         print("Lancement de l'interface de connexion patient ...")
