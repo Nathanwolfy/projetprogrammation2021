@@ -118,6 +118,11 @@
    </item>
    <item>
     <property name="text">
+     <string>Orthophoniste</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>Pédiatre‎</string>
     </property>
    </item>
@@ -194,6 +199,29 @@
    </property>
    <property name="text">
     <string>Validation</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Date_Label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Date (jj/mm/aaaa) :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Date_LineEdit">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>180</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
    </property>
   </widget>
  </widget>

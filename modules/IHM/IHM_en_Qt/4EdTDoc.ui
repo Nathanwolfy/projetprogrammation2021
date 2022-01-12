@@ -6,22 +6,124 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>714</width>
     <height>614</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QTableView" name="EdTtableView">
+  <widget class="QTableWidget" name="EdTtableWidget">
    <property name="geometry">
     <rect>
      <x>60</x>
      <y>200</y>
      <width>601</width>
-     <height>331</height>
+     <height>361</height>
     </rect>
    </property>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>80</number>
+   </attribute>
+   <attribute name="horizontalHeaderMinimumSectionSize">
+    <number>80</number>
+   </attribute>
+   <attribute name="verticalHeaderDefaultSectionSize">
+    <number>25</number>
+   </attribute>
+   <attribute name="verticalHeaderMinimumSectionSize">
+    <number>25</number>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>New Row</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string>Lundi</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Mardi</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Mercredi</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Jeudi</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Vendredi</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Samedi</string>
+    </property>
+   </column>
   </widget>
   <widget class="QLabel" name="EdT_Label">
    <property name="geometry">
