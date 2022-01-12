@@ -27,7 +27,6 @@ choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
 choix_client_encode = choix_client.encode(FORMAT)
 
 if choix_client == 'XXp':
-
     socket.sendall(choix_client_encode)
     patient.client_patient(socket)
 
