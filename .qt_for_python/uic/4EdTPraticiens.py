@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(720, 568)
+        Form.resize(720, 615)
         self.Retour_commandLinkButton = QtWidgets.QCommandLinkButton(Form)
         self.Retour_commandLinkButton.setGeometry(QtCore.QRect(0, 520, 222, 48))
         self.Retour_commandLinkButton.setObjectName("Retour_commandLinkButton")
@@ -33,12 +33,14 @@ class Ui_Form(object):
         self.EdTPraticien_Label.setObjectName("EdTPraticien_Label")
 
         self.retranslateUi(Form)
+        self.ListePraticens_listView.activated['QModelIndex'].connect(self.tableView.edit) # type: ignore
+        self.tableView.activated['QModelIndex'].connect(Form.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.Retour_commandLinkButton.setText(_translate("Form", "Retour"))
+        self.Retour_commandLinkButton.setText(_translate("Form", "Annuler"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
         self.listepraticiens_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Liste des praticiens disponibles :</span></p></body></html>"))
         self.EdTPraticien_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Emploi du Temps du Praticien :</span></p></body></html>"))
