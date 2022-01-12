@@ -1,12 +1,10 @@
 import time
 import sys
 
-from IHM.IHM_en_Python import launcher
+from .IHM.IHM_en_Python import launcher
 
 FORMAT = 'utf-8'
 WAITINGTIME = 0.05
-
-launcher.sequence(2,'bla')
 
 def client_patient(socket):
 
