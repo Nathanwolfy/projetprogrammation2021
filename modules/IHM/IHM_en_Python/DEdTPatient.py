@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\modules\IHM\IHM_en_Qt\4EdTPraticiens.ui'
+# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\modules\IHM\IHM_en_Qt\4EdTPatient.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.1
 #
@@ -7,8 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-import sys
-from . import fonctions
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
