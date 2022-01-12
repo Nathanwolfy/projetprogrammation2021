@@ -24,7 +24,6 @@ while True: #Attente pour l'initialisation
 #Afficher l'interface Qt de choix
 launcher.sequence('Ig',[0,0])
 choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
-print(choix_client)
 choix_client_encode = choix_client.encode(FORMAT)
 
 if choix_client == 'XXp':
