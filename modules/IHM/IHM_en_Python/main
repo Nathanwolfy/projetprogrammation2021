@@ -29,7 +29,7 @@ def main():
     #Création de la fenêtre
     widget = QtWidgets.QWidget()
     #Création de notre widget custom, en le parentant à la fenêtre
-    mycustomwidget = d.Ui_Form()
+    mycustomwidget = c.Ui_Form([0, 0])
     mycustomwidget.setupUi(widget)
     #On montre la fenêtre
     widget.show()

@@ -9,7 +9,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
 import fonctions
-import launcher
 
 
 class Ui_Form(object):

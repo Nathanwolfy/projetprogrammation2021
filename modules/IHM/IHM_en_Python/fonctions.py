@@ -1,10 +1,24 @@
 #Import ce fichier dans tous les fichiers venant de Qt
 #import fonctions
 
+#module A
 metier = ''
+#métier de l'utilisateur (patient ou médecin)
+
+#module B
 identifiant = ''
+#identifiant de l'utilisateur
 motdepass = ''
-n = ''
+#motdepass de l'utilisateur
+
+#module C
+location = ''
+#localisation du rendez-vous
+typepraticien = ''
+#type de praticien demandé
+typeRdV = ''
+#type de Rendez-Vous demandé
+
 
 def affiche(texte):
     global metier
@@ -18,6 +32,17 @@ def verificationMdP(texte):
     global motdepass
     motdepass = texte
 
+def location(texte):
+    global location
+    location = texte
+
+def praticien(texte):
+    global typepraticien
+    typepraticien = texte
+
+def Rdv(texte):
+    global typeRdV
+    typeRdV = texte
 
 def imprime(texte):
     print(texte)
@@ -26,10 +51,20 @@ def connection(commande):
     global n 
     n = commande
     
+def Bidentifiant():
+    return identifiant
 
+def Bmotdepass():
+    return motdepass
 
+def Clocation():
+    return location
 
+def Cpraticien():
+    return typepraticien
 
+def CRdV():
+    return typeRdV
 
 
 

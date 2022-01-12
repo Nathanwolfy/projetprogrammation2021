@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\Users\Dartencet\Desktop\Sauvgarde ProjetInfo\Autre possibilitée\DEdTPraticiens.ui'
+# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\modules\IHM\IHM_en_Qt\4EdTPraticiens.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.1
 #
@@ -31,6 +31,9 @@ class Ui_Form(object):
         self.EdTPraticien_Label = QtWidgets.QLabel(Form)
         self.EdTPraticien_Label.setGeometry(QtCore.QRect(400, 120, 291, 41))
         self.EdTPraticien_Label.setObjectName("EdTPraticien_Label")
+        self.ValidationpushButton = QtWidgets.QPushButton(Form)
+        self.ValidationpushButton.setGeometry(QtCore.QRect(260, 550, 111, 41))
+        self.ValidationpushButton.setObjectName("ValidationpushButton")
 
         self.retranslateUi(Form)
         self.ListePraticens_listView.activated['QModelIndex'].connect(self.tableView.edit) # type: ignore
@@ -44,3 +47,4 @@ class Ui_Form(object):
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
         self.listepraticiens_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Liste des praticiens disponibles :</span></p></body></html>"))
         self.EdTPraticien_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Emploi du Temps du Praticien :</span></p></body></html>"))
+        self.ValidationpushButton.setText(_translate("Form", "Validation"))

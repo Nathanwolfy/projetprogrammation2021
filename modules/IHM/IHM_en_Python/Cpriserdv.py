@@ -7,6 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+import sys
 import fonctions
 
 class Ui_Form(object):
@@ -48,6 +49,7 @@ class Ui_Form(object):
         self.Praticien_comboBox.addItem("")
         self.Praticien_comboBox.addItem("")
         self.Praticien_comboBox.addItem("")
+        self.Praticien_comboBox.addItem("")
         self.RdV_Label = QtWidgets.QLabel(Form)
         self.RdV_Label.setGeometry(QtCore.QRect(40, 310, 171, 41))
         self.RdV_Label.setObjectName("RdV_Label")
@@ -57,11 +59,16 @@ class Ui_Form(object):
         self.C_Retour_commandLinkButton = QtWidgets.QCommandLinkButton(Form)
         self.C_Retour_commandLinkButton.setGeometry(QtCore.QRect(0, 390, 222, 48))
         self.C_Retour_commandLinkButton.setObjectName("C_Retour_commandLinkButton")
+        self.ValidationpushButton = QtWidgets.QPushButton(Form)
+        self.ValidationpushButton.setGeometry(QtCore.QRect(290, 380, 101, 41))
+        self.ValidationpushButton.setObjectName("ValidationpushButton")
 
         self.retranslateUi(Form)
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
-        self.C_Retour_commandLinkButton.released.connect(lambda: fonctions.connection("back"))
+        self.ValidationpushButton.released.connect(Form.close) # type: ignore
         self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.location(self.Localisation_LineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.praticien(self.Praticien_comboBox.currentText()))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -88,3 +95,4 @@ class Ui_Form(object):
         self.Praticien_comboBox.setItemText(15, _translate("Form", "Orthophoniste"))
         self.RdV_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:9pt;\">Type de Rendez-Vous :</span></p></body></html>"))
         self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
+        self.ValidationpushButton.setText(_translate("Form", "Validation"))
