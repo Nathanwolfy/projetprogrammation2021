@@ -50,6 +50,9 @@ def imprime(texte):
 def connection(commande):
     global n 
     n = commande
+
+def Ametier():
+    return metier
     
 def Bidentifiant():
     return identifiant
