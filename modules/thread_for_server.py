@@ -26,7 +26,6 @@ class ThreadForServer(threading.Thread):
         self.initialisation_choix_client() #On initialise la demande de choix du client
         choix_client = self.conn.recv(8)
         choix_client = choix_client.decode(FORMAT)
-        print(choix_client)
 
         #On lance l'initialisation de l'interface en fonction du choix de client et on déroule les étapes
         if choix_client == 'XXp':
@@ -36,8 +35,6 @@ class ThreadForServer(threading.Thread):
             #On réceptionne le signal d'envoi des clés de connexion
             #envoi_cles_connexion = self.conn.recv(32)
             #envoi_cles_connexion = envoi_cles_connexion.decode(FORMAT)
-            #Faire un test si le client appui sur retour
-
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)
