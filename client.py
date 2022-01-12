@@ -27,8 +27,25 @@ choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
 choix_client_encode = choix_client.encode(FORMAT)
 
 if choix_client == 'XXp':
+
     socket.sendall(choix_client_encode)
     patient.client_patient(socket)
+
+    confirmation_serveur = socket.recv(32)
+    confirmation_serveur = confirmation_serveur.decode(FORMAT)
+
+    if confirmation_serveur == '02pINITCONN':
+        print("Lancement de l'interface de connexion patient ...")
+        launcher.sequence('IIg',[0,0])
+        #TODO Proposer la création d'un identifiant de connexion
+        clef_patient = fonctions.Bidentifiant() + fonctions.Bmotdepass() #On récupère identifiants et mot de passe rentré par le client
+        clef_patient = clef_patient.encode(FORMAT)
+
+        envoi_clefs_connexion = '02pSENDCLEF'.encode(FORMAT)
+        socket.sendall(envoi_clefs_connexion)
+        socket.sendall(clef_patient)
+
+
 elif choix_client == 'XXd':
     socket.sendall(choix_client_encode)
     docteur.client_docteur(socket)
