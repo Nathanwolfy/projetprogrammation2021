@@ -16,8 +16,8 @@ def client_patient(socket):
         print("Lancement de l'interface de connexion patient ...")
         launcher.sequence('IIg',[0,0])
         #TODO Proposer la création d'un identifiant de connexion
-        #identifiant_patient = fonctions.Bidentifiant()
-        #motdepasse_patient = fonctions.Bmotdepass() #Comment encrypter les mots de passe ?
+        dentifiant_patient = fonctions.Bidentifiant()
+        motdepasse_patient = fonctions.Bmotdepass() #Comment encrypter les mots de passe ?
         print(1)
         #identifiant_patient = identifiant_patient.encode(FORMAT)
         #motdepasse_patient = motdepasse_patient.encode(FORMAT)
