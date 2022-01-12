@@ -1,6 +1,7 @@
 import socket
 from modules.thread_for_server import ThreadForServer
 
+
 host, port = ('',5566)
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Création du socket

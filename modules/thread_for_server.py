@@ -8,6 +8,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 #TODO On pourra imaginer un client patient/docteur unique à l'avenir
 
 import threading
+from .modules_sqlite import exploitation_sql_patient
 
 FORMAT = 'utf-8'
 
@@ -29,12 +30,28 @@ class ThreadForServer(threading.Thread):
 
         #On lance l'initialisation de l'interface en fonction du choix de client et on déroule les étapes
         if choix_client == 'XXp':
-            code_initialisation_connexion_patient = '02pINITCONN'.encode(FORMAT) 
-            self.conn.sendall(code_initialisation_connexion_patient)
+            clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
+            while clef_valide == 'False':
+                code_initialisation_connexion_patient = '02pINITCONN'.encode(FORMAT) 
+                self.conn.sendall(code_initialisation_connexion_patient)
 
-            #On réceptionne le signal d'envoi des clés de connexion
-            #envoi_cles_connexion = self.conn.recv(32)
-            #envoi_cles_connexion = envoi_cles_connexion.decode(FORMAT)
+                #On réceptionne le signal d'envoi des clés de connexion
+                reponse = self.conn.recv(32)
+                reponse = reponse.decode(FORMAT)
+                clef_valide = False
+
+                if reponse == '02pSENDCLEF':
+                    clef_connexion = self.conn.recv(64)
+                    clef_connexion = clef_connexion.decode(FORMAT).split(" ")
+                    identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
+                    
+                    clef_valide = exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,motdepasse_patient) #On vérifie que la clef de connexion est valide
+                else:
+                    raise NotImplementedError
+
+            #On initie la suite
+
+
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)
