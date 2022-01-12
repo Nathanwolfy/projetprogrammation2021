@@ -35,4 +35,4 @@ def supprimer_rdv_passe(jour, mois, annee):
     con.close()
     return 'Le rendez-vous a été supprimé'
 
-supprimer_rdv_passe(1, 3, 2022)
+
