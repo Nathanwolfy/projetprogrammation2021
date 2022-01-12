@@ -1,5 +1,6 @@
-import modules.patient as patient
-import modules.docteur as docteur
+from modules import patient
+from modules import docteur
+from modules.IHM.IHM_en_Python import launcher
 import socket
 import time
 
@@ -20,6 +21,7 @@ while True: #Attente pour l'initialisation
     time.sleep(0.1)
 
 #Afficher l'interface Qt de choix
+launcher.sequence('Ig','argfacultatif')
 choix_client = str(input('Choix du client ? XXp pour patient / XXd pour docteur : ')) #'XXp' ou 'XXd' #TODO #Récupérer le choix_client à l'aide de l'interface Qt
 choix_client_encode = choix_client.encode(FORMAT)
 

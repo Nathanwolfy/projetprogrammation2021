@@ -1,4 +1,8 @@
 import time
+import sys
+
+from .IHM.IHM_en_Python import launcher
+
 FORMAT = 'utf-8'
 WAITINGTIME = 0.05
 
@@ -17,13 +21,10 @@ def client_patient(socket):
         identifiant_patient = identifiant_patient.encode(FORMAT)
         motdepasse_patient = motdepasse_patient.encode(FORMAT)
 
-        #On signale au serveur que l'on va envoyer les clés de connexion
+        #On signale au serveur que l'on va envoyer les clés de connexion et on envoie successivement l'identifiant et le mot de passe pour vérifier qu'ils sont bien dans la base de données
         envoi_cles_connexion = '02pSENDCONN'.encode(FORMAT)
         socket.sendall(envoi_cles_connexion)
         time.sleep(WAITINGTIME)
         socket.sendall(identifiant_patient)
-
-
-
     else:
         raise NotImplementedError
