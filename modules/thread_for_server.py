@@ -45,7 +45,10 @@ class ThreadForServer(threading.Thread):
                     clef_connexion = clef_connexion.decode(FORMAT).split(" ")
                     identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
                     
-                    clef_valide = exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,motdepasse_patient) #On vérifie que la clef de connexion est valide
+                    clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,motdepasse_patient)) #On vérifie que la clef de connexion est valide
+
+                    validation = clef_valide.encode(FORMAT)
+                    self.conn.sendall(validation)
                 else:
                     raise NotImplementedError
 
