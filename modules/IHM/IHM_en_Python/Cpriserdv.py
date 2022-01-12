@@ -7,12 +7,10 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-<<<<<<< HEAD
+
 import sys
-import fonctions
-=======
 from . import fonctions
->>>>>>> 77772c89152399340620379e502cbe7bcc02344d
+
 
 class Ui_Form(object):
     def __init__(self, arg):
