@@ -1,4 +1,4 @@
-import profil as p
+from . import profil as p
 import sqlite3
 
 

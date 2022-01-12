@@ -3,7 +3,8 @@ import sys
 from . import Achoixdocuser
 from . import Bconnexionouinscription
 from . import Cpriserdv
-from . import DEdTPraticiens
+from . import DEdTPatient
+from . import DEdTDoc
 from . import InscriptionDoc
 from . import InscriptionPat
 from . import fonctions
