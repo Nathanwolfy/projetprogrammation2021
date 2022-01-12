@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>720</width>
-    <height>568</height>
+    <height>615</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Retour</string>
+    <string>Annuler</string>
    </property>
   </widget>
   <widget class="QLabel" name="Brand_Label">
@@ -87,5 +87,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ListePraticens_listView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>tableView</receiver>
+   <slot>edit(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>540</x>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>540</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>307</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

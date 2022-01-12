@@ -4,6 +4,8 @@ import Achoixdocuser
 import Bconnexionouinscription
 import Cpriserdv
 import DEdTPraticiens
+import InscriptionDoc
+import InscriptionPat
 import fonctions
 
 Yp = InscriptionPat
@@ -15,7 +17,7 @@ IVp = DEdTPraticiens
 f = fonctions
 #rentrer ca dans le dico
 
-seq={1:a, 2:b, 2:c, 3:c, 4:d}
+seq={Yp:InscriptionPat, Yd:InscriptionDoc, Ig:Achoixdocuser, IIg:Bconnexionouinscription, IIIp:Cpriserdv, IVp:DEdTPraticiens}
 
 def sequence(i, arg):
     appS = QtWidgets.QApplication(sys.argv)
@@ -26,5 +28,4 @@ def sequence(i, arg):
     appS.exec()  
 
      
-    
-sequence(3)
+

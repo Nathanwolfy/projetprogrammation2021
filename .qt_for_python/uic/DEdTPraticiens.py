@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\Users\Dartencet\Desktop\Sauvgarde ProjetInfo\Autre possibilitée\DEdTPraticiens.ui'
+# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\IHM\DEdTPraticiens.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.1
 #

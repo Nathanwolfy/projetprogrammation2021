@@ -10,6 +10,11 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import fonctions
 
 class Ui_Form(object):
+    def __init__(self, arg):
+        self.listtypdemedecin = arg[0]
+        self.listrdv = arg[1]
+#listtypmedecin est la liste des médecins disponibles dans l'application
+#listrdv est une liste de liste
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(545, 439)
@@ -80,5 +85,6 @@ class Ui_Form(object):
         self.Praticien_comboBox.setItemText(12, _translate("Form", "Radiologue‎"))
         self.Praticien_comboBox.setItemText(13, _translate("Form", "Rhumatologue‎"))
         self.Praticien_comboBox.setItemText(14, _translate("Form", "Vétérinaire‎"))
+        self.Praticien_comboBox.setItemText(15, _translate("Form", "Orthophoniste"))
         self.RdV_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:9pt;\">Type de Rendez-Vous :</span></p></body></html>"))
         self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))

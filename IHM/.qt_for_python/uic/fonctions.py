@@ -59,4 +59,15 @@ def connection(commande):
         self.Mdp_LineEdit.editingFinished.connect(self.ConnexionButton.show) # type: ignore
         self.Mdp_LineEdit.editingFinished.connect(lambda: fonctions.connection("continue"))
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+
+
+        self.retranslateUi(Form)
+        self.ValidationpushButton.released.connect(Form.close) # type: ignore
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.MdPlineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.NomlineEdit.text()))
+        self.Praticien_comboBox.keyPressEvent 
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.Praticien_comboBox.currentText()))
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
 """

@@ -98,7 +98,7 @@ class Ui_Form(object):
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.MdPlineEdit.text()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.NomlineEdit.text()))
         self.Praticien_comboBox.keyPressEvent 
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.Praticien_comboBox.sel))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.Praticien_comboBox.currentText()))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
