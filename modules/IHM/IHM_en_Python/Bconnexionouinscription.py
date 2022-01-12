@@ -51,26 +51,21 @@ class Ui_Form(object):
         self.Inscriptionlabel.setObjectName("Inscriptionlabel")
 
         self.retranslateUi(Form)
-        #self.ConnexionButton.clicked['QAbstractButton*'].connect(self.NomPrenom_LineEdit.copy) # type: ignore
         self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.verificationId(self.NomPrenom_LineEdit.text()))
-        #self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.imprime(self.NomPrenom_LineEdit.text()))
-        #self.ConnexionButton.clicked['QAbstractButton*'].connect(self.Mdp_LineEdit.copy) # type: ignore
         self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.verificationMdP(self.Mdp_LineEdit.text()))
-        #self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.imprime(self.Mdp_LineEdit.text()))
-        self.ConnexionButton.clicked['QAbstractButton*'].connect(Form.close)
         self.InscriptionButton.released.connect(Form.close) # type: ignore
-        #self.InscriptionButton.released.connect(lambda: fonctions.connection("sub"))
         self.B_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
-        #self.B_Retour_commandLinkButton.released.connect(lambda: fonctions.connection("back"))
-        #self.NomPrenom_LineEdit.textEdited['QString'].connect(self.Mdp_LineEdit.show) # type: ignore
-        #self.Mdp_LineEdit.editingFinished.connect(self.ConnexionButton.show) # type: ignore
-        #self.Mdp_LineEdit.editingFinished.connect(lambda: fonctions.connection("continue"))
+        if self.arg != '':
+            self.NomPrenom_LineEdit.insert(self.arg)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Nom et Prénom :</span></p></body></html>"))
+        if self.arg == '':
+            self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Adresse Mail :</span></p></body></html>"))
+        else :
+            self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Adresse Mail : (mauvaise combinaison)</span></p></body></html>"))
         self.labelMdP.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Mot de Passe : </span></p></body></html>"))
         self.labelConnexion.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">Connexion</span></p></body></html>"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
