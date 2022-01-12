@@ -2,6 +2,10 @@ import profil as p
 import sqlite3
 
 
+def bdd_recherche(table, ):
+    """cette fonction peut servir a faciliter la fonction recherche 
+    en prenant en compte toutes les bases de donnees"""
+    pass
 
 
 def lire_sql_medecin(row):
@@ -23,6 +27,40 @@ def liste_medecin():
         liste_praticiens.append(doc)
     connection.close()
     return liste_praticiens
+
+
+def liste_type_medecin():
+    """Cette fonction envoie la liste sans redondance des types de medecin"""
+    liste_type_medecins = []
+    connection = sqlite3.connect("donnees.db")
+    cursor = connection.cursor()
+    req = cursor.execute('SELECT DISTINCT type_de_medecin FROM rdvs')
+    for elt in req.fetchall():
+        liste_type_medecins.append(elt[0])
+    connection.close()
+    return liste_type_medecins
+    
+def liste_rendez_vous_du_medecin(type_de_medecin):
+    """cette fonction renvoie une liste des types de rendez vous pris 
+    par les differents types de medecins"""
+    liste_type_rdvs = []
+    connection = sqlite3.connect("donnees.db")
+    cursor = connection.cursor()
+    type_de_medecin_sql = (type_de_medecin,)
+    req = cursor.execute('SELECT DISTINCT motif FROM rdvs WHERE type_de_medecin = ?', type_de_medecin_sql)
+    for elt in req.fetchall():
+        liste_type_rdvs.append(elt[0])
+    connection.close()
+    return liste_type_rdvs
+
+def liste_type_de_medecin_et_rdv_pris():
+    """cette fonction retoune une liste d'une liste de rdv que pratiquent un type
+    de medecin avec le mmee indice que la liste de medecins"""
+    liste_complete = []
+    liste_type_medecins = liste_type_medecin()
+    for elt in liste_type_medecins:
+        liste_complete.append(liste_rendez_vous_du_medecin(elt))
+    return liste_complete
 
 
 def lire_sql_patient(row):
@@ -70,4 +108,16 @@ if __name__ == "__main__" :
     """
     liste_malades = liste_patient()
     print(liste_malades)
+    """
+    
+    """
+    print (liste_type_medecin())
+    """
+
+    """
+    print (liste_rendez_vous_du_medecin("generaliste"))
+    """
+    
+    """
+    print (liste_type_de_medecin_et_rdv_pris())
     """
