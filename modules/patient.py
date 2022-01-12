@@ -16,16 +16,13 @@ def client_patient(socket):
         print("Lancement de l'interface de connexion patient ...")
         launcher.sequence('IIg',[0,0])
         #TODO Proposer la création d'un identifiant de connexion
-        dentifiant_patient = fonctions.Bidentifiant()
-        motdepasse_patient = fonctions.Bmotdepass() #Comment encrypter les mots de passe ?
 
-        #identifiant_patient = identifiant_patient.encode(FORMAT)
-        #motdepasse_patient = motdepasse_patient.encode(FORMAT)
+        clef_patient = fonctions.Bidentifiant() + " " + fonctions.Bmotdepass() #On récupère identifiants et mot de passe rentré par le client
+        clef_patient = clef_patient.encode(FORMAT)
 
-        #On signale au serveur que l'on va envoyer les clés de connexion et on envoie successivement l'identifiant et le mot de passe pour vérifier qu'ils sont bien dans la base de données
-        #envoi_cles_connexion = '02pSENDCONN'.encode(FORMAT)
-        #socket.sendall(envoi_cles_connexion)
-        #time.sleep(WAITINGTIME)
-        #socket.sendall(identifiant_patient)
+        envoi_clef_connexion = '02pSENDCLEF'.encode(FORMAT)
+        socket.sendall(envoi_clef_connexion)
+        socket.sendall(clef_patient)
+
     else:
         raise NotImplementedError

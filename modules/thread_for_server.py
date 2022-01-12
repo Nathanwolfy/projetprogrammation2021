@@ -33,8 +33,12 @@ class ThreadForServer(threading.Thread):
             self.conn.sendall(code_initialisation_connexion_patient)
 
             #On réceptionne le signal d'envoi des clés de connexion
-            #envoi_cles_connexion = self.conn.recv(32)
-            #envoi_cles_connexion = envoi_cles_connexion.decode(FORMAT)
+            reponse = self.conn.recv(32)
+            print(reponse)
+            reponse = reponse.decode(FORMAT)
+
+            if reponse == '02pSENDCLEF':
+                p
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)
