@@ -9,7 +9,7 @@ from . import InscriptionDoc
 from . import InscriptionPat
 from . import fonctions
 
-seq={'Yp':InscriptionPat, 'Yd':InscriptionDoc, 'Ig':Achoixdocuser, 'IIg':Bconnexionouinscription, 'IIIp':Cpriserdv, 'IVp' :DEdTPraticiens}
+seq={'Yp':InscriptionPat, 'Yd':InscriptionDoc, 'Ig':Achoixdocuser, 'IIg':Bconnexionouinscription, 'IIIp':Cpriserdv, 'IVp' :DEdTPatient, 'IVd' : DEdTDoc}
 
 appS = QtWidgets.QApplication(sys.argv)
 def sequence(i, arg):
