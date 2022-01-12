@@ -38,7 +38,13 @@ class ThreadForServer(threading.Thread):
             reponse = reponse.decode(FORMAT)
 
             if reponse == '02pSENDCLEF':
-                p
+                clef_connexion = self.conn.recv(64)
+                clef_connexion = clef_connexion.decode(FORMAT).split(" ")
+                identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
+                print(identifiant_patient)
+                pirnt(motdepasse_patient)
+            else:
+                raise NotImplementedError
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)
