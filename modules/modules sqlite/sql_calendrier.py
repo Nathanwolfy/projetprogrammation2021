@@ -47,6 +47,7 @@ for i in range(365): #[Lundi 3 Janvier, Mardi 4 Janvier, Mercredi 5 Janvier, ...
     else:
         if mois_jour == 12:
             mois_jour = 1
+            annee += 1
         else:
             mois_jour += 1
         nb_jour = 1
