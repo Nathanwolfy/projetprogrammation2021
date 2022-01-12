@@ -10,8 +10,7 @@ WAITINGTIME = 0.05
 def client_patient(socket):
 
     confirmation_serveur = socket.recv(32)
-    confirmation_serveur.decode(FORMAT)
-    print(confirmation_serveur)
+    confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '02pINITCONN':
         print("Lancement de l'interface de connexion patient ...")
