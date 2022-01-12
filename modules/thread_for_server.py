@@ -30,7 +30,7 @@ class ThreadForServer(threading.Thread):
 
         #On lance l'initialisation de l'interface en fonction du choix de client et on déroule les étapes
         if choix_client == 'XXp':
-            clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
+            clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas.
             while clef_valide == 'False':
                 code_initialisation_connexion_patient = '02pINITCONN'.encode(FORMAT) 
                 self.conn.sendall(code_initialisation_connexion_patient)
