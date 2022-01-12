@@ -2,6 +2,7 @@ import time
 import sys
 
 from .IHM.IHM_en_Python import launcher
+from .IHM.IHM_en_Python import fonctions
 
 FORMAT = 'utf-8'
 WAITINGTIME = 0.05
@@ -13,10 +14,10 @@ def client_patient(socket):
 
     if confirmation_serveur == '02pINITCONN':
         print("Lancement de l'interface de connexion patient ...")
-        pass #TODO Lancement interface QT
+        launcher.sequence('IIg',[0,0])
         #TODO Proposer la création d'un identifiant de connexion
-        identifiant_patient = 'nom.prenom@gmail.com' #Données à récupérer à l'aide de l'interface Qt
-        motdepasse_patient = 'motdepasse' #Comment encrypter les mots de passe ?
+        identifiant_patient = fonctions.Bidentifiant()
+        motdepasse_patient = fonctions.Bmotdepass() #Comment encrypter les mots de passe ?
 
         identifiant_patient = identifiant_patient.encode(FORMAT)
         motdepasse_patient = motdepasse_patient.encode(FORMAT)

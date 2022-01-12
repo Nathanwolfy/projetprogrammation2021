@@ -11,6 +11,10 @@ import sys
 from . import fonctions
 
 class Ui_Form(object):
+
+    def __init__(self,arg):
+        self.arg = arg
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(400, 331)
@@ -27,8 +31,8 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
-        self.PatientButton.released.connect(lambda: fonctions.affiche("Patient"))
-        self.DoctorButton.released.connect(lambda: fonctions.affiche("Doctor"))
+        self.PatientButton.released.connect(lambda: fonctions.affiche("XXp")) #XXp pour patient
+        self.DoctorButton.released.connect(lambda: fonctions.affiche("XXd")) #XXd pour docteur
         self.PatientButton.released.connect(lambda: fonctions.connection("continue"))
         self.DoctorButton.released.connect(lambda: fonctions.connection("continue"))
  #       self.DoctorButton.released.connect(lambda: launcher.sequence("continue"))

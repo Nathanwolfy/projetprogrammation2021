@@ -22,7 +22,7 @@ while True: #Attente pour l'initialisation
     time.sleep(0.1)
 
 #Afficher l'interface Qt de choix
-launcher.sequence('Ig','argument_facultatif')
+launcher.sequence('Ig',[0,0])
 choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
 print(choix_client)
 choix_client_encode = choix_client.encode(FORMAT)

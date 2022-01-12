@@ -13,7 +13,7 @@ seq={'Yp':InscriptionPat, 'Yd':InscriptionDoc, 'Ig':Achoixdocuser, 'IIg':Bconnex
 def sequence(i, arg):
     appS = QtWidgets.QApplication(sys.argv)
     widget = QtWidgets.QWidget()
-    mycustomwidget = seq[i].Ui_Form()
+    mycustomwidget = seq[i].Ui_Form(arg)
     mycustomwidget.setupUi(widget)
     widget.show()
     appS.exec()  
