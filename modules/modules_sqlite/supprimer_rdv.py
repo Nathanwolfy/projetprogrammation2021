@@ -23,14 +23,14 @@ cursor = con.cursor()
 
 def supprimer_rdv_passe(jour, mois, annee):
     ajd = e.Jour(nom_jour(jour, mois, annee), jour, mois, annee)
-    cursor.execute('SELECT * FROM test_supprimer')
+    cursor.execute('SELECT * FROM rdv_dispos')
     rows = cursor.fetchall()
     liste_jour = []
     for row in rows:
         jour = e.Jour(nom_jour(row[0], row[1], row[2]), row[0], row[1], row[2])
         if jour < ajd:
             liste_jour.append((row[0], row[1], row[2]))
-    cursor.executemany('DELETE FROM test_supprimer WHERE jour=? AND mois=? AND annee=?', liste_jour)
+    cursor.executemany('DELETE FROM rdv_dispos WHERE jour=? AND mois=? AND annee=?', liste_jour)
     con.commit()
     con.close()
     return 'Le rendez-vous a été supprimé'
