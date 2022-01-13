@@ -32,3 +32,22 @@ def client_patient(socket):
             clef_valide = retour.decode(FORMAT)
         else:
             raise NotImplementedError
+
+    confirmation_serveur = socket.recv(32)
+    confirmation_serveur = confirmation_serveur.decode(FORMAT)
+
+    if confirmation_serveur == '03pINITPRISERDV':
+        launcher.sequence('IIIp','argumentfacultatif')
+        localisation = fonctions.Clocation().encode(FORMAT)
+        type_docteur = fonctions.Cpraticien().encode(FORMAT)
+        type_rdv = fonctions.CRdV().encode(FORMAT)
+
+        envoi_donnees_prise_rdv = '03pSENDDATARDV'.encode(FORMAT)
+        socket.sendall(envoi_donnees_prise_rdv)
+
+        socket.sendall(localisation)
+        socket.sendall(type_docteur)
+        socket.sendall(type_rdv)
+    else:
+        raise NotImplementedError
+

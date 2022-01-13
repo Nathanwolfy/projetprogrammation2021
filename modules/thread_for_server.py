@@ -8,7 +8,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 #TODO On pourra imaginer un client patient/docteur unique à l'avenir
 
 import threading
-from .modules_sqlite import exploitation_sql_patient
+from .modules_sqlite import exploitation_sql_patient,lire_sql
 
 FORMAT = 'utf-8'
 
@@ -52,7 +52,27 @@ class ThreadForServer(threading.Thread):
                 else:
                     raise NotImplementedError
 
-            #On initie la suite
+            #On initie la suite la prise de rdv
+
+            liste_docteurs = lire_sql.liste_medecin
+            liste_types_rdv = lire_sql.liste_type_de_medecin_et_rdv_pris
+            print(liste_docteurs,liste_types_rdv)
+
+            self.conn.sendall(liste_docteurs)
+            self.conn.sendall(liste_types_rdv)
+
+            code_initialisation_prise_rdv = '03pINITPRISERDV'.encode(FORMAT)
+            self.conn.sendall(code_initialisation_prise_rdv)
+
+            reponse = self.conn.recv(32)
+            reponse = reponse.decode(FORMAT)
+
+            if reponse == '03pSENDDATARDV':
+
+                localisation = self.conn.recv(32).decode(FORMAT)
+                type_docteur = self.conn.recv(32).decode(FORMAT)
+                type_rdv = self.conn.recv(64).decode(FORMAT)
+                print(localisation,type_docteur,type_rdv)
 
 
 
