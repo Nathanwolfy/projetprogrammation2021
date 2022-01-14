@@ -54,15 +54,13 @@ class ThreadForServer(threading.Thread):
 
             #On initie la suite la prise de rdv
 
-            liste_docteurs = lire_sql.liste_medecin
-            liste_types_rdv = lire_sql.liste_type_de_medecin_et_rdv_pris
-            print(liste_docteurs,liste_types_rdv)
-
-            self.conn.sendall(liste_docteurs)
-            self.conn.sendall(liste_types_rdv)
-
             code_initialisation_prise_rdv = '03pINITPRISERDV'.encode(FORMAT)
+            liste_type_docteurs = str(lire_sql.liste_type_medecin()).encode(FORMAT)
+            liste_types_rdv = str(lire_sql.liste_type_de_medecin_et_rdv_pris()).encode(FORMAT)
+
             self.conn.sendall(code_initialisation_prise_rdv)
+            self.conn.sendall(liste_type_docteurs)
+            self.conn.sendall(liste_types_rdv)
 
             reponse = self.conn.recv(32)
             reponse = reponse.decode(FORMAT)

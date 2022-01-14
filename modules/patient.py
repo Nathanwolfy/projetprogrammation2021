@@ -3,6 +3,7 @@ import sys
 
 from .IHM.IHM_en_Python import launcher
 from .IHM.IHM_en_Python import fonctions
+from . import fonctions_transfert
 
 FORMAT = 'utf-8'
 WAITINGTIME = 0.05
@@ -37,7 +38,13 @@ def client_patient(socket):
     confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '03pINITPRISERDV':
-        launcher.sequence('IIIp','argumentfacultatif')
+        str_liste_type_docteurs = socket.recv(512) #On récéptionne une liste des types de docteurs et une liste de liste des types de rdv pour chaque type de docteur
+        str_liste_type_rdv = socket.recv(512)
+        liste_type_docteurs = fonctions_transfert.strlist_to_list(str_liste_type_docteurs.decode(FORMAT)) #On les décode et convertit en listes
+        liste_type_rdv = fonctions_transfert.strlist2_to_list(str_liste_type_rdv.decode(FORMAT))
+        print(liste_type_docteurs,liste_type_rdv)
+
+        launcher.sequence('IIIp',(liste_type_docteurs,liste_type_rdv))
         localisation = fonctions.Clocation().encode(FORMAT)
         type_docteur = fonctions.Cpraticien().encode(FORMAT)
         type_rdv = fonctions.CRdV().encode(FORMAT)

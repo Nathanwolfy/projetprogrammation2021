@@ -2,10 +2,27 @@ from . import profil as p
 import sqlite3
 
 
-def bdd_recherche(table, ):
+
+def connection_bdd():
+    """cette fonction est utile pour la partie de nathan : il fait le lien
+    entre serveur et client et a donc besoin de cette fonction pour se
+    connecter a la base de donnee cote serveur"""
+    path = "./modules/modules_sqlite/donnees.db"
+    return sqlite3.connect(path)
+
+def connection_bdd_calendrier():
+    """cette fonction est utile pour la partie de nathan : il fait le lien
+    entre serveur et client et a donc besoin de cette fonction pour se
+    connecter a la base de donnee cote serveur"""
+    path = "./modules/modules_sqlite/calendrier.db"
+    return sqlite3.connect(path)
+
+
+def bdd_recherche(table, string):
     """cette fonction peut servir a faciliter la fonction recherche 
-    en prenant en compte toutes les bases de donnees"""
+    en prenant en compte toutes les tables de la base 'donnees'"""
     pass
+
 
 
 def lire_sql_medecin(row):
@@ -14,12 +31,11 @@ def lire_sql_medecin(row):
     doc.saisie(row[0], row[1], row[3], row[4], row[5], row[2])
     return doc
 
-
 def liste_medecin():
     """cette fonction prends la bdd sql ou on met nos données en param
     le lit et retourne une liste exploitale de tous les docteurs"""
     liste_praticiens = []
-    connection = sqlite3.connect("donnees.db")
+    connection = connection_bdd()
     cursor = connection.cursor()
     req = cursor.execute('SELECT * FROM medecins')
     for row in req.fetchall():
@@ -29,10 +45,11 @@ def liste_medecin():
     return liste_praticiens
 
 
+
 def liste_type_medecin():
-    """Cette fonction envoie la liste sans redondance des types de medecin"""
+    """cette fonction envoie la liste sans redondance des types de medecin"""
     liste_type_medecins = []
-    connection = sqlite3.connect("donnees.db")
+    connection = connection_bdd()
     cursor = connection.cursor()
     req = cursor.execute('SELECT DISTINCT type_de_medecin FROM rdvs')
     for elt in req.fetchall():
@@ -42,9 +59,9 @@ def liste_type_medecin():
     
 def liste_rendez_vous_du_medecin(type_de_medecin):
     """cette fonction renvoie une liste des types de rendez vous pris 
-    par les differents types de medecins"""
+    par ce type de medecin specifique"""
     liste_type_rdvs = []
-    connection = sqlite3.connect("donnees.db")
+    connection = connection_bdd()
     cursor = connection.cursor()
     type_de_medecin_sql = (type_de_medecin,)
     req = cursor.execute('SELECT DISTINCT motif FROM rdvs WHERE type_de_medecin = ?', type_de_medecin_sql)
@@ -55,12 +72,22 @@ def liste_rendez_vous_du_medecin(type_de_medecin):
 
 def liste_type_de_medecin_et_rdv_pris():
     """cette fonction retoune une liste d'une liste de rdv que pratiquent un type
-    de medecin avec le mmee indice que la liste de medecins"""
+    de medecin avec le meme indice que la liste de medecins"""
     liste_complete = []
     liste_type_medecins = liste_type_medecin()
     for elt in liste_type_medecins:
         liste_complete.append(liste_rendez_vous_du_medecin(elt))
     return liste_complete
+
+def dictionnaire_pour_qt():
+    """cette fonction extrait de la base de donnee les different types
+    de medecins et leurs différents motifs"""
+    n = len(liste_type_medecin())
+    thisdict = {}
+    for i in range (n) :
+        thisdict[liste_type_medecin()[i]] = liste_type_de_medecin_et_rdv_pris()[i]
+    return thisdict
+
 
 
 def lire_sql_patient(row):
@@ -76,7 +103,7 @@ def liste_patient():
     """cette fonction prends la bdd sql ou on met nos données en param
     le lit et retourne une liste exploitale de tous les patients"""
     liste_patients = []
-    connection = sqlite3.connect("donnees.db")
+    connection = connection_bdd()
     cursor = connection.cursor()
     req = cursor.execute('SELECT * FROM patients')
     for row in req.fetchall():
@@ -89,7 +116,7 @@ def liste_patient():
 def mdp_existe(mail):
     """cette fonction prends un mail, regarde si il existe un login enregistre
     dans la bdd identifiants avec ce mail, si oui renvoie True, si non renvoie False"""
-    connection = sqlite3.connect("donnees.db")
+    connection = connection_bdd()
     cursor = connection.cursor()
     sql_mail = (str(mail),)
     cursor.execute('SELECT * FROM identifiants WHERE mail = ?', sql_mail)
@@ -120,4 +147,8 @@ if __name__ == "__main__" :
     
     """
     print (liste_type_de_medecin_et_rdv_pris())
+    """
+    
+    """
+    print (dictionnaire_pour_qt())
     """

@@ -1,7 +1,7 @@
-MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout", "septembre", "octobre", "novembre", "décembre"]
+MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
 
 class Profil:
-    """Les parametres communs à tous les profils sont le prenom le nom le mail, 
+    """les parametres communs a tous les profils sont le prenom le nom le mail, 
     telephone et adresse, on rajoutera des choses pour le docteur/patient"""
     
     def __init__(self):
@@ -20,12 +20,12 @@ class Profil:
         
 
 class Docteur(Profil):
-    """Le docteur prends en plus en parametre de lui meme son metier 
+    """le docteur prends en plus en parametre de lui meme son metier 
     ie si c'est un dentiste il va pas faire des trucs de generaliste"""
     
     def __init__(self):
         Profil.__init__(self)
-        self.metier = "metier"
+        self.metier = "metier"#STR
 
     def saisie(self, prenom, nom, mail, telephone, adresse, metier):
         Profil.saisie(self, prenom, nom, mail, telephone, adresse)
@@ -36,11 +36,10 @@ class Docteur(Profil):
 
 
 class Patient(Profil):
-    """Le patient prends en plus en parametre sa date de naissance, j'ai 
+    """le patient prends en plus en parametre sa date de naissance, je n'ai 
     intentionnellement pas mis le fait qu'il soit majeur en parametre pour
-    moi ça me semble pas enormement important alors j'ai défini une fonction
-    en dehors mais c'est peut etre plus interessant d'en faire une methode
-    et après ça donnera patient.est_majeur() et True/False"""
+    moi ça me semble pas enormement important alors j'ai défini une methode
+    en dehors et cela donne patient.est_majeur() = True/False"""
     
     def __init__(self):
         Profil.__init__(self)
@@ -53,10 +52,12 @@ class Patient(Profil):
     def __repr__(self):
         return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nRésidant au : " + self.adresse
 
-
+#piste d'amelioration : faire de cette methode un automatisme avec une fonction
+#qui prend en compte le jour ou nous sommes actuellement afin qu'il ne soit pas
+#a taper manuellement
     def est_majeur(self, jour):
-        """Cette fonction retourne True le patient est majeur le jour indiqué et
-        False si c'est pas le cas"""
+        """cette methode retourne True : le patient est majeur le jour indique.
+        False si ce n'est pas le cas"""
         date_majeur = self.date
         date_majeur[2] += 18
             
@@ -78,12 +79,18 @@ class Patient(Profil):
 
 if __name__ == "__main__" :
     
+    """
     doc1 = Docteur()
     doc1.saisie("Vic-Eline", "Carré", "vic.carre@alumni.enac.fr", "0656849331", "87 rue de la vallée de Dana PARIS FRANCE 75 000", "generaliste")
     print(doc1)
+    """
     
+    """
     patient1 = Patient()
-    patient1.saisie("Nathan", "Le-Con", "nathan.ledergerbergerberger@gmail.com", "0655219874", "7 rue de la libération, STRASBOURG, 53 980, FRANCE", [27, 6, 2000])
+    patient1.saisie("nathan", "ledergerbergerberger", "nathan.ledergerbergerberger@gmail.com", "0655219874", "7 rue de la libération, STRASBOURG, 53 980, FRANCE", [27, 6, 2000])
     print(patient1)
+    """
     
+    """
     print( patient1.est_majeur([26, 7, 2019]) )
+    """
