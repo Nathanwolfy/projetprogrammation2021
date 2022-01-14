@@ -11,9 +11,9 @@ import sys
 from . import fonctions
 
 class Ui_Form(object):
-
     def __init__(self,arg):
         self.arg = arg
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(400, 424)
