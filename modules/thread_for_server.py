@@ -8,7 +8,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 #TODO On pourra imaginer un client patient/docteur unique à l'avenir
 
 import threading
-from .modules_sqlite import exploitation_sql_patient,lire_sql
+from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql,exploitation_sql_rendez_vous
 
 FORMAT = 'utf-8'
 
