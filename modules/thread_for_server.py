@@ -103,3 +103,4 @@ class ThreadForServer(threading.Thread):
         else:
             pass
             #raise NotImplementedError ?
+        #TODO DOCTEUR
