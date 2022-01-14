@@ -18,10 +18,9 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(720, 570)
-        self.ConnexionButton = QtWidgets.QDialogButtonBox(Form)
+        self.ConnexionButton = QtWidgets.QPushButton(Form)
         self.ConnexionButton.setGeometry(QtCore.QRect(390, 480, 193, 28))
         self.ConnexionButton.setMouseTracking(True)
-        self.ConnexionButton.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Cancel|QtWidgets.QDialogButtonBox.StandardButton.Ok)
         self.ConnexionButton.setObjectName("ConnexionButton")
         self.labelNomPrenom = QtWidgets.QLabel(Form)
         self.labelNomPrenom.setGeometry(QtCore.QRect(340, 160, 351, 41))
