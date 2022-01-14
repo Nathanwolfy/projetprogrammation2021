@@ -45,7 +45,7 @@ def client_patient(socket):
 
     if confirmation_serveur == '03pINITPRISERDV':
         str_dico_type_rdv = socket.recv(1024).decode(FORMAT)
-        dico_type_rdv = fonctions_transfert.FONCTIONACREER(str_dico_type_rdv) #TODO fonction à créer pour convertir un string de dico en dico
+        dico_type_rdv = fonctions_transfert.from_string_to_dict(str_dico_type_rdv) #TODO fonction à créer pour convertir un string de dico en dico
 
         launcher.sequence('IIIp',dico_type_rdv)
         localisation = fonctions.Clocation().encode(FORMAT)
