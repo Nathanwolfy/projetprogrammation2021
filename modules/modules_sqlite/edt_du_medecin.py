@@ -116,5 +116,5 @@ def return_edt(medecin, nom_jour, jour, mois, annee):
 edt = return_edt('eogiherog@yahoo.com', 'Mardi', 1, 3, 2022)   
 print(edt)        
 
-
+con.close()
 
