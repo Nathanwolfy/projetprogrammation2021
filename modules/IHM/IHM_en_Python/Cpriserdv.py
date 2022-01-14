@@ -66,7 +66,6 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
-        self.ValidationpushButton.pressed.connect(self.validation)
         self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.location(self.Localisation_LineEdit.text()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.praticien(self.Praticien_comboBox.currentText()))
