@@ -19,7 +19,7 @@ def client_patient(socket):
         if confirmation_serveur == '02pINITCONN':
             launcher.sequence('IIg',identifiant)
             creationcompte_patient = fonctions.Bcreationcompte()
-            
+                        
             if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fonctions.Bidentifiant()
                 motdepasse = fonctions.Bmotdepass()
@@ -87,7 +87,9 @@ def client_patient(socket):
     confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '04pINITAFFDISPO':
-        str_dico_disponibilités = socket.recv(2048).decode(FORMAT) #On récupère la liste des docteurs dispos et leurs disponibilités
+        str_dico_disponibilités = socket.recv(256).decode(FORMAT)
+        print(str_dico_disponibilités) #On récupère la liste des docteurs dispos et leurs disponibilités
         dico_disponibilités = fonctions_transfert.from_string_to_dict(str_dico_disponibilités)
+        print(dico_disponibilités)
 
         launcher.sequence('IVp',(dico_disponibilités))
