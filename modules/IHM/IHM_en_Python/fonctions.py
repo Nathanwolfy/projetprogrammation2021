@@ -153,8 +153,14 @@ def Cpraticien():
 def CRdV():
     return typeRdV
 
-def CdateRdv():
-    return dateRdV
+def Cjour():
+    return PIjour
+
+def Cmois():
+    return PImois
+
+def Cannee():
+    return PIannee
 
 def Ddocname():
     return nomdudoc
