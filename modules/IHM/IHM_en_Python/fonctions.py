@@ -10,6 +10,7 @@ identifiant = ''
 #identifiant de l'utilisateur
 motdepass = ''
 #motdepass de l'utilisateur
+coins = ''
 
 #module C
 loc = ''
@@ -42,6 +43,10 @@ def verificationId(texte):
 def verificationMdP(texte):
     global motdepass
     motdepass = texte
+
+def con_ins(bool):
+    global coins
+    coins = bool
 
 def location(texte):
     global loc
@@ -87,8 +92,11 @@ def Bidentifiant():
 def Bmotdepass():
     return motdepass
 
+def Bcreationcompte():
+    return coins
+
 def Clocation():
-    return location
+    return loc
 
 def Cpraticien():
     return typepraticien
@@ -107,7 +115,6 @@ def DHoraireRdv():
 
 def DInfos():
     return Info
-
 
 
 """

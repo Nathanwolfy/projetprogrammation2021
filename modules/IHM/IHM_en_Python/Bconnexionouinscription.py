@@ -54,6 +54,8 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.verificationId(self.NomPrenom_LineEdit.text()))
         self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.verificationMdP(self.Mdp_LineEdit.text()))
+        self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.con_ins(False))
+        self.InscriptionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.con_ins(True))
         self.ConnexionButton.clicked['QAbstractButton*'].connect(Form.close)
 
         self.InscriptionButton.released.connect(Form.close) # type: ignore
