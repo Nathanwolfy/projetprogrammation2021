@@ -12,7 +12,6 @@ WAITINGTIME = 0.05
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
     identifiant = '' #Il n'y a pas d'identifiant mal saisi au départ
-    #print("Lancement de l'interface de connexion patient ...")
     while clef_valide == 'False':
         confirmation_serveur = socket.recv(32)
         confirmation_serveur = confirmation_serveur.decode(FORMAT)
@@ -71,7 +70,8 @@ def client_patient(socket):
         localisation = fonctions.Clocation().encode(FORMAT)
         type_docteur = fonctions.Cpraticien().encode(FORMAT)
         type_rdv = fonctions.CRdV().encode(FORMAT)
-        date_rdv = fonctions.CdateRdv().encode(FORMAT)
+        date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
+        date_rdv = date_rdv.encode(FORMAT)
 
         envoi_donnees_prise_rdv = '03pSENDDATARDV'.encode(FORMAT)
         socket.sendall(envoi_donnees_prise_rdv)
