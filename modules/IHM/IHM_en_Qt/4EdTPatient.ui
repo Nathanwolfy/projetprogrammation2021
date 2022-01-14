@@ -52,7 +52,7 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Liste des praticiens disponibles :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QListView" name="ListePraticens_listView">
+  <widget class="QListWidget" name="ListePraticens_listWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -61,18 +61,43 @@
      <height>331</height>
     </rect>
    </property>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>New Item</string>
+    </property>
+   </item>
   </widget>
-  <widget class="QTableView" name="tableView">
-   <property name="geometry">
-    <rect>
-     <x>365</x>
-     <y>190</y>
-     <width>351</width>
-     <height>331</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="EdTPraticien_Label">
+  <widget class="QLabel" name="Horaire_Label">
    <property name="geometry">
     <rect>
      <x>400</x>
@@ -82,13 +107,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Emploi du Temps du Praticien :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Horaires possibles :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="ValidationpushButton">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>310</x>
      <y>550</y>
      <width>111</width>
      <height>41</height>
@@ -98,40 +123,40 @@
     <string>Validation</string>
    </property>
   </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>200</y>
+     <width>241</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Info_Label">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>280</y>
+     <width>291</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Informations supplémentaires :&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;(Pour le médecin)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="InfolineEdit">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>380</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>ListePraticens_listView</sender>
-   <signal>activated(QModelIndex)</signal>
-   <receiver>tableView</receiver>
-   <slot>edit(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>145</x>
-     <y>355</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>540</x>
-     <y>355</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tableView</sender>
-   <signal>activated(QModelIndex)</signal>
-   <receiver>Form</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>540</x>
-     <y>355</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>359</x>
-     <y>307</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

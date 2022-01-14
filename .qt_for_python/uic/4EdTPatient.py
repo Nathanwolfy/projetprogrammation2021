@@ -7,13 +7,9 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-import sys
-from . import fonctions
+
 
 class Ui_Form(object):
-    def __init__(self, arg):
-        self.dico = arg
-    
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(720, 615)
@@ -29,10 +25,20 @@ class Ui_Form(object):
         self.ListePraticens_listWidget = QtWidgets.QListWidget(Form)
         self.ListePraticens_listWidget.setGeometry(QtCore.QRect(20, 190, 251, 331))
         self.ListePraticens_listWidget.setObjectName("ListePraticens_listWidget")
-
-        for key in self.dico.keys():
-            self.ListePraticens_listWidget.addItem(key)
-
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.ListePraticens_listWidget.addItem(item)
         self.Horaire_Label = QtWidgets.QLabel(Form)
         self.Horaire_Label.setGeometry(QtCore.QRect(400, 120, 291, 41))
         self.Horaire_Label.setObjectName("Horaire_Label")
@@ -50,29 +56,30 @@ class Ui_Form(object):
         self.InfolineEdit.setObjectName("InfolineEdit")
 
         self.retranslateUi(Form)
-        self.ValidationpushButton.released.connect(Form.close) # type: ignore
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.horaire(self.comboBox.currentText()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.infodoc(self.InfolineEdit.text()))
-        self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)
         QtCore.QMetaObject.connectSlotsByName(Form)
-        
-    def update_rdv_type_combobox(self, docteur_type):
-        fonctions.medecin(docteur_type)
-        self.comboBox.clear()
-        if docteur_type in self.dico.keys():
-            type_rdv = self.dico[docteur_type]
-            for rdv in type_rdv:
-                self.comboBox.addItem(rdv)
-
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.Retour_commandLinkButton.setText(_translate("Form", "Retour"))
+        self.Retour_commandLinkButton.setText(_translate("Form", "Annuler"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
         self.listepraticiens_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Liste des praticiens disponibles :</span></p></body></html>"))
         __sortingEnabled = self.ListePraticens_listWidget.isSortingEnabled()
         self.ListePraticens_listWidget.setSortingEnabled(False)
+        item = self.ListePraticens_listWidget.item(0)
+        item.setText(_translate("Form", "New Item"))
+        item = self.ListePraticens_listWidget.item(1)
+        item.setText(_translate("Form", "New Item"))
+        item = self.ListePraticens_listWidget.item(2)
+        item.setText(_translate("Form", "New Item"))
+        item = self.ListePraticens_listWidget.item(3)
+        item.setText(_translate("Form", "New Item"))
+        item = self.ListePraticens_listWidget.item(4)
+        item.setText(_translate("Form", "New Item"))
+        item = self.ListePraticens_listWidget.item(5)
+        item.setText(_translate("Form", "New Item"))
+        item = self.ListePraticens_listWidget.item(6)
+        item.setText(_translate("Form", "New Item"))
         self.ListePraticens_listWidget.setSortingEnabled(__sortingEnabled)
         self.Horaire_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Horaires possibles :</span></p></body></html>"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
