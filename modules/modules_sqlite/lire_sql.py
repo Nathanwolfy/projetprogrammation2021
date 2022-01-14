@@ -10,6 +10,12 @@ def connection_bdd():
     path = "./modules/modules_sqlite/donnees.db"
     return sqlite3.connect(path)
 
+def connection_bdd_calendrier():
+    """cette fonction est utile pour la partie de nathan : il fait le lien
+    entre serveur et client et a donc besoin de cette fonction pour se
+    connecter a la base de donnee cote serveur"""
+    path = "./modules/modules_sqlite/calendrier.db"
+    return sqlite3.connect(path)
 
 
 def bdd_recherche(table, string):
