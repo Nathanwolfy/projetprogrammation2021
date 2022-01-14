@@ -30,6 +30,55 @@ horairerdv = ''
 Info = ''
 #Informations supplémentaires pour le docteur
 
+PInom = ''
+PIprenom = ''
+PIjour = ''
+PImois = ''
+PIannee = ''
+PInumero = ''
+
+def finom(texte):
+    global PInom
+    PInom = texte
+
+def fiprenom(texte):
+    global PIprenom
+    PIprenom = texte
+
+def fijour(texte):
+    global PIjour
+    PIjour = texte
+
+def fimois(texte):
+    global PImois
+    PImois = texte
+
+def fiannee(texte):
+    global PIannee
+    PIannee = texte
+
+def finumero(texte):
+    global PInumero
+    PInumero = texte
+
+def Inom():
+    return PInom
+
+def Iprenom():
+    return PIprenom
+
+def Ijour():
+    return PIjour
+
+def Imois():
+    return PImois
+
+def Iannee():
+    return PIannee
+
+def Inumero():
+    return PInumero
+
 
 
 def affiche(texte):
