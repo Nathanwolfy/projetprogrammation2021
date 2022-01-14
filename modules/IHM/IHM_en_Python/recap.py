@@ -13,7 +13,7 @@ import sys
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
-        
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(400, 424)
@@ -95,12 +95,12 @@ class Ui_Form(object):
         self.numerolabel.setText(_translate("Form", "Numéro :"))
         self.adressemaillabel.setText(_translate("Form", "Adresse mail :"))
         self.infolabel.setText(_translate("Form", "Informations données :"))
-        self.rdvmodiflabel.setText(_translate("Form", "TextLabel"))
-        self.heuremodiflabel.setText(_translate("Form", "TextLabel"))
-        self.nomdocmodiflabel.setText(_translate("Form", "TextLabel"))
-        self.villemodiflabel.setText(_translate("Form", "TextLabel"))
-        self.codepostalmodiflabel.setText(_translate("Form", "TextLabel"))
-        self.ruemodiflabel.setText(_translate("Form", "TextLabel"))
-        self.numeromodiflabel.setText(_translate("Form", "TextLabel"))
-        self.adressemailmodiflabel.setText(_translate("Form", "TextLabel"))
-        self.infodonneesmodiflabel.setText(_translate("Form", "TextLabel"))
+        self.rdvmodiflabel.setText(_translate("Form", self.arg[0]))
+        self.heuremodiflabel.setText(_translate("Form", self.arg[1]))
+        self.nomdocmodiflabel.setText(_translate("Form", self.arg[2]))
+        self.villemodiflabel.setText(_translate("Form", self.arg[3]))
+        self.codepostalmodiflabel.setText(_translate("Form", self.arg[4]))
+        self.ruemodiflabel.setText(_translate("Form", self.arg[5]))
+        self.numeromodiflabel.setText(_translate("Form", self.arg[6]))
+        self.adressemailmodiflabel.setText(_translate("Form", self.arg[7]))
+        self.infodonneesmodiflabel.setText(_translate("Form", self.arg[8]))
