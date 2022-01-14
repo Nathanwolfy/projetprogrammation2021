@@ -4,9 +4,6 @@ Il détaille dans la méthode 'run' toutes les actions que le serveur devra effe
 Du côté client seule la réception de la requête de choix sera identique entre patient et docteur.
 '''
 
-#TODO Trouver comment envoyer tout type de données.
-#TODO On pourra imaginer un client patient/docteur unique à l'avenir
-
 import threading
 from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql,exploitation_sql_rendez_vous
 
@@ -38,9 +35,8 @@ class ThreadForServer(threading.Thread):
                 #On réceptionne le signal d'envoi des clés de connexion
                 reponse = self.conn.recv(32)
                 reponse = reponse.decode(FORMAT)
-                clef_valide = False
 
-                if reponse == '02pSENDCLEF':
+                if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = self.conn.recv(64)
                     clef_connexion = clef_connexion.decode(FORMAT).split(" ")
                     identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
@@ -49,28 +45,71 @@ class ThreadForServer(threading.Thread):
 
                     validation = clef_valide.encode(FORMAT)
                     self.conn.sendall(validation)
+
+                elif reponse == '02pINSCRIPTION': #Le patient décide de créer un compte
+                    code_initialisation_inscription_patient = 'YYpINITINSC'.encode(FORMAT) #On initialise la création du compte du patient
+                    self.conn.sendall(code_initialisation_inscription_patient)
+
+                    reponse = self.conn.recv(32)
+                    reponse = reponse.decode(FORMAT)
+
+                    if reponse == 'YYpSENDDATA':
+                        nom_patient = self.conn.recv(32).decode(FORMAT)
+                        prenom_patient = self.conn.recv(16).decode(FORMAT)
+                        date_naissance_patient = self.conn.recv(16).decode(FORMAT)
+                        numero_patient = self.conn.recv(16).decode(FORMAT)
+                        identifiant_patient = self.conn.recv(64).decode(FORMAT)
+                        motdepasse_patient = self.conn.recv(32).decode(FORMAT)
+                        jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
+                        #TODO transformer la date de naissance en trois variable
+                        #TODO double vérification mot de passe ?
+                        exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
+                        clef_valide = 'True'
+
+                    else:
+                        raise NotImplementedError
+
                 else:
                     raise NotImplementedError
 
             #On initie la suite la prise de rdv
-
-            code_initialisation_prise_rdv = '03pINITPRISERDV'.encode(FORMAT)
             dico_type_rdv = str(lire_sql.dictionnaire_pour_qt()).encode(FORMAT)
+            rdv_validé = 'False'
+            while rdv_validé == 'False':
+                code_initialisation_prise_rdv = '03pINITPRISERDV'.encode(FORMAT)
+                self.conn.sendall(code_initialisation_prise_rdv)
+                self.conn.sendall(dico_type_rdv)
 
-            self.conn.sendall(code_initialisation_prise_rdv)
-            self.conn.sendall(dico_type_rdv)
+                reponse = self.conn.recv(32)
+                reponse = reponse.decode(FORMAT)
 
-            reponse = self.conn.recv(32)
-            reponse = reponse.decode(FORMAT)
+                if reponse == '03pSENDDATARDV':
 
-            if reponse == '03pSENDDATARDV':
+                    localisation = self.conn.recv(32).decode(FORMAT)
+                    type_docteur = self.conn.recv(32).decode(FORMAT)
+                    type_rdv = self.conn.recv(32).decode(FORMAT)
+                    date_rdv = self.conn.recv(32).decode(FORMAT)
+                    
+                    #TODO traiter les données avec la base de données et obtenir en sortie une liste de médecin dispos (+ horaires ? -> quelle date ??)
+                    liste_docteurs_dispos = []
+                    liste_disponibilités = [] #Ou sous forme de dictionnaire ?
+                    code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
-                localisation = self.conn.recv(32).decode(FORMAT)
-                type_docteur = self.conn.recv(32).decode(FORMAT)
-                type_rdv = self.conn.recv(64).decode(FORMAT)
-                print(localisation,type_docteur,type_rdv)
+                    self.conn.sendall(code_initialisation_affichage_disponibilites)
+                    self.conn.sendall(liste_docteurs_dispos)
+                    self.conn.sendall(liste_disponibilités)
 
+                    rdv_validé = self.conn.recv(8).decode(FORMAT)
 
+                    if rdv_validé == 'True':
+                        date_choisie_rdv = self.conn.recv(32).decode(FORMAT)
+                        notes_pour_docteur = self.conn.recv(64).decode(FORMAT)
+                        pass #TODO valider le rdv dans la base de données avec les notes associées
+                else:
+                    raise NotImplementedError
+        
+        #TODO INSCRIPTION PATIENT ET RECAP GENERALE DES INFOS CHOISIES + FERMER LA FENETRE
+        
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)
