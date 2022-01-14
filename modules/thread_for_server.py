@@ -46,14 +46,7 @@ class ThreadForServer(threading.Thread):
                     validation = clef_valide.encode(FORMAT)
                     self.conn.sendall(validation)
 
-                elif reponse == '02pINSCRIPTION': #Le patient décide de créer un compte
-                    code_initialisation_inscription_patient = 'YYpINITINSC'.encode(FORMAT) #On initialise la création du compte du patient
-                    self.conn.sendall(code_initialisation_inscription_patient)
-
-                    reponse = self.conn.recv(32)
-                    reponse = reponse.decode(FORMAT)
-
-                    if reponse == 'YYpSENDDATA':
+                elif reponse == 'YYpSENDDATA':
                         nom_patient = self.conn.recv(32).decode(FORMAT)
                         prenom_patient = self.conn.recv(16).decode(FORMAT)
                         date_naissance_patient = self.conn.recv(16).decode(FORMAT)
@@ -65,9 +58,6 @@ class ThreadForServer(threading.Thread):
                         #TODO double vérification mot de passe ?
                         exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
                         clef_valide = 'True'
-
-                    else:
-                        raise NotImplementedError
 
                 else:
                     raise NotImplementedError
