@@ -51,11 +51,11 @@ class Ui_Form(object):
         self.Inscriptionlabel.setObjectName("Inscriptionlabel")
 
         self.retranslateUi(Form)
-        self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.verificationId(self.NomPrenom_LineEdit.text()))
-        self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.verificationMdP(self.Mdp_LineEdit.text()))
-        self.ConnexionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.con_ins(False))
-        self.InscriptionButton.clicked['QAbstractButton*'].connect(lambda: fonctions.con_ins(True))
-        self.ConnexionButton.clicked['QAbstractButton*'].connect(Form.close)
+        self.ConnexionButton.released.connect(lambda: fonctions.verificationId(self.NomPrenom_LineEdit.text()))
+        self.ConnexionButton.released.connect(lambda: fonctions.verificationMdP(self.Mdp_LineEdit.text()))
+        self.ConnexionButton.released.connect(lambda: fonctions.con_ins(False))
+        self.InscriptionButton.released.connect(lambda: fonctions.con_ins(True))
+        self.ConnexionButton.released.connect(Form.close)
 
         self.InscriptionButton.released.connect(Form.close) # type: ignore
         self.B_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
