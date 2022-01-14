@@ -1,10 +1,10 @@
 
 def strlist_to_list(strlist):
-    return eval(strlist)
+    return strlist.strip('[]').replace("'", '').split(', ')
 
 def strlist2_to_list(strlist2):
     resultat = []
-    list_temp = eval(strlist2)
-    for liste in list_temp:
-        resultat.append(eval(liste))
+    l1 = strlist2.strip('[]').split("], [")
+    for sublist in l1:
+        resultat.append(sublist.replace("'","").split(", "))
     return resultat

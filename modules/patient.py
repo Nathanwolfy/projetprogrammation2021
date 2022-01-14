@@ -38,13 +38,10 @@ def client_patient(socket):
     confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '03pINITPRISERDV':
-        str_liste_type_docteurs = socket.recv(512) #On récéptionne une liste des types de docteurs et une liste de liste des types de rdv pour chaque type de docteur
-        str_liste_type_rdv = socket.recv(512)
-        liste_type_docteurs = fonctions_transfert.strlist_to_list(str_liste_type_docteurs.decode(FORMAT)) #On les décode et convertit en listes
-        liste_type_rdv = fonctions_transfert.strlist2_to_list(str_liste_type_rdv.decode(FORMAT))
-        print(liste_type_docteurs,liste_type_rdv)
+        str_dico_type_rdv = socket.recv(1024).decode(FORMAT)
+        dico_type_rdv = fonctions_transfert.FONCTIONACREER(str_dico_type_rdv) #TODO fonction à créer pour convertir un string de dico en dico
 
-        launcher.sequence('IIIp',(liste_type_docteurs,liste_type_rdv))
+        launcher.sequence('IIIp',dico_type_rdv)
         localisation = fonctions.Clocation().encode(FORMAT)
         type_docteur = fonctions.Cpraticien().encode(FORMAT)
         type_rdv = fonctions.CRdV().encode(FORMAT)
