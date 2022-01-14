@@ -34,7 +34,7 @@ def client_patient(socket):
                 clef_valide = retour.decode(FORMAT)
 
             else: #Le client choisit de créer un compte
-                launcher.sequence('YYp',[0,0])
+                launcher.sequence('Yp',[0,0])
                 """
                 envoi_donnees_inscription_debut = 'YYpINITSENDDATA'.encode(FORMAT)
                 nom_patient = .encode(FORMAT)
@@ -88,9 +88,7 @@ def client_patient(socket):
     confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '04pINITAFFDISPO':
-        str_liste_docteurs_dispos = socket.recv(128).decode(FORMAT) #On récupère la liste des docteurs dispos et leurs disponibilités
-        str_liste_disponibilités = socket.recv(256).decode(FORMAT)
-        liste_docteurs_dispos = fonctions_transfert.FONCTIONACREER(str_liste_docteurs_dispos)
-        liste_disponibilités = fonctions_transfert.FONCTIONACREER(str_liste_disponibilités)
+        str_dico_disponibilités = socket.recv(2048).decode(FORMAT) #On récupère la liste des docteurs dispos et leurs disponibilités
+        dico_disponibilités = fonctions_transfert.from_string_to_dict(str_dico_disponibilités)
 
-        launcher.sequence('IVp',(liste_docteurs_dispos,liste_disponibilités))
+        launcher.sequence('IVp',(dico_disponibilités))
