@@ -43,6 +43,7 @@ def nom_jour(jour, mois, annee):
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nb_jour=? AND mois_jour=? AND annee=?', (jour, mois, annee))
     req = cursor_1.fetchone()
+    con_1.close()
     return req[1]
 
 con = connection('donnees.db')
