@@ -12,7 +12,7 @@ WAITINGTIME = 0.05
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
     identifiant = '' #Il n'y a pas d'identifiant mal saisi au départ
-    print("Lancement de l'interface de connexion patient ...")
+    #print("Lancement de l'interface de connexion patient ...")
     while clef_valide == 'False':
         confirmation_serveur = socket.recv(32)
         confirmation_serveur = confirmation_serveur.decode(FORMAT)
@@ -36,16 +36,15 @@ def client_patient(socket):
 
             else: #Le client choisit de créer un compte
                 launcher.sequence('Yp',[0,0])
-                """
                 envoi_donnees_inscription_debut = 'YYpINITSENDDATA'.encode(FORMAT)
-                nom_patient = .encode(FORMAT)
-                prenom_patient = .encode(FORMAT)
-                jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = 
+                nom_patient = fonctions.Inom().encode(FORMAT)
+                prenom_patient = fonctions.Iprenom().encode(FORMAT)
+                jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fonctions.Ijour(),fonctions.Imois(),fonctions.Iannee()
                 date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
                 date_naissance_patient = date_naissance_patient.encode(FORMAT)
-                numero_patient = .encode(FORMAT)
-                identifiant = .encode(FORMAT)
-                motdepasse = .encode(FORMAT)
+                numero_patient = fonctions.Inumero().encode(FORMAT)
+                identifiant = fonctions.Bidentifiant().encode(FORMAT)
+                motdepasse = fonctions.Bmotdepass().encode(FORMAT)
                 envoi_donnees_inscription_fin = 'YYpTERMSENDDATA'.encode(FORMAT)
 
                 socket.sendall(envoi_donnees_inscription_debut)
@@ -55,10 +54,9 @@ def client_patient(socket):
                 socket.sendall(numero_patient)
                 socket.sendall(identifiant)
                 socket.sendall(motdepasse)
-                socket.sendall(envoi_donnees_inscription_fin)"""
+                socket.sendall(envoi_donnees_inscription_fin)
+                clef_valide = 'True'
                 
-
-
         else:
             raise NotImplementedError
 
