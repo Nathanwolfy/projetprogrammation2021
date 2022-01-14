@@ -95,9 +95,8 @@ def lire_sql_patient(row):
     de sql"""
     patient = p.Patient()
     date = [ int(row[2]), int(row[3]), int(row[4]) ]
-    patient.saisie(row[0], row[1], row[5], row[6], row[7], date)
+    patient.saisie(row[0], row[1], row[5], row[6], date)#prenom nom mail telephone date
     return patient
-
 
 def liste_patient():
     """cette fonction prends la bdd sql ou on met nos données en param
