@@ -18,6 +18,7 @@ def nb_jours_dans_un_mois(mois, annee):
         return 31
     return 30
 
+'''S'il y a besoin de renvoyer l'emploi du temps de la semaine à partir de la date d'aujourd'hui'''
 now = time.localtime(time.time())
 actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) nb_jour mois annee
 nom_jour = JOURS[DAYS.index(actual_time[:3])]
@@ -42,6 +43,7 @@ def nom_jour(jour, mois, annee):
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nb_jour=? AND mois_jour=? AND annee=?', (jour, mois, annee))
     req = cursor_1.fetchone()
+    con_1.close()
     return req[1]
 
 con = connection('donnees.db')
@@ -115,5 +117,5 @@ def return_edt(medecin, nom_jour, jour, mois, annee):
 edt = return_edt('eogiherog@yahoo.com', 'Mardi', 1, 3, 2022)   
 print(edt)        
 
-
+con.close()
 

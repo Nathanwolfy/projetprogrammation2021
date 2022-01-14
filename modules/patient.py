@@ -20,17 +20,22 @@ def client_patient(socket):
             
             launcher.sequence('IIg',identifiant)
             #TODO Proposer la création d'un identifiant de connexion
-            identifiant = fonctions.Bidentifiant()
-            motdepasse = fonctions.Bmotdepass()
-            clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentré par le client
-            clef_patient = clef_patient.encode(FORMAT)
+            #TODO Trouver comment savoir si le client a cliqué sur la création d'un rendez-vous ou nom
+            if True: #Le client choisit de rentrer son identifiant et mot de passe
+                identifiant = fonctions.Bidentifiant()
+                motdepasse = fonctions.Bmotdepass()
+                clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentré par le client
+                clef_patient = clef_patient.encode(FORMAT)
 
-            envoi_clef_connexion = '02pSENDCLEF'.encode(FORMAT)
-            socket.sendall(envoi_clef_connexion)
-            socket.sendall(clef_patient)
+                envoi_clef_connexion = '02pSENDCLEF'.encode(FORMAT)
+                socket.sendall(envoi_clef_connexion)
+                socket.sendall(clef_patient)
 
-            retour = socket.recv(32)
-            clef_valide = retour.decode(FORMAT)
+                retour = socket.recv(32)
+                clef_valide = retour.decode(FORMAT)
+
+            elif False: #Le client choisit de créer un compte
+                pass
         else:
             raise NotImplementedError
 
@@ -38,16 +43,14 @@ def client_patient(socket):
     confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '03pINITPRISERDV':
-        str_liste_type_docteurs = socket.recv(512) #On récéptionne une liste des types de docteurs et une liste de liste des types de rdv pour chaque type de docteur
-        str_liste_type_rdv = socket.recv(512)
-        liste_type_docteurs = fonctions_transfert.strlist_to_list(str_liste_type_docteurs.decode(FORMAT)) #On les décode et convertit en listes
-        liste_type_rdv = fonctions_transfert.strlist2_to_list(str_liste_type_rdv.decode(FORMAT))
-        print(liste_type_docteurs,liste_type_rdv)
+        str_dico_type_rdv = socket.recv(1024).decode(FORMAT)
+        dico_type_rdv = fonctions_transfert.FONCTIONACREER(str_dico_type_rdv) #TODO fonction à créer pour convertir un string de dico en dico
 
-        launcher.sequence('IIIp',(liste_type_docteurs,liste_type_rdv))
+        launcher.sequence('IIIp',dico_type_rdv)
         localisation = fonctions.Clocation().encode(FORMAT)
         type_docteur = fonctions.Cpraticien().encode(FORMAT)
         type_rdv = fonctions.CRdV().encode(FORMAT)
+        date_rdv = fonctions.CdateRdv.encode(FORMAT)
 
         envoi_donnees_prise_rdv = '03pSENDDATARDV'.encode(FORMAT)
         socket.sendall(envoi_donnees_prise_rdv)
@@ -55,6 +58,17 @@ def client_patient(socket):
         socket.sendall(localisation)
         socket.sendall(type_docteur)
         socket.sendall(type_rdv)
+        socket.sendall(date_rdv)
     else:
         raise NotImplementedError
 
+    confirmation_serveur = socket.recv(32)
+    confirmation_serveur = confirmation_serveur.decode(FORMAT)
+
+    if confirmation_serveur == '04pINITAFFDISPO':
+        str_liste_docteurs_dispos = socket.recv(128).decode(FORMAT) #On récupère la liste des docteurs dispos et leurs disponibilités
+        str_liste_disponibilités = socket.recv(256).decode(FORMAT)
+        liste_docteurs_dispos = fonctions_transfert.FONCTIONACREER(str_liste_docteurs_dispos)
+        liste_disponibilités = fonctions_transfert.FONCTIONACREER(str_liste_disponibilités)
+
+        launcher.sequence('IVp',(liste_docteurs_dispos,liste_disponibilités))
