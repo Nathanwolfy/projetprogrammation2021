@@ -1,7 +1,6 @@
 import sqlite3
-import lire_sql as lsql
-#faire une fonction qui prends un jour donne et supprime TOUT de ce jour et 
-#des jours d'avants
+from . import profil as p
+from . import lire_sql as lsql
 
 
 def suppr_donnees_apres_rdv(jour, mois, annee):
@@ -12,7 +11,7 @@ def journee_existe_pour_ce_medecin(jour, mois, annee, medecin):
     """cette fonction verifie si il existe pour un certain medecin un rendez
     vous dans cette journee au cas ou pour ne pas recreer une journee vide
     dans la bdd par accident"""
-    connection = sqlite3.connect("donnees.db")
+    connection = lsql.connection_bdd()
     cursor = connection.cursor()
     cursor.execute("SELECT DISTINCT medecin FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND medecin = ?", (jour, mois, annee, medecin))
     rech = cursor.fetchall()
@@ -26,9 +25,9 @@ def journee_existe_pour_ce_medecin(jour, mois, annee, medecin):
 def temps_motif(type_de_medecin, motif):
     """cette fonction retourne le temps que dure un tel motif de rendez vous
     pour un tel medecin"""
-    print(lsql.liste_type_medecin())
-    print(lsql.liste_type_de_medecin_et_rdv_pris())
-    connection = sqlite3.connect("donnees.db")
+    #print(lsql.liste_type_medecin())
+    #print(lsql.liste_type_de_medecin_et_rdv_pris())
+    connection = lsql.connection_bdd()
     cursor = connection.cursor()
     cursor.execute("SELECT temps FROM rdvs WHERE type_de_medecin = ? AND motif = ?", (type_de_medecin, motif))
     rech = cursor.fetchone()
@@ -39,7 +38,7 @@ def temps_motif(type_de_medecin, motif):
 def rdv_dispo(jour, mois, annee, heure, minute, medecin):
     """cette fonction renvoie true si le rendez vous est disponible et renvoie
     false si le rendez vous n'est pas disponible"""
-    connection = sqlite3.connect("donnees.db")
+    connection = lsql.connection_bdd()
     cursor = connection.cursor()
     cursor.execute("SELECT dispo FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND heure = ? AND minute = ? AND medecin = ?", (jour, mois, annee, heure, minute, medecin))
     rech = cursor.fetchone()
@@ -50,15 +49,16 @@ def rdv_dispo(jour, mois, annee, heure, minute, medecin):
         return True
 
 
-#creer une securite si le rdv est pris renvoyer que ce n'est pas possible
-#pour les motifs et patients des rendez vous faire une deuxieme bdd je pense
+#a faire : -> creer une securite : si le rdv est pris 
+#renvoyer que ce n'est pas possible
 def passer_creneau_dispo_en_creneau_pris(jour, mois, annee, heure, minute, medecin):
     """cette fonction fait passer une tranche de 15 minutes d'un medecin en
     non disponible en passant la disponibilite a 0"""    
-    connection = sqlite3.connect("donnees.db")
+    connection = lsql.connection_bdd()
     cursor = connection.cursor()
     #ne sachant pas comment utiliser un WHERE et un VALUES dans la meme
-    #requete, il va falloir supprimer et recreer un rdv
+    #requete, il va falloir supprimer et recreer un rdv ce qui n'est pas le 
+    #¼plus optimise a mon avis mais des que j'ai le temps je demande au prof
     cursor.execute("DELETE FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND heure = ? AND minute = ? AND medecin = ?", (jour, mois, annee, heure, minute, medecin))
     connection.commit()
     cursor.execute("INSERT INTO rdv_dispos VALUES (?,?,?,?,?,?,?)", (jour, mois, annee, heure, minute, medecin, 0))
@@ -99,19 +99,20 @@ def passer_rdv_dispo_en_rdv_pris(jour, mois, annee, heure, minute, medecin, temp
             else :
                 minute += 15
     else:
-        return "probleme de temps"
+        #return "probleme de temps"
+        pass
     
 
 
 
 #amelioration dans le futur : creer une facon de faire une demi journee voir 
-#gerer l'amplitude horaire journaliere d'un medecin et sa pause dej
+#gerer l'amplitude horaire journaliere d'un medecin et sa pause dejeuner
 def creer_journee_vide(jour, mois, annee, medecin):
     """cette fonction cree une journee vide remplie de rdv disponibles pour un
     certain medecin, avec debut 8h00 et fin 19h00 et une heure pour manger 
     entre midi et 13h"""
     if journee_existe_pour_ce_medecin(jour, mois, annee, medecin) == False:
-        connection = sqlite3.connect("donnees.db")
+        connection = lsql.connection_bdd()
         cursor = connection.cursor()
         for i in range(8, 19):
             donnee_a_implementer = (jour, mois, annee, i, 0, medecin, 1)
@@ -133,7 +134,8 @@ def creer_journee_vide(jour, mois, annee, medecin):
         connection.commit()
         connection.close()
     else :
-        print("ce medecin a deja la journee de creee")
+        #return("ce medecin a deja la journee de creee")
+        pass
 
 
 def rdv_disponible(jour, mois, annee, medecin, temps):
@@ -162,13 +164,21 @@ def rdv_disponible(jour, mois, annee, medecin, temps):
     return liste_creneaux_possibles
 
 def date(jour, mois, annee):
-    connection = sqlite3.connect("calendrier.db")
+    """cette fonction est utile pour l'affichage, elle transforme trois
+    chiffres ( par exemple 17 03 2020 ) en une string affichable par Qt
+    ( ici : lundi 17 mars 2020 )"""
+    connection = lsql.connection_bdd_calendrier()
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO rdv_dispos VALUES (?,?,?,?,?,?,?)", donnee_a_implementer)
-    connection.commit()
+    cursor.execute("SELECT nom_jour FROM calendrier WHERE nb_jour = ? AND mois_jour = ? AND annee = ?", (jour, mois, annee))
+    nom_du_jour = cursor.fetchone()
     connection.close()
-    date_str = 
+    return f"{nom_du_jour[0]} {jour} {p.MOIS[mois-1]} {annee}"
     
+def affichage_final_rdv_dispo(jour, mois, annee, medecin, temps):
+    """cette fonction renvoie les rendez vous disponibles par date donnee pour
+    medecin donne et pour delai donne dans une journee entiere comme le fait 
+    doctolib"""
+    return [date(jour, mois, annee), rdv_disponible(jour, mois, annee, medecin, temps)]
 
 
 if __name__ == "__main__" :

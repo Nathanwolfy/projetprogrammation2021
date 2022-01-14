@@ -12,12 +12,23 @@ motdepass = ''
 #motdepass de l'utilisateur
 
 #module C
-location = ''
+loc = ''
 #localisation du rendez-vous
 typepraticien = ''
 #type de praticien demandé
 typeRdV = ''
 #type de Rendez-Vous demandé
+dateRdV = ''
+#date du rendez-Vous
+
+#module D
+nomdudoc = ''
+#Nom du docteur
+horairerdv = ''
+#Horaire du Rendez-Vous
+Info = ''
+#Informations supplémentaires pour le docteur
+
 
 
 def affiche(texte):
@@ -33,8 +44,8 @@ def verificationMdP(texte):
     motdepass = texte
 
 def location(texte):
-    global location
-    location = texte
+    global loc
+    loc = texte
 
 def praticien(texte):
     global typepraticien
@@ -43,6 +54,22 @@ def praticien(texte):
 def Rdv(texte):
     global typeRdV
     typeRdV = texte
+
+def date(texte):
+    global dateRdV
+    dateRdV = texte
+
+def medecin(texte):
+    global nomdudoc
+    nomdudoc = texte
+
+def horaire(texte):
+    global horairerdv
+    horairerdv = texte
+
+def infodoc(texte):
+    global Info
+    Info = texte
 
 def imprime(texte):
     print(texte)
@@ -69,6 +96,17 @@ def Cpraticien():
 def CRdV():
     return typeRdV
 
+def CdateRdv():
+    return dateRdV
+
+def Ddocname():
+    return nomdudoc
+
+def DHoraireRdv():
+    return horairerdv
+
+def DInfos():
+    return Info
 
 
 
