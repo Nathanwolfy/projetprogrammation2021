@@ -94,7 +94,7 @@ class ThreadForServer(threading.Thread):
                 else:
                     raise NotImplementedError
         
-        #TODO INSCRIPTION PATIENT ET RECAP GENERALE DES INFOS CHOISIES + FERMER LA FENETRE
+        #TODO RECAP GENERALE DES INFOS CHOISIES + FERMER LA FENETRE
         
 
         elif choix_client == 'XXd':
