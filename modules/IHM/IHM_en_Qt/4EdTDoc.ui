@@ -126,7 +126,7 @@
    </column>
    <item row="1" column="1">
     <property name="text">
-     <string>nique ta mere</string>
+     <string/>
     </property>
    </item>
   </widget>
