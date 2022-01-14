@@ -48,14 +48,12 @@ class ThreadForServer(threading.Thread):
 
                 elif reponse == 'YYpSENDDATA':
                         nom_patient = self.conn.recv(32).decode(FORMAT)
-                        prenom_patient = self.conn.recv(16).decode(FORMAT)
+                        prenom_patient = self.conn.recv(32).decode(FORMAT)
                         date_naissance_patient = self.conn.recv(16).decode(FORMAT)
                         numero_patient = self.conn.recv(16).decode(FORMAT)
                         identifiant_patient = self.conn.recv(64).decode(FORMAT)
                         motdepasse_patient = self.conn.recv(32).decode(FORMAT)
                         jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
-                        #TODO transformer la date de naissance en trois variable
-                        #TODO double vérification mot de passe ?
                         exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
                         clef_valide = 'True'
 
