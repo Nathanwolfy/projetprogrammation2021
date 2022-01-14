@@ -35,6 +35,7 @@ class ThreadForServer(threading.Thread):
                 #On réceptionne le signal d'envoi des clés de connexion
                 reponse = self.conn.recv(32)
                 reponse = reponse.decode(FORMAT)
+                print(reponse)
 
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = self.conn.recv(64)
@@ -54,8 +55,12 @@ class ThreadForServer(threading.Thread):
                     identifiant_patient = self.conn.recv(64).decode(FORMAT)
                     motdepasse_patient = self.conn.recv(32).decode(FORMAT)
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
-                    exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
-                    clef_valide = 'True'
+                    reponse = self.conn.recv(16).decode(FORMAT)
+                    if reponse == 'YYpTERMSENDDATA':
+                        exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
+                        clef_valide = 'True'
+                    else:
+                        raise NotImplementedError
 
                 else:
                     raise NotImplementedError
