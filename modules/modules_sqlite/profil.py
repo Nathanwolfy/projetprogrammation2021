@@ -1,35 +1,36 @@
 MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
 
 class Profil:
-    """les parametres communs a tous les profils sont le prenom le nom le mail, 
-    telephone et adresse, on rajoutera des choses pour le docteur/patient"""
+    """les parametres communs a tous les profils sont le prenom le nom le mail 
+    et telephone, on rajoutera des choses pour le docteur/patient"""
     
     def __init__(self):
         self.prenom = "" #STR
         self.nom = "" #STR
         self.mail = "" #STR
         self.telephone = 0 #INT
-        self.adresse = "" #STR
 
-    def saisie(self, prenom, nom, mail, telephone, adresse):
+    def saisie(self, prenom, nom, mail, telephone):
         self.prenom = str(prenom) #STR
         self.nom = str(nom) #STR
         self.mail = str(mail) #STR
         self.telephone = str(telephone) #STR
-        self.adresse = str(adresse) #STR
         
 
 class Docteur(Profil):
     """le docteur prends en plus en parametre de lui meme son metier 
-    ie si c'est un dentiste il va pas faire des trucs de generaliste"""
+    ie si c'est un dentiste il va pas faire des trucs de generaliste et 
+    l'adresse de son cabinet"""
     
     def __init__(self):
         Profil.__init__(self)
         self.metier = "metier"#STR
+        self.adresse = "" #STR
 
     def saisie(self, prenom, nom, mail, telephone, adresse, metier):
-        Profil.saisie(self, prenom, nom, mail, telephone, adresse)
+        Profil.saisie(self, prenom, nom, mail, telephone)
         self.metier = str(metier)
+        self.adresse = str(adresse)
 
     def __repr__(self):
         return "FICHE DOCTEUR : Medecin " + str(self.metier) + " " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.adresse
@@ -45,12 +46,12 @@ class Patient(Profil):
         Profil.__init__(self)
         self.date = [0, 0, 0] #LISTE sous forme [dd, mm, yyyy]
         
-    def saisie(self, prenom, nom, mail, telephone, adresse, date):
-        Profil.saisie(self, prenom, nom, mail, telephone, adresse)
+    def saisie(self, prenom, nom, mail, telephone, date):
+        Profil.saisie(self, prenom, nom, mail, telephone)
         self.date = date
     
     def __repr__(self):
-        return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nRésidant au : " + self.adresse
+        return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone)
 
 #piste d'amelioration : faire de cette methode un automatisme avec une fonction
 #qui prend en compte le jour ou nous sommes actuellement afin qu'il ne soit pas
@@ -60,7 +61,7 @@ class Patient(Profil):
         False si ce n'est pas le cas"""
         date_majeur = self.date
         date_majeur[2] += 18
-            
+        
         if jour[2] > date_majeur[2] :
             return True
         elif jour[2] < date_majeur[2] :
@@ -87,10 +88,10 @@ if __name__ == "__main__" :
     
     """
     patient1 = Patient()
-    patient1.saisie("nathan", "ledergerbergerberger", "nathan.ledergerbergerberger@gmail.com", "0655219874", "7 rue de la libération, STRASBOURG, 53 980, FRANCE", [27, 6, 2000])
+    patient1.saisie("nathan", "ledergerbergerberger", "nathan.ledergerbergerberger@gmail.com", "0655219874", [27, 6, 2001])
     print(patient1)
     """
     
     """
-    print( patient1.est_majeur([26, 7, 2019]) )
+    print( patient1.est_majeur([27, 6, 2018]) )
     """
