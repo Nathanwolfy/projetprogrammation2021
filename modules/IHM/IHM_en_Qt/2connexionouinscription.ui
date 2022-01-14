@@ -13,22 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QDialogButtonBox" name="ConnexionButton">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>480</y>
-     <width>193</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="mouseTracking">
-    <bool>true</bool>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
   <widget class="QLabel" name="labelNomPrenom">
    <property name="geometry">
     <rect>
@@ -140,41 +124,22 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Inscription&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="ConnexionButton">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>470</y>
+     <width>161</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Connexion</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>ConnexionButton</sender>
-   <signal>clicked(QAbstractButton*)</signal>
-   <receiver>NomPrenom_LineEdit</receiver>
-   <slot>copy()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>466</x>
-     <y>543</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>340</x>
-     <y>255</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConnexionButton</sender>
-   <signal>clicked(QAbstractButton*)</signal>
-   <receiver>Mdp_LineEdit</receiver>
-   <slot>copy()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>466</x>
-     <y>543</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>340</x>
-     <y>405</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>InscriptionButton</sender>
    <signal>released()</signal>
@@ -220,22 +185,6 @@
     <hint type="destinationlabel">
      <x>460</x>
      <y>405</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>Mdp_LineEdit</sender>
-   <signal>editingFinished()</signal>
-   <receiver>ConnexionButton</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>460</x>
-     <y>405</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>486</x>
-     <y>493</y>
     </hint>
    </hints>
   </connection>
