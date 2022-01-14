@@ -42,7 +42,7 @@
   <widget class="QLabel" name="Nomlabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>130</y>
      <width>121</width>
      <height>21</height>
@@ -57,7 +57,7 @@
     <rect>
      <x>190</x>
      <y>130</y>
-     <width>171</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -67,7 +67,7 @@
     <rect>
      <x>190</x>
      <y>160</y>
-     <width>171</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -75,7 +75,7 @@
   <widget class="QLabel" name="Prenomlabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>160</y>
      <width>121</width>
      <height>21</height>
@@ -88,7 +88,7 @@
   <widget class="QLabel" name="DateNaissancelabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>190</y>
      <width>161</width>
      <height>21</height>
@@ -103,15 +103,18 @@
     <rect>
      <x>190</x>
      <y>190</y>
-     <width>31</width>
+     <width>21</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="AdresseMaillabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>270</y>
      <width>121</width>
      <height>21</height>
@@ -124,9 +127,9 @@
   <widget class="QLineEdit" name="AdresseMaillineEdit">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>190</x>
      <y>270</y>
-     <width>191</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -147,7 +150,7 @@
   <widget class="QLabel" name="Numerolabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>220</y>
      <width>161</width>
      <height>21</height>
@@ -162,7 +165,7 @@
     <rect>
      <x>190</x>
      <y>220</y>
-     <width>171</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -172,7 +175,7 @@
     <rect>
      <x>190</x>
      <y>320</y>
-     <width>171</width>
+     <width>181</width>
      <height>21</height>
     </rect>
    </property>
@@ -180,7 +183,7 @@
   <widget class="QLabel" name="MdPlabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>320</y>
      <width>121</width>
      <height>21</height>
@@ -193,9 +196,9 @@
   <widget class="QLineEdit" name="moislineEdit">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>220</x>
      <y>190</y>
-     <width>31</width>
+     <width>21</width>
      <height>21</height>
     </rect>
    </property>
@@ -203,7 +206,7 @@
   <widget class="QLineEdit" name="anneelineEdit">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>250</x>
      <y>190</y>
      <width>31</width>
      <height>21</height>
@@ -213,14 +216,14 @@
   <widget class="QLabel" name="jjmmaaaalabel">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>290</x>
      <y>190</y>
-     <width>71</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JJ/MM/AAA&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;jj/mm/aaaa&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
