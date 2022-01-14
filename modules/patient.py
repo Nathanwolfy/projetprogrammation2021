@@ -71,7 +71,8 @@ def client_patient(socket):
         localisation = fonctions.Clocation().encode(FORMAT)
         type_docteur = fonctions.Cpraticien().encode(FORMAT)
         type_rdv = fonctions.CRdV().encode(FORMAT)
-        date_rdv = fonctions.CdateRdv().encode(FORMAT)
+        date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
+        date_rdv = date_rdv.encode(FORMAT)
 
         envoi_donnees_prise_rdv = '03pSENDDATARDV'.encode(FORMAT)
         socket.sendall(envoi_donnees_prise_rdv)

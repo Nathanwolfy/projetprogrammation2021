@@ -79,7 +79,7 @@ class ThreadForServer(threading.Thread):
                     date_rdv = self.conn.recv(16).decode(FORMAT)
                     jour,mois,annee = date_rdv.split('/')
                     
-                    dico_disponibilités = rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee).encode(FORMAT)
+                    dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee).encode(FORMAT))
                     code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
                     self.conn.sendall(code_initialisation_affichage_disponibilites)
