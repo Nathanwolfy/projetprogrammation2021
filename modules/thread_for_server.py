@@ -80,14 +80,11 @@ class ThreadForServer(threading.Thread):
                     type_rdv = self.conn.recv(32).decode(FORMAT)
                     date_rdv = self.conn.recv(32).decode(FORMAT)
                     
-                    #TODO traiter les données avec la base de données et obtenir en sortie une liste de médecin dispos (+ horaires ? -> quelle date ??)
-                    liste_docteurs_dispos = []
-                    liste_disponibilités = [] #Ou sous forme de dictionnaire ?
+                    dico_disponibilités = .encode(FORMAT)
                     code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
                     self.conn.sendall(code_initialisation_affichage_disponibilites)
-                    self.conn.sendall(liste_docteurs_dispos)
-                    self.conn.sendall(liste_disponibilités)
+                    self.conn.sendall(dico_disponibilités)
 
                     rdv_validé = self.conn.recv(8).decode(FORMAT)
 
