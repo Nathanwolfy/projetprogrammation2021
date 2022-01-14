@@ -18,6 +18,7 @@ def nb_jours_dans_un_mois(mois, annee):
         return 31
     return 30
 
+'''S'il y a besoin de renvoyer l'emploi du temps de la semaine à partir de la date d'aujourd'hui'''
 now = time.localtime(time.time())
 actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) nb_jour mois annee
 nom_jour = JOURS[DAYS.index(actual_time[:3])]
