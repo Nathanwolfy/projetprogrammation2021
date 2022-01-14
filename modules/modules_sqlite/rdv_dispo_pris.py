@@ -181,7 +181,7 @@ def affichage_final_rdv_dispo(jour, mois, annee, medecin, temps):
     return [date(jour, mois, annee), rdv_disponible(jour, mois, annee, medecin, temps)]
 
 
-def medecins_disp_dans_ta_region(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
+def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
     medecins_de_ce_type_et_de_cette_ville = []
     medecins_de_ce_type_et_de_cette_ville_id = []
     liste_des_rdv_disponibles = []
