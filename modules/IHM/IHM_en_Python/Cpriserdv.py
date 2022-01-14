@@ -80,22 +80,20 @@ class Ui_Form(object):
 
     #slot permettant de mettre à jour la rdv_combobox
     def update_rdv_type_combobox(self, docteur_type):
-        print(docteur_type)
         self.RdV_comboBox.clear()
-        print("combobox_cleared")
         if docteur_type in self.dico.keys():
             type_rdv = self.dico[docteur_type]
             for rdv in type_rdv:
                 self.RdV_comboBox.addItem(rdv)
 
-    def validation(self):
-        print("type de practicien choisi = {}\ntype de rdv choisis = {}".format(self.Praticien_comboBox.currentText(),self.RdV_comboBox.currentText()))
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Localisation_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Localisation (Ville) :</span></p></body></html>"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.TypePraticien_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Type de Praticien :</span></p></body></html>"))
         self.RdV_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:9pt;\">Type de Rendez-Vous :</span></p></body></html>"))
         self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
+        self.Date_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Date (jj/mm/aaaa) :</span></p></body></html>"))
