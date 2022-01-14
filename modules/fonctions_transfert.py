@@ -10,6 +10,9 @@ def strlist2_to_list(strlist2):
     return resultat
 
 def from_string_to_dict(string):
+    print(string)
+    if string == "":
+        return None
     version1_str = string.split("{")[1]
     version2_str = version1_str.split("}")[0]
     version3_list = version2_str.split("[")

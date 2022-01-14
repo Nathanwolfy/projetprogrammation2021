@@ -47,15 +47,15 @@ class ThreadForServer(threading.Thread):
                     self.conn.sendall(validation)
 
                 elif reponse == 'YYpSENDDATA':
-                        nom_patient = self.conn.recv(32).decode(FORMAT)
-                        prenom_patient = self.conn.recv(32).decode(FORMAT)
-                        date_naissance_patient = self.conn.recv(16).decode(FORMAT)
-                        numero_patient = self.conn.recv(16).decode(FORMAT)
-                        identifiant_patient = self.conn.recv(64).decode(FORMAT)
-                        motdepasse_patient = self.conn.recv(32).decode(FORMAT)
-                        jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
-                        exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
-                        clef_valide = 'True'
+                    nom_patient = self.conn.recv(32).decode(FORMAT)
+                    prenom_patient = self.conn.recv(32).decode(FORMAT)
+                    date_naissance_patient = self.conn.recv(16).decode(FORMAT)
+                    numero_patient = self.conn.recv(16).decode(FORMAT)
+                    identifiant_patient = self.conn.recv(64).decode(FORMAT)
+                    motdepasse_patient = self.conn.recv(32).decode(FORMAT)
+                    jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
+                    exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
+                    clef_valide = 'True'
 
                 else:
                     raise NotImplementedError
@@ -79,7 +79,7 @@ class ThreadForServer(threading.Thread):
                     date_rdv = self.conn.recv(16).decode(FORMAT)
                     jour,mois,annee = date_rdv.split('/')
                     
-                    dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee).encode(FORMAT))
+                    dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee)).encode(FORMAT)
                     code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
                     self.conn.sendall(code_initialisation_affichage_disponibilites)
