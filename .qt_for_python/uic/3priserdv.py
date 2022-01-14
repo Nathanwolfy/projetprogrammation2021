@@ -59,9 +59,15 @@ class Ui_Form(object):
         self.Date_Label = QtWidgets.QLabel(Form)
         self.Date_Label.setGeometry(QtCore.QRect(10, 180, 241, 41))
         self.Date_Label.setObjectName("Date_Label")
-        self.Date_LineEdit = QtWidgets.QLineEdit(Form)
-        self.Date_LineEdit.setGeometry(QtCore.QRect(250, 180, 201, 31))
-        self.Date_LineEdit.setObjectName("Date_LineEdit")
+        self.jourLineEdit = QtWidgets.QLineEdit(Form)
+        self.jourLineEdit.setGeometry(QtCore.QRect(250, 180, 41, 31))
+        self.jourLineEdit.setObjectName("jourLineEdit")
+        self.moisLineEdit = QtWidgets.QLineEdit(Form)
+        self.moisLineEdit.setGeometry(QtCore.QRect(310, 180, 41, 31))
+        self.moisLineEdit.setObjectName("moisLineEdit")
+        self.anneeLineEdit = QtWidgets.QLineEdit(Form)
+        self.anneeLineEdit.setGeometry(QtCore.QRect(370, 180, 41, 31))
+        self.anneeLineEdit.setObjectName("anneeLineEdit")
 
         self.retranslateUi(Form)
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
