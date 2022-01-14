@@ -17,11 +17,10 @@ def client_patient(socket):
         confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
         if confirmation_serveur == '02pINITCONN':
-            
             launcher.sequence('IIg',identifiant)
-            #TODO Proposer la création d'un identifiant de connexion
-            #TODO Trouver comment savoir si le client a cliqué sur la création d'un rendez-vous ou nom
-            if True: #Le client choisit de rentrer son identifiant et mot de passe
+            creationcompte_patient = fonctions.Bcreationcompte()
+            
+            if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fonctions.Bidentifiant()
                 motdepasse = fonctions.Bmotdepass()
                 clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentré par le client
@@ -34,8 +33,10 @@ def client_patient(socket):
                 retour = socket.recv(32)
                 clef_valide = retour.decode(FORMAT)
 
-            elif False: #Le client choisit de créer un compte
+            else: #Le client choisit de créer un compte
                 pass
+                clef_valide = 'True'
+
         else:
             raise NotImplementedError
 
@@ -44,7 +45,7 @@ def client_patient(socket):
 
     if confirmation_serveur == '03pINITPRISERDV':
         str_dico_type_rdv = socket.recv(1024).decode(FORMAT)
-        dico_type_rdv = fonctions_transfert.FONCTIONACREER(str_dico_type_rdv) #TODO fonction à créer pour convertir un string de dico en dico
+        dico_type_rdv = fonctions_transfert.from_string_to_dict(str_dico_type_rdv) #TODO fonction à créer pour convertir un string de dico en dico
 
         launcher.sequence('IIIp',dico_type_rdv)
         localisation = fonctions.Clocation().encode(FORMAT)
