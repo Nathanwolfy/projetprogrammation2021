@@ -88,7 +88,6 @@ def client_patient(socket):
 
     if confirmation_serveur == '04pINITAFFDISPO':
         str_dico_disponibilités = socket.recv(256).decode(FORMAT)
-        print(str_dico_disponibilités) #On récupère la liste des docteurs dispos et leurs disponibilités
         dico_disponibilités = fonctions_transfert.from_string_to_dict(str_dico_disponibilités)
         print(dico_disponibilités)
 

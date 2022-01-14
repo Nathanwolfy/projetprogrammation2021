@@ -1,4 +1,5 @@
 import sqlite3
+from unittest import result
 from . import profil as p
 from . import lire_sql as lsql
 
@@ -181,7 +182,7 @@ def affichage_final_rdv_dispo(jour, mois, annee, medecin, temps):
     return [date(jour, mois, annee), rdv_disponible(jour, mois, annee, medecin, temps)]
 
 
-def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
+def medecins_disponibilites_avec_localisation_liste(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
     medecins_de_ce_type_et_de_cette_ville = []
     medecins_de_ce_type_et_de_cette_ville_id = []
     liste_des_rdv_disponibles = []
@@ -202,6 +203,13 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
         liste_des_rdv_disponibles.append(rdv_disponible(jour, mois, annee, elt, temps))
     
     return [medecins_de_ce_type_et_de_cette_ville, liste_des_rdv_disponibles]
+
+def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
+    resultat = medecins_disponibilites_avec_localisation_liste(type_de_medecin, type_de_rdv, ville, jour, mois, annee)
+    dico = {}
+    for i in range(len(resultat[0])):
+        dico[resultat[0][i]] = resultat[1][i]
+    return dico
 
 
 if __name__ == "__main__" :
