@@ -10,7 +10,7 @@ WAITINGTIME = 0.05
 
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
-    identifiant = '' #Il n'y a pas de mal saisi au départ
+    identifiant = '' #Il n'y a pas d'identifiant mal saisi au départ
     print("Lancement de l'interface de connexion patient ...")
     while clef_valide == 'False':
         confirmation_serveur = socket.recv(32)
@@ -23,7 +23,7 @@ def client_patient(socket):
             if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fonctions.Bidentifiant()
                 motdepasse = fonctions.Bmotdepass()
-                clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentré par le client
+                clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_patient = clef_patient.encode(FORMAT)
 
                 envoi_clef_connexion = '02pSENDCLEF'.encode(FORMAT)
@@ -34,8 +34,29 @@ def client_patient(socket):
                 clef_valide = retour.decode(FORMAT)
 
             else: #Le client choisit de créer un compte
-                pass
-                clef_valide = 'True'
+                launcher.sequence('YYp',[0,0])
+                """
+                envoi_donnees_inscription_debut = 'YYpINITSENDDATA'.encode(FORMAT)
+                nom_patient = .encode(FORMAT)
+                prenom_patient = .encode(FORMAT)
+                jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = 
+                date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
+                date_naissance_patient = date_naissance_patient.encode(FORMAT)
+                numero_patient = .encode(FORMAT)
+                identifiant = .encode(FORMAT)
+                motdepasse = .encode(FORMAT)
+                envoi_donnees_inscription_fin = 'YYpTERMSENDDATA'.encode(FORMAT)
+
+                socket.sendall(envoi_donnees_inscription_debut)
+                socket.sendall(nom_patient)
+                socket.sendall(prenom_patient)
+                socket.sendall(date_naissance_patient)
+                socket.sendall(numero_patient)
+                socket.sendall(identifiant)
+                socket.sendall(motdepasse)
+                socket.sendall(envoi_donnees_inscription_fin)"""
+                
+
 
         else:
             raise NotImplementedError
