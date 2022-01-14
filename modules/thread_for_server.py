@@ -5,7 +5,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 '''
 
 import threading
-from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql,exploitation_sql_rendez_vous
+from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql,exploitation_sql_rendez_vous, rdv_dispo_pris
 
 FORMAT = 'utf-8'
 
@@ -78,16 +78,14 @@ class ThreadForServer(threading.Thread):
                     localisation = self.conn.recv(32).decode(FORMAT)
                     type_docteur = self.conn.recv(32).decode(FORMAT)
                     type_rdv = self.conn.recv(32).decode(FORMAT)
-                    date_rdv = self.conn.recv(32).decode(FORMAT)
+                    date_rdv = self.conn.recv(16).decode(FORMAT)
+                    jour,mois,annee = date_rdv.split('/')
                     
-                    #TODO traiter les données avec la base de données et obtenir en sortie une liste de médecin dispos (+ horaires ? -> quelle date ??)
-                    liste_docteurs_dispos = []
-                    liste_disponibilités = [] #Ou sous forme de dictionnaire ?
+                    dico_disponibilités = rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee).encode(FORMAT)
                     code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
                     self.conn.sendall(code_initialisation_affichage_disponibilites)
-                    self.conn.sendall(liste_docteurs_dispos)
-                    self.conn.sendall(liste_disponibilités)
+                    self.conn.sendall(dico_disponibilités)
 
                     rdv_validé = self.conn.recv(8).decode(FORMAT)
 
