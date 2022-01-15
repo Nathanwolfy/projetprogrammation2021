@@ -5,6 +5,10 @@ a = {'Dr siphano lebeau': ['8:00', '8:15', '8:30', '8:45', '9:00', '9:15', '9:30
 launcher.sequence('IVp',a)"""
 
 from modules.modules_sqlite import rdv_dispo_pris
+from modules import fonctions_transfert
+from modules.IHM.IHM_en_Python import launcher
 
 a = rdv_dispo_pris.medecins_disponibilites_avec_localisation('generaliste','certificat medical', 'TOULOUSE', '27', '01','2022')
-print(a)
+b = fonctions_transfert.from_string_to_dict(str(a))
+print(b)
+launcher.sequence('IVp',(b))

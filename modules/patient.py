@@ -87,11 +87,11 @@ def client_patient(socket):
     confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
     if confirmation_serveur == '04pINITAFFDISPO':
-        str_dico_disponibilités = socket.recv(256).decode(FORMAT)
-        print(str_dico_disponibilités)
-        print(1)
-        dico_disponibilités = fonctions_transfert.from_string_to_dict(str_dico_disponibilités)
-        print(dico_disponibilités)
-        print(2)
+        str_dico_disponibilites = socket.recv(512).decode(FORMAT)
+        print(str_dico_disponibilites)
+        print(type(str_dico_disponibilites))
+        dico_disponibilites = fonctions_transfert.from_string_to_dict(str_dico_disponibilites)
+        print(dico_disponibilites)
+        print(type(dico_disponibilites))
 
-        launcher.sequence('IVp',(dico_disponibilités))
+        launcher.sequence('IVp',(dico_disponibilites))
