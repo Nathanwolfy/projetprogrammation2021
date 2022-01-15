@@ -66,8 +66,8 @@ class ThreadForServer(threading.Thread):
 
             #On initie la suite la prise de rdv
             dico_type_rdv = str(lire_sql.dictionnaire_pour_qt()).encode(FORMAT)
-            rdv_validé = 'False'
-            while rdv_validé == 'False':
+            rdv_validé = False
+            while not rdv_validé:
                 code_initialisation_prise_rdv = '03pINITPRISERDV'.encode(FORMAT)
                 self.conn.sendall(code_initialisation_prise_rdv)
                 self.conn.sendall(dico_type_rdv)
@@ -89,17 +89,16 @@ class ThreadForServer(threading.Thread):
                     self.conn.sendall(code_initialisation_affichage_disponibilites)
                     self.conn.sendall(dico_disponibilités)
 
-                    rdv_validé = self.conn.recv(8).decode(FORMAT)
+                    reponse_patient = self.conn.recv(16).decode(FORMAT)
 
-                    if rdv_validé == 'True':
-                        date_choisie_rdv = self.conn.recv(32).decode(FORMAT)
+                    if reponse_patient == '04pVALIDATIONRDV':
+                        nom_docteur_choisi_rdv = self.conn.recv(32).decode(FORMAT)
+                        horaire_rdv_choisi = self.conn.recv(32).decode(FORMAT)
                         notes_pour_docteur = self.conn.recv(64).decode(FORMAT)
                         pass #TODO valider le rdv dans la base de données avec les notes associées
                 else:
                     raise NotImplementedError
-        
-        #TODO RECAP GENERALE DES INFOS CHOISIES + FERMER LA FENETRE
-        
+              
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)
@@ -107,4 +106,3 @@ class ThreadForServer(threading.Thread):
         else:
             pass
             #raise NotImplementedError ?
-        #TODO DOCTEUR

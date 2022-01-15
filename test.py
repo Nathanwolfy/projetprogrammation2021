@@ -11,4 +11,6 @@ from modules.IHM.IHM_en_Python import launcher
 a = rdv_dispo_pris.medecins_disponibilites_avec_localisation('generaliste','certificat medical', 'TOULOUSE', '27', '01','2022')
 b = fonctions_transfert.from_string_to_dict(str(a))
 print(b)
-launcher.sequence('IVp',(b))
+#launcher.sequence('IVp',(b))
+c = fonctions_transfert.from_string_to_dict('{}')
+print(c)
