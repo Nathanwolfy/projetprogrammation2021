@@ -29,7 +29,7 @@ def main():
     #Création de la fenêtre
     widget = QtWidgets.QWidget()
     #Création de notre widget custom, en le parentant à la fenêtre
-    mycustomwidget = d.Ui_Form({'generaliste': ['certificat medical', 'vaccin', 'arret de travail'], 'rhumatologue': ['magie noire vaudou'], 'dentiste': ['detartage'], 'kinesitherapeute': ['reeducation'], 'osteopathe': ['dos'], 'pediatre': ['reeducation', 'verrue'], 'veterinaire': ['controle de routine', "arrivee d'hospitalisation"], 'radiologue': ['radio france culture'], 'psychiatre': ['session standart'], 'pneumologue': ['analyse medicale'], 'ophtalmologue': ['analyse visuelle standart'], 'neurologue': ['consultation pre-hospitalisation'], 'dermatologue': ['depistage du cancer de la peau'], 'cardiologue': ['analyse du coeur'], 'cancerologue': ['session initiale de chimiotherapie', 'session de chimiotherapie standart'], 'allergologue': ['test pousse de recherche', 'test de recherche standart'], 'addictologue': ['session alcooliques anonymes'], 'orthophoniste': ['un chasseur sachant chasser doit savoir chasser sans son chien']})
+    mycustomwidget = b.Ui_Form([0, 0])
     mycustomwidget.setupUi(widget)
     #On montre la fenêtre
     widget.show()
