@@ -4,7 +4,6 @@ import sys
 from .IHM.IHM_en_Python import launcher
 from .IHM.IHM_en_Python import fonctions
 from . import fonctions_transfert
-#TODO Bien gérer les fermetures de fenêtres
 
 FORMAT = 'utf-8'
 WAITINGTIME = 0.05
@@ -54,44 +53,67 @@ def client_patient(socket):
                 socket.sendall(identifiant)
                 socket.sendall(motdepasse)
                 socket.sendall(envoi_donnees_inscription_fin)
-                clef_valide = 'True'
+                clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
         else:
             raise NotImplementedError
 
-    confirmation_serveur = socket.recv(32)
-    confirmation_serveur = confirmation_serveur.decode(FORMAT)
+    rdv_validé = 'False'
+    while rdv_validé == 'False':
+        confirmation_serveur = socket.recv(32)
+        confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
-    if confirmation_serveur == '03pINITPRISERDV':
-        str_dico_type_rdv = socket.recv(1024).decode(FORMAT)
-        dico_type_rdv = fonctions_transfert.from_string_to_dict(str_dico_type_rdv)
+        if confirmation_serveur == '03pINITPRISERDV':
+            str_dico_type_rdv = socket.recv(1024).decode(FORMAT)
+            dico_type_rdv = fonctions_transfert.from_string_to_dict(str_dico_type_rdv)
 
-        launcher.sequence('IIIp',dico_type_rdv)
-        localisation = fonctions.Clocation().encode(FORMAT)
-        type_docteur = fonctions.Cpraticien().encode(FORMAT)
-        type_rdv = fonctions.CRdV().encode(FORMAT)
-        date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
-        date_rdv = date_rdv.encode(FORMAT)
+            launcher.sequence('IIIp',dico_type_rdv)
+            localisation = fonctions.Clocation().encode(FORMAT)
+            type_docteur = fonctions.Cpraticien().encode(FORMAT)
+            type_rdv = fonctions.CRdV().encode(FORMAT)
+            date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
+            date_rdv = date_rdv.encode(FORMAT)
 
-        envoi_donnees_prise_rdv = '03pSENDDATARDV'.encode(FORMAT)
-        socket.sendall(envoi_donnees_prise_rdv)
+            envoi_donnees_prise_rdv = '03pSENDDATARDV'.encode(FORMAT)
+            socket.sendall(envoi_donnees_prise_rdv)
 
-        socket.sendall(localisation)
-        socket.sendall(type_docteur)
-        socket.sendall(type_rdv)
-        socket.sendall(date_rdv)
-    else:
-        raise NotImplementedError
+            socket.sendall(localisation)
+            socket.sendall(type_docteur)
+            socket.sendall(type_rdv)
+            socket.sendall(date_rdv)
+        else:
+            raise NotImplementedError
 
-    confirmation_serveur = socket.recv(32)
-    confirmation_serveur = confirmation_serveur.decode(FORMAT)
+        confirmation_serveur = socket.recv(32)
+        confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
-    if confirmation_serveur == '04pINITAFFDISPO':
-        str_dico_disponibilites = socket.recv(512).decode(FORMAT)
-        print(str_dico_disponibilites)
-        print(type(str_dico_disponibilites))
-        dico_disponibilites = fonctions_transfert.from_string_to_dict(str_dico_disponibilites)
-        print(dico_disponibilites)
-        print(type(dico_disponibilites))
+        if confirmation_serveur == '04pINITAFFDISPO':
+            str_dico_disponibilites = socket.recv(512).decode(FORMAT)
+            print(str_dico_disponibilites)
+            print(type(str_dico_disponibilites))
+            dico_disponibilites = fonctions_transfert.from_string_to_dict(str_dico_disponibilites)
+            print(dico_disponibilites)
+            print(type(dico_disponibilites))
 
-        launcher.sequence('IVp',(dico_disponibilites))
+            launcher.sequence('IVp',(dico_disponibilites))
+            
+            if True: #Si le rdv est validé
+                envoi_validation_rdv = '04pVALIDATIONRDV'.encode(FORMAT) #Confirmation au serveur qu'on valide le rdv et envoi des infos correspondantes
+                nom_docteur_rdv_choisi = fonctions.Ddocname().encode(FORMAT)
+                horaire_rdv_choisi = fonctions.DHoraireRdv().encode(FORMAT)
+                infos_supp_pour_docteur = fonctions.DInfos().encode(FORMAT)
+
+                socket.sendall(envoi_validation_rdv)
+                socket.sendall(nom_docteur_rdv_choisi)
+                socket.sendall(horaire_rdv_choisi)
+                socket.sendall(infos_supp_pour_docteur)
+                rdv_validé = 'True'
+            elif False: #Retour en arrière
+                pass
+            else: 
+                pass
+
+        elif confirmation_serveur == '04pRDVNONDISPO':
+            pass
+
+    #RECAP
