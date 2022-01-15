@@ -1,4 +1,3 @@
-import time
 import sys
 
 from .IHM.IHM_en_Python import launcher
@@ -111,7 +110,9 @@ def client_patient(socket):
                 rdv_validé = True
             elif False: #Retour en arrière
                 pass
-            else: 
+            else: #Fermeture de fenêtre
+                #TODO envoi de code en cas de fermeture de fenêtre
+                sys.exit()
                 pass
 
         elif confirmation_serveur == '04pRDVNONDISPO': #S'il n'y a pas de rdv dispo pour ces conditions, on revient au début de la boucle
