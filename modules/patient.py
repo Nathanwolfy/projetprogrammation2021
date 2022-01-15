@@ -11,7 +11,7 @@ WAITINGTIME = 0.05
 
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
-    identifiant = '' #Il n'y a pas d'identifiant mal saisi au départ
+    identifiant = '' #Il n'y a pas d'identifiant saisi au départ
     while clef_valide == 'False':
         confirmation_serveur = socket.recv(32)
         confirmation_serveur = confirmation_serveur.decode(FORMAT)
