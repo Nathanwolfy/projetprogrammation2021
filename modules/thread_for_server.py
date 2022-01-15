@@ -35,7 +35,6 @@ class ThreadForServer(threading.Thread):
                 #On réceptionne le signal d'envoi des clés de connexion
                 reponse = self.conn.recv(32)
                 reponse = reponse.decode(FORMAT)
-                print(reponse)
 
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = self.conn.recv(64)
@@ -114,6 +113,7 @@ class ThreadForServer(threading.Thread):
             #On initie le récap des informations
             code_initialisation_recap_patient = 'VpINITRECAP'.encode(FORMAT)
             self.conn.sendall(code_initialisation_recap_patient)
+            #TODO envoyer adresse, numéro de téléphone et email du docteur au patient
             #Une fois l'initialisation du récap envoyée, le thread peut s'arrêter
 
         elif choix_client == 'XXd':

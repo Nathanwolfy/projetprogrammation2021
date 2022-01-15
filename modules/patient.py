@@ -89,11 +89,7 @@ def client_patient(socket):
 
         if confirmation_serveur == '04pINITAFFDISPO':
             str_dico_disponibilites = socket.recv(512).decode(FORMAT)
-            print(str_dico_disponibilites)
-            print(type(str_dico_disponibilites))
             dico_disponibilites = fonctions_transfert.from_string_to_dict(str_dico_disponibilites)
-            print(dico_disponibilites)
-            print(type(dico_disponibilites))
 
             launcher.sequence('IVp',(dico_disponibilites))
             
@@ -121,4 +117,10 @@ def client_patient(socket):
         else:
             raise NotImplementedError
 
-    #RECAP
+    confirmation_serveur = socket.recv(32).decode(FORMAT)
+    if confirmation_serveur == 'VpINITRECAP':
+        launcher.sequence('VP',(date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,'rue à remplir','ville à remplir','code postal à remplir','numéro à remplir','adresse email à remplir',infos_supp_pour_docteur))
+    else:
+        raise NotImplementedError
+
+    sys.exit()
