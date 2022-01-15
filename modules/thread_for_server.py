@@ -43,7 +43,6 @@ class ThreadForServer(threading.Thread):
                     identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
                     
                     clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,motdepasse_patient)) #On vérifie que la clef de connexion est valide
-
                     validation = clef_valide.encode(FORMAT)
                     self.conn.sendall(validation)
 
