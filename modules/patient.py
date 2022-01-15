@@ -119,7 +119,7 @@ def client_patient(socket):
 
     confirmation_serveur = socket.recv(32).decode(FORMAT)
     if confirmation_serveur == 'VpINITRECAP':
-        launcher.sequence('VP',(date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,'rue à remplir','ville à remplir','code postal à remplir','numéro à remplir','adresse email à remplir',infos_supp_pour_docteur))
+        launcher.sequence('Vp',(date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,'rue à remplir','ville à remplir','code postal à remplir','numéro à remplir','adresse email à remplir',infos_supp_pour_docteur))
     else:
         raise NotImplementedError
 
