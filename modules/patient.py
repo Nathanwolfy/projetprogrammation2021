@@ -58,8 +58,9 @@ def client_patient(socket):
         else:
             raise NotImplementedError
 
-    rdv_validé = 'False'
-    while rdv_validé == 'False':
+    rdv_validé = False
+    rdv_non_dispo = False
+    while not rdv_validé:
         confirmation_serveur = socket.recv(32)
         confirmation_serveur = confirmation_serveur.decode(FORMAT)
 
@@ -107,13 +108,16 @@ def client_patient(socket):
                 socket.sendall(nom_docteur_rdv_choisi)
                 socket.sendall(horaire_rdv_choisi)
                 socket.sendall(infos_supp_pour_docteur)
-                rdv_validé = 'True'
+                rdv_validé = True
             elif False: #Retour en arrière
                 pass
             else: 
                 pass
 
-        elif confirmation_serveur == '04pRDVNONDISPO':
-            pass
+        elif confirmation_serveur == '04pRDVNONDISPO': #S'il n'y a pas de rdv dispo pour ces conditions, on revient au début de la boucle
+            rdv_validé = False
+            rdv_non_dispo = True
+        else:
+            raise NotImplementedError
 
     #RECAP

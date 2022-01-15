@@ -84,21 +84,37 @@ class ThreadForServer(threading.Thread):
                     jour,mois,annee = date_rdv.split('/')
                     
                     dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee)).encode(FORMAT)
-                    code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
-                    self.conn.sendall(code_initialisation_affichage_disponibilites)
-                    self.conn.sendall(dico_disponibilités)
+                    if dico_disponibilités != '{}': #S'il existe des rdvs dispo sous ces conditions
+                        code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités
 
-                    reponse_patient = self.conn.recv(16).decode(FORMAT)
+                        self.conn.sendall(code_initialisation_affichage_disponibilites)
+                        self.conn.sendall(dico_disponibilités)
 
-                    if reponse_patient == '04pVALIDATIONRDV':
-                        nom_docteur_choisi_rdv = self.conn.recv(32).decode(FORMAT)
-                        horaire_rdv_choisi = self.conn.recv(32).decode(FORMAT)
-                        notes_pour_docteur = self.conn.recv(64).decode(FORMAT)
-                        pass #TODO valider le rdv dans la base de données avec les notes associées
+                        reponse_patient = self.conn.recv(16).decode(FORMAT)
+
+                        if reponse_patient == '04pVALIDATIONRDV':
+                            nom_docteur_choisi_rdv = self.conn.recv(32).decode(FORMAT)
+                            horaire_rdv_choisi = self.conn.recv(32).decode(FORMAT)
+                            notes_pour_docteur = self.conn.recv(64).decode(FORMAT)
+                            #TODO valider le rdv dans la base de données avec les notes associées
+                            rdv_validé = True
+                        elif False: #Dans le cas où le client revient en arrière
+                            pass
+                        else: #Dans le cas où le client ferme la fenêtre
+                            pass
+
+                    else: #S'il n'y a pas de rdv dispos sous ces conditions, on revient au début de la boucle
+                        code_initialisation_affichage_disponibilites = '04pRDVNONDISPO'.encode(FORMAT)
+                        self.conn.sendall(code_initialisation_affichage_disponibilites)
+                        
                 else:
                     raise NotImplementedError
-              
+
+            #On initie le récap des informations
+            code_initialisation_recap_patient = 'VpINITRECAP'.encode(FORMAT)
+            self.conn.sendall(code_initialisation_recap_patient)
+            #Une fois l'initialisation du récap envoyée, le thread peut s'arrêter
 
         elif choix_client == 'XXd':
             code_initialisation_connexion_docteur = '02dINITCONN'.encode(FORMAT)

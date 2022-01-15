@@ -16,5 +16,6 @@ while True:
     threadclient = ThreadForServer(conn) #Création d'un thread par nouvelle connexion
     threadclient.start()
 
-conn.close() #On ferme la connexion
+    conn.close() #On ferme la connexion
+    print(f'Fermeture de la connxion {conn}')
 socket.close() #On ferme le socket
