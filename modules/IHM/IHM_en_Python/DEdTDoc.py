@@ -13,40 +13,20 @@ from . import fonctions
 
 class Ui_Form(object):
     def __init__(self, arg):
-        self.dico = arg
+        self.arg = arg
 
     def setupUi(self, Form):
+        n = max((len(self.arg[0]), len(self.arg[1]), len(self.arg[2]), len(self.arg[3]), len(self.arg[4]), len(self.arg[5])))
         Form.setObjectName("Form")
         Form.resize(714, 614)
         self.EdTtableWidget = QtWidgets.QTableWidget(Form)
         self.EdTtableWidget.setGeometry(QtCore.QRect(60, 200, 601, 361))
         self.EdTtableWidget.setObjectName("EdTtableWidget")
         self.EdTtableWidget.setColumnCount(6)
-        self.EdTtableWidget.setRowCount(12)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(4, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(5, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(6, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(7, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(8, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(9, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(10, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.EdTtableWidget.setVerticalHeaderItem(11, item)
+        self.EdTtableWidget.setRowCount(n)
+        for i in range(n):
+            item = QtWidgets.QTableWidgetItem()
+            self.EdTtableWidget.setVerticalHeaderItem(i, item)
         item = QtWidgets.QTableWidgetItem()
         self.EdTtableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -59,7 +39,12 @@ class Ui_Form(object):
         self.EdTtableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.EdTtableWidget.setHorizontalHeaderItem(5, item)
-        self.EdTtableWidget.horizontalHeader().setDefaultSectionSize(80)
+        for i in range(len(self.arg)):
+            for j in range(len(self.arg[i])):
+                item = QtWidgets.QTableWidgetItem(self.arg[i][j])
+                self.EdTtableWidget.setItem(j, i, item)
+                
+        self.EdTtableWidget.horizontalHeader().setDefaultSectionSize(97)
         self.EdTtableWidget.horizontalHeader().setMinimumSectionSize(80)
         self.EdTtableWidget.verticalHeader().setDefaultSectionSize(25)
         self.EdTtableWidget.verticalHeader().setMinimumSectionSize(25)
@@ -74,6 +59,7 @@ class Ui_Form(object):
         self.FermepushButton.setObjectName("FermepushButton")
 
         self.retranslateUi(Form)
+        self.FermepushButton.released.connect(Form.close)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -81,49 +67,20 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         item = self.EdTtableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Form", "Lundi"))
-        n = 0
-        for key in self.dico['lundi']:
-            item = self.EdTtableWidget.item(0, n)
-            item.setText(_translate("Form", key))
-            n += 1
         item = self.EdTtableWidget.horizontalHeaderItem(1)
         item.setText(_translate("Form", "Mardi"))
-        n = 0
-        for key in self.dico['mardi']:
-            item = self.EdTtableWidget.item(1, n)
-            item.setText(_translate("Form", key))
-            n += 1
         item = self.EdTtableWidget.horizontalHeaderItem(2)
         item.setText(_translate("Form", "Mercredi"))
-        n = 0
-        for key in self.dico['mercredi']:
-            item = self.EdTtableWidget.item(2, n)
-            item.setText(_translate("Form", key))
-            n += 1
         item = self.EdTtableWidget.horizontalHeaderItem(3)
         item.setText(_translate("Form", "Jeudi"))
-        n = 0
-        for key in self.dico['jeudi']:
-            item = self.EdTtableWidget.item(3, n)
-            item.setText(_translate("Form", key))
-            n += 1
         item = self.EdTtableWidget.horizontalHeaderItem(4)
         item.setText(_translate("Form", "Vendredi"))
-        n = 0
-        for key in self.dico['vendredi']:
-            item = self.EdTtableWidget.item(4, n)
-            item.setText(_translate("Form", key))
-            n += 1
         item = self.EdTtableWidget.horizontalHeaderItem(5)
         item.setText(_translate("Form", "Samedi"))
-        n = 0
-        for key in self.dico['lundi']:
-            item = self.EdTtableWidget.item(5, n)
-            item.setText(_translate("Form", key))
-            n += 1
         __sortingEnabled = self.EdTtableWidget.isSortingEnabled()
-        self.EdTtableWidget.setSortingEnabled(False)
+        self.EdTtableWidget.setSortingEnabled(False)      
         self.EdTtableWidget.setSortingEnabled(__sortingEnabled)
         self.EdT_Label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Emploi du Temps :</span></p></body></html>"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
         self.FermepushButton.setText(_translate("Form", "Fermer"))
+        
