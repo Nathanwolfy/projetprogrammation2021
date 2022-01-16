@@ -50,8 +50,8 @@ class ThreadForServer(threading.Thread):
                     identifiant_patient = echanges_donnees.reception(self.conn)
                     motdepasse_patient = echanges_donnees.reception(self.conn)
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
-                    reponse = echanges_donnees.reception(self.conn)
-                    if reponse == 'YYpTERMSENDDATA':
+                    validation_fin_envoi = echanges_donnees.reception(self.conn)
+                    if validation_fin_envoi == 'YYpTERMSENDDATA':
                         exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient,motdepasse_patient)
                         clef_valide = 'True'
                     else:
@@ -140,9 +140,9 @@ class ThreadForServer(threading.Thread):
                     numero_docteur = echanges_donnees.envoi(self.conn)
                     identifiant_docteur = echanges_donnees.envoi(self.conn)
                     motdepasse_docteur = echanges_donnees.envoi(self.conn)
-                    envoi_donnees_inscription_fin = echanges_donnees.envoi(self.conn)
+                    validation_fin_envoi = echanges_donnees.envoi(self.conn)
 
-                    if reponse == 'YYdTERMSENDDATA':
+                    if validation_fin_envoi == 'YYdTERMSENDDATA':
                         exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,'',identifiant_docteur,numero_docteur,'adresse à insérer',motdepasse_docteur,motdepasse_docteur)
                         clef_valide = 'True'
                     else:
