@@ -74,7 +74,7 @@ def return_edt(medecin, nom_jour, jour, mois, annee):
     mois_i = lundi[1]
     annee_i = lundi[2]
     for i in range(6):
-        cursor.execute('SELECT * FROM test_return_edt WHERE medecin=? AND jour=? AND mois=? AND annee=?', (medecin, jour_i, mois_i, annee_i))
+        cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=?', (medecin, jour_i, mois_i, annee_i))
         rows = cursor.fetchall()
         liste_horaire = []
         if len(rows) == 0:
@@ -87,7 +87,7 @@ def return_edt(medecin, nom_jour, jour, mois, annee):
             liste_horaire.sort()
         liste_creneau = []
         for h in liste_horaire:
-            cursor.execute('SELECT * FROM test_return_edt WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', (medecin, jour_i, mois_i, annee_i, h.heure, h.minute))
+            cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', (medecin, jour_i, mois_i, annee_i, h.heure, h.minute))
             duree = int(cursor.fetchone()[8])
             duree_boucle = duree // 15
             heure_i = h.heure
@@ -114,7 +114,7 @@ def return_edt(medecin, nom_jour, jour, mois, annee):
             jour_i = 1
     return edt
                 
-edt = return_edt('eogiherog@yahoo.com', 'Mardi', 1, 3, 2022)   
+edt = return_edt('zelvac_mc_pro@gmail.com', 'Lundi', 17, 1, 2022)   
 print(edt)        
 
 con.close()
