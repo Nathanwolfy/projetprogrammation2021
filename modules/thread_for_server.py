@@ -45,7 +45,7 @@ class ThreadForServer(threading.Thread):
                     validation = clef_valide.encode(FORMAT)
                     self.conn.sendall(validation)
 
-                elif reponse == 'YYpSENDDATA':
+                elif reponse == 'YYpINITSENDDATA':
                     nom_patient = self.conn.recv(32).decode(FORMAT)
                     prenom_patient = self.conn.recv(32).decode(FORMAT)
                     date_naissance_patient = self.conn.recv(16).decode(FORMAT)
@@ -55,7 +55,7 @@ class ThreadForServer(threading.Thread):
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
                     reponse = self.conn.recv(16).decode(FORMAT)
                     if reponse == 'YYpTERMSENDDATA':
-                        exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient)
+                        exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient,motdepasse_patient)
                         clef_valide = 'True'
                     else:
                         raise NotImplementedError

@@ -34,6 +34,7 @@ def client_docteur(socket):
             else: #Le docteur choisit de créer un compte
                 launcher.sequence('Yd',[0,0])
                 envoi_donnees_inscription_debut = 'YYdINITSENDDATA'.encode(FORMAT)
+                """
                 nom_docteur = .encode(FORMAT)
                 prenom_docteur = .encode(FORMAT)
                 ville_de_pratique = .encode(FORMAT)
@@ -53,7 +54,7 @@ def client_docteur(socket):
                 socket.sendall(numero_docteur)
                 socket.sendall(identifiant)
                 socket.sendall(motdepasse)
-                socket.sendall(envoi_donnees_inscription_fin)
+                socket.sendall(envoi_donnees_inscription_fin)"""
                 clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
         else:
