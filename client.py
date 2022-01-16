@@ -1,7 +1,5 @@
-from modules import patient
-from modules import docteur
-from modules.IHM.IHM_en_Python import launcher
-from modules.IHM.IHM_en_Python import fonctions
+from modules import patient, docteur, echanges_donnees
+from modules.IHM.IHM_en_Python import launcher, fonctions
 import socket
 import time
 
@@ -14,26 +12,20 @@ socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket.connect((host,port))
 print('Connecté au serveur...')
 
-while True: #Attente pour l'initialisation
-    reponse = socket.recv(32)
-    reponse = reponse.decode(FORMAT)
-    if reponse == '01gINITCHOIX':
-        break
-    time.sleep(0.1)
+reponse = echanges_donnees.reception(socket)
+if reponse == '01gINITCHOIX':
+    #Afficher l'interface Qt de choix
+    launcher.sequence('Ig',[0,0])
+    choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
 
-#Afficher l'interface Qt de choix
-launcher.sequence('Ig',[0,0])
-choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
-choix_client_encode = choix_client.encode(FORMAT)
+    if choix_client == 'XXp':
+        echanges_donnees.envoi(socket,choix_client)
+        patient.client_patient(socket)
 
-if choix_client == 'XXp':
-    socket.sendall(choix_client_encode)
-    patient.client_patient(socket)
-
-elif choix_client == 'XXd':
-    socket.sendall(choix_client_encode)
-    docteur.client_docteur(socket)
+    elif choix_client == 'XXd':
+        echanges_donnees.envoi(socket,choix_client)
+        docteur.client_docteur(socket)
+    else:
+        raise NotImplementedError
 else:
-    raise NotImplementedError
-
-time.sleep(2)
+    raise NotImplemented
