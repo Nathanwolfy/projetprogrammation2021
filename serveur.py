@@ -11,7 +11,7 @@ print('Le serveur est lancé.')
 while True:
     socket.listen() #On met en écoute le port, valeur du nombre de tentatives facltutatif
     conn, address = socket.accept() #On accepte les connexions
-    print(f'Le client : {conn} est connecté.')
+    #print(f'Le client : {conn} est connecté.')
 
     threadclient = ThreadForServer(conn) #Création d'un thread par nouvelle connexion
     threadclient.start()

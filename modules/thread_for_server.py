@@ -83,7 +83,6 @@ class ThreadForServer(threading.Thread):
                     jour,mois,annee = date_rdv.split('/')
                     
                     dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee)).encode(FORMAT)
-                    print(dico_disponibilités)
 
                     if dico_disponibilités != b'{}': #S'il existe des rdvs dispo sous ces conditions
                         code_initialisation_affichage_disponibilites = '04pINITAFFDISPO'.encode(FORMAT) #On initialise l'affichage des disponibilités

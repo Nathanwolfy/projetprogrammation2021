@@ -1,4 +1,3 @@
-- rdv après inscription
 - bien gérer si le dico est vide -> relancer la fenêtre avec une erreur à la manière d'une mauvaise combinaison
 - valider le rdv dans la base de données
 - recap des données, envoyer adresse et etc
