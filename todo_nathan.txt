@@ -4,4 +4,6 @@
 - recap des données, envoyer adresse et etc
 - bien gérer les fermetures fenêtres
 - ne pas faire suivre si rien n'est rentré comme données
-- côté docteur avec inscription
+- côté docteur avec inscription bien tout relier
+
+=> pour tous : épurer, commenter et compacter le code au maximum
