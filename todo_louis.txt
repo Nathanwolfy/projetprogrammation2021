@@ -7,4 +7,4 @@
 
 - si temps bonus, voir pour bouton retour
 
-=> pour tous : épurer, commenter et compacter le code au maximum
+=> pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles

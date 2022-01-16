@@ -6,4 +6,4 @@
 - ne pas faire suivre si rien n'est rentré comme données
 - côté docteur avec inscription bien tout relier
 
-=> pour tous : épurer, commenter et compacter le code au maximum
+=> pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
