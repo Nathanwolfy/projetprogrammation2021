@@ -113,9 +113,43 @@ class ThreadForServer(threading.Thread):
             #TODO envoyer adresse, numéro de téléphone et email du docteur au patient
             #Une fois l'initialisation du récap envoyée, le thread peut s'arrêter
 
-        elif choix_client == 'XXd':
-            code_initialisation_connexion_docteur = '02dINITCONN'
-            echanges_donnees.envoi(self.conn,code_initialisation_connexion_docteur)
+        elif choix_client == 'XXd': #Le client choisi est celui du docteur
+            
+            clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas.
+            while clef_valide == 'False':
+                code_initialisation_connexion_docteur = '02dINITCONN'
+                echanges_donnees.envoi(self.conn,code_initialisation_connexion_docteur)
+
+                #On réceptionne le signal d'envoi des clés de connexion
+                reponse = echanges_donnees.reception(self.conn)    
+
+                if reponse == '02dSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
+                    clef_connexion = echanges_donnees.reception(self.conn).split(" ")
+                    identifiant_docteur, motdepasse_docteur = clef_connexion[0], clef_connexion[1]
+                    
+                    clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,motdepasse_docteur)) #On vérifie que la clef de connexion est valide
+                    validation = clef_valide
+                    echanges_donnees.envoi(self.conn,validation)
+
+                elif reponse == 'YYdINITSENDDATA':
+                    nom_docteur = echanges_donnees.envoi(self.conn)
+                    prenom_docteur = echanges_donnees.envoi(self.conn)
+                    ville_de_pratique = echanges_donnees.envoi(self.conn)
+                    adresse_docteur = echanges_donnees.envoi(self.conn)
+                    code_postal_docteur = echanges_donnees.envoi(self.conn)
+                    numero_docteur = echanges_donnees.envoi(self.conn)
+                    identifiant_docteur = echanges_donnees.envoi(self.conn)
+                    motdepasse_docteur = echanges_donnees.envoi(self.conn)
+                    envoi_donnees_inscription_fin = echanges_donnees.envoi(self.conn)
+
+                    if reponse == 'YYdTERMSENDDATA':
+                        exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,'',identifiant_docteur,numero_docteur,'adresse à insérer',motdepasse_docteur,motdepasse_docteur)
+                        clef_valide = 'True'
+                    else:
+                        raise NotImplementedError
+
+                else:
+                    raise NotImplementedError
         else:
             pass
             #raise NotImplementedError ?

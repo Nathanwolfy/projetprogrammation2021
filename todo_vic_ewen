@@ -1,4 +1,5 @@
 - que faire si mauvais format de données pendant inscription ?
 - les rdvs sont-ils bien inscrits une fois pris ?
+- changer les fonctions d'inscription dans base de données et bdd avec adresse
 - bien gérer les dates, ex: si on donne le 27012022 ou 2712022, est-ce que ça change qqchose ?
 - bien gérer si dans la prise de rdv on met des majuscules ou pas dans la ville
