@@ -4,5 +4,3 @@
 - bien gérer les fermetures fenêtres
 - ne pas faire suivre si rien n'est rentré comme données
 - côté docteur avec inscription
-- que faire si pas de rdv dispo
-- bien afficher les rdvs dispo

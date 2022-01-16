@@ -1,11 +1,9 @@
 import sys
 
-from .IHM.IHM_en_Python import launcher
-from .IHM.IHM_en_Python import fonctions
+from .IHM.IHM_en_Python import launcher, fonctions
 from . import fonctions_transfert
 
 FORMAT = 'utf-8'
-WAITINGTIME = 0.05
 
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
