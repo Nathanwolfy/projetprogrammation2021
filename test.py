@@ -5,7 +5,7 @@ a = {'Dr siphano lebeau': ['8:00', '8:15', '8:30', '8:45', '9:00', '9:15', '9:30
 launcher.sequence('IVp',a)"""
 
 from modules.modules_sqlite import rdv_dispo_pris, exploitation_sql_patient
-from modules import fonctions_transfert
+from modules import conversion_types
 from modules.IHM.IHM_en_Python import launcher
 
 #a = rdv_dispo_pris.medecins_disponibilites_avec_localisation('generaliste','certificat medical', 'TOULOUSE', '27', '01','2022')
@@ -14,4 +14,4 @@ from modules.IHM.IHM_en_Python import launcher
 #launcher.sequence('IVp',(b))
 #c = fonctions_transfert.from_string_to_dict('{}')
 #print(c)
-exploitation_sql_patient.inscription_patient('Karim','Aziz','01','01','2000','karim.aziz@gmail.com','0751515151','1234','1234')
+#exploitation_sql_patient.inscription_patient('Karim','Aziz','01','01','2000','karim.aziz@gmail.com','0751515151','1234','1234')

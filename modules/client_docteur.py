@@ -1,7 +1,7 @@
 import sys
 
 from .IHM.IHM_en_Python import launcher, fonctions
-from . import fonctions_transfert, echanges_donnees
+from . import conversion_types, echanges_donnees
 
 def client_docteur(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
@@ -29,7 +29,7 @@ def client_docteur(socket):
                 requete_liste_types_docteur = '02dCREACOMPTE' #On demande la liste des types de docteurs
                 echanges_donnees.envoi(socket,requete_liste_types_docteur)
                 str_liste_types_docteurs = echanges_donnees.reception(socket) #On réceptionne la liste des types de docteurs sous forme d'une string
-                liste_types_docteurs = fonctions_transfert.strlist_to_list(str_liste_types_docteurs) #On la convertit effectivement en liste
+                liste_types_docteurs = conversion_types.strlist_to_list(str_liste_types_docteurs) #On la convertit effectivement en liste
 
                 launcher.sequence('Yd',liste_types_docteurs) #On démarre la fenêtre de création de compte
                 

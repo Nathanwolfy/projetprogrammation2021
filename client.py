@@ -1,4 +1,4 @@
-from modules import patient, docteur, echanges_donnees
+from modules import client_docteur, client_patient, echanges_donnees
 from modules.IHM.IHM_en_Python import launcher, fonctions
 import socket
 import time
@@ -20,11 +20,11 @@ if reponse == '01gINITCHOIX':
 
     if choix_client == 'XXp':
         echanges_donnees.envoi(socket,choix_client)
-        patient.client_patient(socket)
+        client_patient.client_patient(socket)
 
     elif choix_client == 'XXd':
         echanges_donnees.envoi(socket,choix_client)
-        docteur.client_docteur(socket)
+        client_docteur.client_docteur(socket)
     else:
         raise NotImplementedError
 else:

@@ -1,7 +1,7 @@
 import sys
 
 from .IHM.IHM_en_Python import launcher, fonctions
-from . import fonctions_transfert
+from . import conversion_types
 from . import echanges_donnees
 
 def client_patient(socket):
@@ -58,7 +58,7 @@ def client_patient(socket):
 
         if confirmation_serveur == '03pINITPRISERDV':
             str_dico_type_rdv = echanges_donnees.reception(socket)
-            dico_type_rdv = fonctions_transfert.from_string_to_dict(str_dico_type_rdv)
+            dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv)
 
             launcher.sequence('IIIp',dico_type_rdv)
             localisation = fonctions.Clocation()
@@ -81,7 +81,7 @@ def client_patient(socket):
 
         if confirmation_serveur == '04pINITAFFDISPO':
             str_dico_disponibilites = echanges_donnees.reception(socket)
-            dico_disponibilites = fonctions_transfert.from_string_to_dict(str_dico_disponibilites)
+            dico_disponibilites = conversion_types.from_string_to_dict(str_dico_disponibilites)
 
             launcher.sequence('IVp',(dico_disponibilites))
             
