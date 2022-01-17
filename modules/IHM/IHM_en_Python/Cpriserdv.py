@@ -64,6 +64,10 @@ class Ui_Form(object):
         self.update_rdv_type_combobox(self.Praticien_comboBox.currentText())
 
         self.retranslateUi(Form)
+
+        fonctions.contin(False)
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.continu(True))
+
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
         self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
@@ -73,6 +77,7 @@ class Ui_Form(object):
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fijour(self.jourLineEdit.text()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fimois(self.moisLineEdit.text()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiannee(self.anneeLineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(Form.close)
         self.Praticien_comboBox.currentTextChanged.connect(self.update_rdv_type_combobox)
         QtCore.QMetaObject.connectSlotsByName(Form)
         

@@ -29,6 +29,11 @@ class Ui_Form(object):
         self.PatientButton.setObjectName("PatientButton")
 
         self.retranslateUi(Form)
+
+        fonctions.continu(False)
+        self.DoctorButton.released.connect(lambda: fonctions.continu(True))
+        self.PatientButton.released.connect(lambda: fonctions.continu(True))  
+
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(lambda: fonctions.affiche("XXp")) #XXp pour patient

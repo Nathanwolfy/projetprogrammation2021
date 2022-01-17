@@ -44,7 +44,7 @@ class Ui_Form(object):
                 item = QtWidgets.QTableWidgetItem(self.arg[i][j])
                 self.EdTtableWidget.setItem(j, i, item)
                 
-        self.EdTtableWidget.horizontalHeader().setDefaultSectionSize(97)
+        self.EdTtableWidget.horizontalHeader().setDefaultSectionSize(96)
         self.EdTtableWidget.horizontalHeader().setMinimumSectionSize(80)
         self.EdTtableWidget.verticalHeader().setDefaultSectionSize(25)
         self.EdTtableWidget.verticalHeader().setMinimumSectionSize(25)
@@ -59,6 +59,10 @@ class Ui_Form(object):
         self.FermepushButton.setObjectName("FermepushButton")
 
         self.retranslateUi(Form)
+
+        fonctions.continu(False)
+        self.FermepushButton.released.connect(lambda: fonctions.continu(True))
+
         self.FermepushButton.released.connect(Form.close)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
