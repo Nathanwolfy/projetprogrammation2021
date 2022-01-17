@@ -24,11 +24,11 @@ def client_patient(socket):
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_patient)
 
-                clef_valide = echanges_donnees.reception(socket)
+                clef_valide = echanges_donnees.reception(socket) #Le serveur renvoie la validité de la clef de connexion du patient
 
             else: #Le client choisit de créer un compte
                 launcher.sequence('Yp',[0,0]) #TODO supprimer argument inutile
-                #On récupère les données fournies par le patient lors de son inscription
+                #On récupère les données fournies par le patient lors de son inscription del'IHM
                 envoi_donnees_inscription = '02pCREACOMPTE'
                 nom_patient = fonctions.Inom()
                 prenom_patient = fonctions.Iprenom()
@@ -38,7 +38,7 @@ def client_patient(socket):
                 numero_patient = fonctions.Inumero()
                 identifiant = fonctions.Bidentifiant()
                 motdepasse = fonctions.Bmotdepass()
-
+                #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
                 echanges_donnees.envoi(socket,envoi_donnees_inscription)
                 echanges_donnees.envoi(socket,nom_patient)
                 echanges_donnees.envoi(socket,prenom_patient)

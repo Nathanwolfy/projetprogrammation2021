@@ -110,7 +110,7 @@ class ThreadForServer(threading.Thread):
             #On initie le récap des informations
             code_initialisation_recap_patient = 'VpINITRECAP'
             echanges_donnees.envoi(self.conn,code_initialisation_recap_patient)
-            #TODO envoyer adresse, numéro de téléphone et email du docteur au patient
+            #TODO envoyer adresse, numéro de téléphone et email du docteur au patient pour le récap
             #Une fois l'initialisation du récap et les données envoyées, le thread peut s'arrêter
 
         elif choix_client == 'XXd': #Le client choisi est celui du docteur
@@ -123,33 +123,31 @@ class ThreadForServer(threading.Thread):
                 #On réceptionne le signal d'envoi des clés de connexion
                 reponse = echanges_donnees.reception(self.conn)    
 
-                if reponse == '02dSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
+                if reponse == '02dSENDCLEF': #Le docteur choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ")
                     identifiant_docteur, motdepasse_docteur = clef_connexion[0], clef_connexion[1]
                     
                     clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,motdepasse_docteur)) #On vérifie que la clef de connexion est valide
-                    validation = clef_valide
-                    echanges_donnees.envoi(self.conn,validation)
+                    echanges_donnees.envoi(self.conn,clef_valide)
 
-                elif reponse == '02dCREACOMPTE':
-                    str_liste_types_docteur = str(lire_sql.liste_type_medecin())
+                elif reponse == '02dCREACOMPTE': #Le docteur choisir de créer son compte
+                    str_liste_types_docteur = str(lire_sql.liste_type_medecin()) #Le serveur envoie la liste des types de médecins
                     echanges_donnees.envoi(str_liste_types_docteur)
-
-                    nom_docteur = echanges_donnees.envoi(self.conn)
-                    prenom_docteur = echanges_donnees.envoi(self.conn)
-                    ville_de_pratique = echanges_donnees.envoi(self.conn)
-                    adresse_docteur = echanges_donnees.envoi(self.conn)
-                    code_postal_docteur = echanges_donnees.envoi(self.conn)
-                    numero_docteur = echanges_donnees.envoi(self.conn)
-                    identifiant_docteur = echanges_donnees.envoi(self.conn)
-                    motdepasse_docteur = echanges_donnees.envoi(self.conn)
-                    validation_fin_envoi = echanges_donnees.envoi(self.conn)
-
+                    #On réceptionne les données saisies par le docteur lors de son inscription
+                    nom_docteur = echanges_donnees.reception(self.conn)
+                    prenom_docteur = echanges_donnees.reception(self.conn)
+                    ville_de_pratique = echanges_donnees.reception(self.conn)
+                    adresse_docteur = echanges_donnees.reception(self.conn)
+                    code_postal_docteur = echanges_donnees.reception(self.conn)
+                    numero_docteur = echanges_donnees.reception(self.conn)
+                    identifiant_docteur = echanges_donnees.reception(self.conn)
+                    motdepasse_docteur = echanges_donnees.reception(self.conn)
+                    #On inscrit effecivement le docteur dans la base de données
                     exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,'',identifiant_docteur,numero_docteur,'adresse à insérer',motdepasse_docteur,motdepasse_docteur)
-                    clef_valide = 'True'
+                    clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
 
-                else:
+                else: #Si le docteur n'envoie pas sa clef de connexion ou ne décide pas de créer un profil docteur, c'est un erreur, le thread s'arrête donc
                     raise NotImplementedError
-        else:
-            pass
-            #raise NotImplementedError ?
+
+        else: #Si le client ne choisit pas le client docteur ou patient c'est une erreyr, le thread s'arrête
+            raise NotImplementedError
