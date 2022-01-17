@@ -16,6 +16,7 @@ def reception(support):
     Fonction qui pour un support (socket : côté client, connexion : côté serveur) donné renvoie le message reçu."""
     taille_mess_exposant = support.recv(2).decode(FORMAT)
     message = support.recv(2**int(taille_mess_exposant)).decode(FORMAT)
+    print(message)
     return message
 
 def envoi(support,message):
@@ -23,5 +24,6 @@ def envoi(support,message):
     Fonction qui pour un support (socket : côté client, connexion : côté serveur) et message donnés envoie le successivement l'exposant de la puissance de 2 supérieure à la taille du message ainsi que le message."""
     message = message.encode(FORMAT)
     nbr = exposant_p2_sup(len(message)).encode(FORMAT)
+    print(message)
     support.sendall(nbr)
     support.sendall(message)
