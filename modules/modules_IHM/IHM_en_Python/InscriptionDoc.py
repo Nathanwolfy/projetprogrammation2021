@@ -92,9 +92,14 @@ class Ui_Form(object):
         self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
     
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.MdPlineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.NomlineEdit.text()))
-        self.Praticien_comboBox.keyPressEvent 
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.verificationMdP(self.MdPlineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.finom(self.NomlineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiprenom(self.PrenomlineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiville(self.VillelineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiadresse(self.AdresselineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.ficodepostale(self.CodePostallineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.finumero(self.NumerolineEdit.text()))
+        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.verificationId(self.AdresseMaillineEdit.text()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.Praticien_comboBox.currentText()))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -102,7 +107,7 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Docteurlabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt; font-style:italic;\">Docteur</span></p></body></html>"))
-        self.label_2.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.label_2.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
         self.Nomlabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Nom :</span></p></body></html>"))
         self.Prenomlabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Prénom :</span></p></body></html>"))
         self.Villelabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Ville de Pratique :</span></p></body></html>"))

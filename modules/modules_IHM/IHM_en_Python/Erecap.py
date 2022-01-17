@@ -84,7 +84,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
         self.Rdvlabel.setText(_translate("Form", "Date du Rendez-Vous :"))
         self.heurelabel.setText(_translate("Form", "Heure du Rendez-Vous :"))
         self.nomdoclabel.setText(_translate("Form", "Nom du médecin :"))

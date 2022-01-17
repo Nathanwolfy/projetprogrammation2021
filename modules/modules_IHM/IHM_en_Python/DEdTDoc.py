@@ -85,6 +85,6 @@ class Ui_Form(object):
         self.EdTtableWidget.setSortingEnabled(False)      
         self.EdTtableWidget.setSortingEnabled(__sortingEnabled)
         self.EdT_Label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Emploi du Temps :</span></p></body></html>"))
-        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
         self.FermepushButton.setText(_translate("Form", "Fermer"))
         

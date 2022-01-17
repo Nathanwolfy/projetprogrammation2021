@@ -17,9 +17,6 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(720, 615)
-        self.Retour_commandLinkButton = QtWidgets.QCommandLinkButton(Form)
-        self.Retour_commandLinkButton.setGeometry(QtCore.QRect(0, 520, 222, 48))
-        self.Retour_commandLinkButton.setObjectName("Retour_commandLinkButton")
         self.Brand_Label = QtWidgets.QLabel(Form)
         self.Brand_Label.setGeometry(QtCore.QRect(280, 10, 171, 71))
         self.Brand_Label.setObjectName("Brand_Label")
@@ -72,8 +69,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.Retour_commandLinkButton.setText(_translate("Form", "Retour"))
-        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
         self.listepraticiens_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Liste des praticiens disponibles :</span></p></body></html>"))
         __sortingEnabled = self.ListePraticens_listWidget.isSortingEnabled()
         self.ListePraticens_listWidget.setSortingEnabled(False)
