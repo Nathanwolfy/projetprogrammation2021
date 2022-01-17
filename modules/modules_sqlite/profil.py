@@ -30,7 +30,7 @@ class Docteur(Profil):
         self.code_postal = ""#STR
         self.ville = ""#STR
 
-    def saisie(self, prenom, nom, mail, telephone, metier, rue, code_postal, ville):
+    def saisie(self, prenom, nom, metier, mail, telephone, rue, code_postal, ville):
         Profil.saisie(self, prenom, nom, mail, telephone)
         self.metier = str(metier)
         self.rue = str(rue)
@@ -87,7 +87,7 @@ if __name__ == "__main__" :
     
     """
     doc1 = Docteur()
-    doc1.saisie("Vic-Eline", "Carré", "vic.carre@alumni.enac.fr", "0656849331", "generaliste", "72 rue Marceau", "35300", "FOUGERES")
+    doc1.saisie("Vic-Eline", "Carré", "generaliste", "vic.carre@alumni.enac.fr", "0656849331", "72 rue Marceau", "35300", "FOUGERES")
     print(doc1)
     """
     
