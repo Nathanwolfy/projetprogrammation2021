@@ -34,6 +34,7 @@ def client_docteur(socket):
                 launcher.sequence('Yd',liste_types_docteurs) #On démarre la fenêtre de création de compte
                 
                 #On récupère les informations saisies par le docteur dans l'IHM
+                #TODO
                 nom_docteur = ''
                 prenom_docteur = ''
                 type_docteur = ''
@@ -47,6 +48,7 @@ def client_docteur(socket):
                 #On envoie les informaions saisies pas le docteur
                 echanges_donnees.envoi(socket,nom_docteur)
                 echanges_donnees.envoi(socket,prenom_docteur)
+                echanges_donnees.envoi(socket,type_docteur)
                 echanges_donnees.envoi(socket,ville_de_pratique)
                 echanges_donnees.envoi(socket,adresse_docteur)
                 echanges_donnees.envoi(socket,code_postal_docteur)
