@@ -1,31 +1,29 @@
 from modules import client_docteur, client_patient, echanges_donnees
 from modules.IHM.IHM_en_Python import launcher, fonctions
 import socket
-import time
 
-host, port = ('localhost',5566)
-FORMAT = 'utf-8'
+host, port = ('localhost',5566) #On choisit comme adresse celle locale et un port non affecté
 
 #Création du socket
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-socket.connect((host,port))
+socket.connect((host,port)) #Connexion du socket au l'adresse et le port
 print('Connecté au serveur...')
 
-reponse = echanges_donnees.reception(socket)
-if reponse == '01gINITCHOIX':
+reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la fenêtre de choix du client
+if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix du client par le serveur
     #Afficher l'interface Qt de choix
-    launcher.sequence('Ig',[0,0])
+    launcher.sequence('Ig',[0,0]) #TODO supprimer argument inutile
     choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
 
-    if choix_client == 'XXp':
-        echanges_donnees.envoi(socket,choix_client)
-        client_patient.client_patient(socket)
+    if choix_client == 'XXp': #Le client patient est choisi
+        echanges_donnees.envoi(socket,choix_client) #On informe le serveur du choix du client patient
+        client_patient.client_patient(socket) #On démarre le client patient
 
-    elif choix_client == 'XXd':
-        echanges_donnees.envoi(socket,choix_client)
-        client_docteur.client_docteur(socket)
-    else:
+    elif choix_client == 'XXd': #Le client docteur est choisi
+        echanges_donnees.envoi(socket,choix_client) #On informe le serveur du choix du client docteur
+        client_docteur.client_docteur(socket) #On démarre le client docteur
+    else: 
         raise NotImplementedError
-else:
-    raise NotImplemented
+else: #Si le serveur ne valide pas, l'application s'arrête
+    raise NotImplementedError
