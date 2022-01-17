@@ -1,8 +1,6 @@
-- fermeture fenêtres -> préciser à Nathan (le gaucho) comment tu veux lui renvoyer le booléen
 - edt côté docteur fonctionnel ?
-- pour le côté patient, dans DEdTPatient si je mets un booléen (False cad pas de rdvs dispos) en argument, afficher un truc du genre 'Pas de rdvs dispos sous ces conditions, veuillez réessayer'
+- pour le côté patient, dans Cprise de rdv si je mets un booléen (False cad pas de rdvs dispos) en argument, afficher un truc du genre 'Pas de rdvs dispos sous ces conditions, veuillez réessayer'
 - commennt Nathan (l'extrémiste) peut récupérer les données de l'inscription docteur
-- pour inscription doc, fournir une liste en argument des types de médecin dans laquelle il peut choisir venant du serveur au lieu des trucs prémarqués qu'on pourra pas changer
 - mettre le nom Doctolibre et pas DoctObélix bordel de merde
 - virer les arguments inutiles au lancement des séquences
 
