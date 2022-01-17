@@ -23,7 +23,6 @@ cursor = con.cursor()
 def construction_edt(medecin, jour, mois, annee, heure, minute, motif):
     nom_du_jour = nom_jour(jour, mois, annee)
     cursor.execute('SELECT * FROM rdv_dispos WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', ([medecin], jour, mois, annee, heure, minute))
-    row = cursor.fetchone()
     dispo = cursor.fetchone()[6]
     if dispo == 1:
         cursor.execute('SELECT * FROM rdvs WHERE motif=?', [motif])
