@@ -112,7 +112,7 @@ class Ui_Form(object):
         self.Prenomlabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Prénom :</span></p></body></html>"))
         self.Villelabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Ville de Pratique :</span></p></body></html>"))
         self.CodePostallabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Code Postal :</span></p></body></html>"))
-        self.Adresselabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Adresse du cabine :</span></p></body></html>"))      
+        self.Adresselabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Adresse du cabinet :</span></p></body></html>"))      
         self.TypePratiquelabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:11pt;\">Type de Pratique :</span></p></body></html>"))
         self.AdresseMaillabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Adresse Mail :</span></p></body></html>"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
