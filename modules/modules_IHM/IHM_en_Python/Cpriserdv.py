@@ -65,7 +65,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.contin(False)
+        fonctions.continu(False)
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.continu(True))
 
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore

@@ -187,7 +187,7 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     liste_des_rdv_disponibles = []
     connection = lsql.connection_bdd()
     cursor = connection.cursor()
-    cursor.execute("SELECT prenom, nom, adresse, mail FROM medecins WHERE travail = ?", (type_de_medecin,))
+    cursor.execute("SELECT prenom, nom, ville, mail FROM medecins WHERE travail = ?", (type_de_medecin,))
     medecins_de_ce_type = cursor.fetchall()
     for elt in medecins_de_ce_type:
         liste_adresse = elt[2].split()
