@@ -1,6 +1,5 @@
 from .modules_IHM.IHM_en_Python import launcher, fonctions
-from .modules_echanges import conversion_types
-from .modules_echanges import echanges_donnees
+from .modules_echanges import conversion_types, echanges_donnees, stop_continuation
 
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
@@ -10,9 +9,13 @@ def client_patient(socket):
         
         if confirmation_serveur == '02pINITCONN': #Le serveur valide de lancement de la fenêtre de connexion
             launcher.sequence('IIg',identifiant) #On lance la fenêtre de connexion
+            continuation = fonctions.continus()
             creationcompte_patient = fonctions.Bcreationcompte() #On récupère un booléen pour savoir si le patient se connecte ou non
-                        
-            if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
+
+            if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                stop_continuation.arret_processus(socket)
+          
+            elif not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fonctions.Bidentifiant()
                 motdepasse = fonctions.Bmotdepass()
                 clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
@@ -26,25 +29,31 @@ def client_patient(socket):
 
             else: #Le client choisit de créer un compte
                 launcher.sequence('Yp',[0,0]) #TODO supprimer argument inutile
-                #On récupère les données fournies par le patient lors de son inscription del'IHM
-                envoi_donnees_inscription = '02pCREACOMPTE'
-                nom_patient = fonctions.Inom().capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
-                prenom_patient = fonctions.Iprenom().capitalize()
-                jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fonctions.Ijour(),fonctions.Imois(),fonctions.Iannee()
-                date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
-                date_naissance_patient = date_naissance_patient
-                numero_patient = fonctions.Inumero()
-                identifiant = fonctions.Bidentifiant()
-                motdepasse = fonctions.Bmotdepass()
-                #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
-                echanges_donnees.envoi(socket,envoi_donnees_inscription)
-                echanges_donnees.envoi(socket,nom_patient)
-                echanges_donnees.envoi(socket,prenom_patient)
-                echanges_donnees.envoi(socket,date_naissance_patient)
-                echanges_donnees.envoi(socket,numero_patient)
-                echanges_donnees.envoi(socket,identifiant)
-                echanges_donnees.envoi(socket,motdepasse)
-                clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
+                continuation = fonctions.continus()
+
+                if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                    stop_continuation.arret_processus(socket)
+
+                else: #Dans les autres cas, le processus se déroule normalement
+                    #On récupère les données fournies par le patient lors de son inscription de l'IHM
+                    envoi_donnees_inscription = '02pCREACOMPTE'
+                    nom_patient = fonctions.Inom().capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
+                    prenom_patient = fonctions.Iprenom().capitalize()
+                    jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fonctions.Ijour(),fonctions.Imois(),fonctions.Iannee()
+                    date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
+                    date_naissance_patient = date_naissance_patient
+                    numero_patient = fonctions.Inumero()
+                    identifiant = fonctions.Bidentifiant()
+                    motdepasse = fonctions.Bmotdepass()
+                    #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
+                    echanges_donnees.envoi(socket,envoi_donnees_inscription)
+                    echanges_donnees.envoi(socket,nom_patient)
+                    echanges_donnees.envoi(socket,prenom_patient)
+                    echanges_donnees.envoi(socket,date_naissance_patient)
+                    echanges_donnees.envoi(socket,numero_patient)
+                    echanges_donnees.envoi(socket,identifiant)
+                    echanges_donnees.envoi(socket,motdepasse)
+                    clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la fenêtre de connexion, l'application s'arrête
             raise NotImplementedError
@@ -58,19 +67,24 @@ def client_patient(socket):
             dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv) #On le convertit effectivement en dictionnaire
 
             launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv
-            #On réceptionne les conditions du rdv choisies par le patient
-            localisation = fonctions.Clocation().upper() #upper() car toutes les villes sont en masjuscule dans la bdd
-            type_docteur = fonctions.Cpraticien()
-            type_rdv = fonctions.CRdV()
-            date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
-            date_rdv = date_rdv
+            continuation = fonctions.continus()
 
-            envoi_donnees_prise_rdv = '03pSENDDATARDV' #On signale au serveur que le patient a effectivement saisi ses conditions de rdv
-            echanges_donnees.envoi(socket,envoi_donnees_prise_rdv)
-            echanges_donnees.envoi(socket,localisation) #On envoie les conditions du patient au serveur
-            echanges_donnees.envoi(socket,type_docteur)
-            echanges_donnees.envoi(socket,type_rdv)
-            echanges_donnees.envoi(socket,date_rdv)
+            if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                stop_continuation.arret_processus(socket)
+            else: #Dans les autres cas le processus se déroule normalement
+                #On réceptionne les conditions du rdv choisies par le patient
+                localisation = fonctions.Clocation().upper() #upper() car toutes les villes sont en masjuscule dans la bdd
+                type_docteur = fonctions.Cpraticien()
+                type_rdv = fonctions.CRdV()
+                date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
+                date_rdv = date_rdv
+
+                envoi_donnees_prise_rdv = '03pSENDDATARDV' #On signale au serveur que le patient a effectivement saisi ses conditions de rdv
+                echanges_donnees.envoi(socket,envoi_donnees_prise_rdv)
+                echanges_donnees.envoi(socket,localisation) #On envoie les conditions du patient au serveur
+                echanges_donnees.envoi(socket,type_docteur)
+                echanges_donnees.envoi(socket,type_rdv)
+                echanges_donnees.envoi(socket,date_rdv)
         else: #Si le serveur ne valide pas le lancement de la fenêtre de prise de rdv, c'est une erreur, le client s'arrête donc
             raise NotImplementedError
 
@@ -81,8 +95,9 @@ def client_patient(socket):
             dico_disponibilites = conversion_types.from_string_to_dict(str_dico_disponibilites) #One le convertit effectivement sous la forme d'un dictionnaore
 
             launcher.sequence('IVp',(dico_disponibilites, rdv_non_dispo)) #On lance la fenêtre d'affichage des rdvs dispos avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions remplies par le patient
-            
-            if True: #Si le rdv est validé par le patient
+            continuation = fonctions.continus()
+
+            if continuation: #Si le rdv est validé par le patient
                 envoi_validation_rdv = '04pVALIDATIONRDV' #Confirmation au serveur que le patient a bien validé un rdv
                 #On réceptionne les données validées par le patient
                 nom_docteur_rdv_choisi = fonctions.Ddocname()
@@ -95,8 +110,8 @@ def client_patient(socket):
                 echanges_donnees.envoi(socket,infos_supp_pour_docteur)
                 rdv_validé = True #Le rdv est donc bien validé
 
-            else: #Si un rdv n'est pas validé par le patient c'est un erreur, le client se ferme
-                raise NotImplementedError
+            elif not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                stop_continuation.arret_processus(socket)
 
         elif confirmation_serveur == '04pRDVNONDISPO': #S'il n'y a pas de rdv dispo pour ces conditions, on revient au début de la boucle
             rdv_validé = False #Le rdv n'est donc pas validé
@@ -114,5 +129,6 @@ def client_patient(socket):
         mail_docteur = echanges_donnees.reception(socket)
         #On affiche la fenêtre récapitulative
         launcher.sequence('Vp',(date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,rue_docteur,ville_docteur,code_postal_docteur,telephone_docteur,mail_docteur,infos_supp_pour_docteur))
+        stop_continuation.arret_processus(socket) #Une fois le récap passé, on peut arrêter le processus et le thread
     else: #Si le serveur ne valide pas le lancement de la fenêtre récapitulative du rdv c'est un erreur, le client se ferme
         raise NotImplementedError
