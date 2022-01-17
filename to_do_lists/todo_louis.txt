@@ -1,4 +1,4 @@
-- edt côté docteur fonctionnel ?
 - virer les arguments inutiles au lancement des séquences
+- fenêtre détails rdv
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
