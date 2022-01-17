@@ -148,7 +148,6 @@ class ThreadForServer(threading.Thread):
                     #On réceptionne les données saisies par le docteur lors de son inscription
                     nom_docteur = echanges_donnees.reception(self.conn)
                     prenom_docteur = echanges_donnees.reception(self.conn)
-                    #TODO type de docteur ?
                     type_docteur = echanges_donnees.reception(self.conn)
                     ville_docteur = echanges_donnees.reception(self.conn)
                     rue_docteur = echanges_donnees.reception(self.conn)
