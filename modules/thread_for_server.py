@@ -95,7 +95,7 @@ class ThreadForServer(threading.Thread):
                             heure = str(horaire_rdv_choisi[0])
                             minute = str(horaire_rdv_choisi[1])
                             
-                            construction_edt.construction_edt(nom_docteur_choisi_rdv, jour, mois, annee, heure, minute, type_rdv, notes_pour_docteur)
+                            construction_edt.construction_edt(nom_docteur_choisi_rdv, jour, mois, annee, heure, minute, type_rdv, notes_pour_docteur) #On ajoute le rdv dans la base de données
                             rdv_validé = True #Le rdv est effectivement validé
                         elif False: #Dans le cas où le client revient en arrière
                             pass

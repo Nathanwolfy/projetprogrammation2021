@@ -1,4 +1,3 @@
-- #TODO valider le rdv dans la base de données avec les notes associées
 - #TODO supprimer argument inutile
 
 - bien gérer les fermetures fenêtres
