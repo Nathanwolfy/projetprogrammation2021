@@ -55,7 +55,7 @@ def client_patient(socket):
     rdv_non_dispo = False #On établit qu'il n'y a pas de rdv dispos sous ces conditions
     while not rdv_validé:
         confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la fenêtre de prise de rdv
-
+        print(confirmation_serveur)
         if confirmation_serveur == '03pINITPRISERDV':
             str_dico_type_rdv = echanges_donnees.reception(socket)
             dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv)
