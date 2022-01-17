@@ -105,4 +105,4 @@ class Ui_Form(object):
         self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
         self.Date_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Date (jj/mm/aaaa) :</span></p></body></html>"))
-        self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\">TextLabel</p></body></html>"))
+        self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" color:#ff0000;\">TextLabel  </span><span style=\" color:#000000;\">dddddddddd</span></p></body></html>"))

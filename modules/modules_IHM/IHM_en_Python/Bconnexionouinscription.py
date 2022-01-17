@@ -39,9 +39,6 @@ class Ui_Form(object):
         self.InscriptionButton = QtWidgets.QPushButton(Form)
         self.InscriptionButton.setGeometry(QtCore.QRect(70, 344, 161, 28))
         self.InscriptionButton.setObjectName("InscriptionButton")
-        self.B_Retour_commandLinkButton = QtWidgets.QCommandLinkButton(Form)
-        self.B_Retour_commandLinkButton.setGeometry(QtCore.QRect(0, 520, 222, 48))
-        self.B_Retour_commandLinkButton.setObjectName("B_Retour_commandLinkButton")
         self.Inscriptionlabel = QtWidgets.QLabel(Form)
         self.Inscriptionlabel.setGeometry(QtCore.QRect(50, 260, 201, 31))
         self.Inscriptionlabel.setObjectName("Inscriptionlabel")
@@ -61,7 +58,6 @@ class Ui_Form(object):
         self.InscriptionButton.released.connect(lambda: fonctions.con_ins(True))
         self.ConnexionButton.released.connect(Form.close)
         self.InscriptionButton.released.connect(Form.close) # type: ignore
-        self.B_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
         if self.arg != '':
             self.NomPrenom_LineEdit.insert(self.arg)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -72,11 +68,10 @@ class Ui_Form(object):
         if self.arg == '':
             self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Adresse Mail :</span></p></body></html>"))
         else :
-            self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Adresse Mail : (mauvaise combinaison)</span></p></body></html>"))
+            self.labelNomPrenom.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Adresse Mail :</span><span style=\" color:#ff0000;\">(Mauvaise combinaison).</span></p></body></html>"))
         self.labelMdP.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Mot de Passe : </span></p></body></html>"))
         self.labelConnexion.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">Connexion</span></p></body></html>"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
         self.InscriptionButton.setText(_translate("Form", "Créer un compte"))
-        self.B_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
         self.Inscriptionlabel.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Inscription</span></p></body></html>"))
         self.ConnexionButton.setText(_translate("Form", "Connexion"))
