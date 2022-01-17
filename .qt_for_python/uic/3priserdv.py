@@ -68,6 +68,9 @@ class Ui_Form(object):
         self.anneeLineEdit = QtWidgets.QLineEdit(Form)
         self.anneeLineEdit.setGeometry(QtCore.QRect(370, 180, 41, 31))
         self.anneeLineEdit.setObjectName("anneeLineEdit")
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setGeometry(QtCore.QRect(150, 80, 231, 20))
+        self.label.setObjectName("label")
 
         self.retranslateUi(Form)
         self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
@@ -102,3 +105,4 @@ class Ui_Form(object):
         self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
         self.Date_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Date (jj/mm/aaaa) :</span></p></body></html>"))
+        self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\">TextLabel</p></body></html>"))

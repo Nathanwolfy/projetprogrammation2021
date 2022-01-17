@@ -13,7 +13,8 @@ from . import fonctions
 
 class Ui_Form(object):
     def __init__(self, arg):
-        self.dico = arg
+        self.dico = arg[0]
+        self.bool = arg[1]
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -61,6 +62,9 @@ class Ui_Form(object):
         self.anneeLineEdit = QtWidgets.QLineEdit(Form)
         self.anneeLineEdit.setGeometry(QtCore.QRect(370, 180, 41, 31))
         self.anneeLineEdit.setObjectName("anneeLineEdit")
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setGeometry(QtCore.QRect(150, 80, 231, 20))
+        self.label.setObjectName("label")
         self.update_rdv_type_combobox(self.Praticien_comboBox.currentText())
 
         self.retranslateUi(Form)
@@ -101,3 +105,5 @@ class Ui_Form(object):
         self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
         self.Date_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Date (jj/mm/aaaa) :</span></p></body></html>"))
+        if self.bool == False:
+            self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\">Pas de rendez-vous disponible</p></body></html>"))

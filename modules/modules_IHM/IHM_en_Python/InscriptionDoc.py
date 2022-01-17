@@ -59,7 +59,7 @@ class Ui_Form(object):
         self.Praticien_comboBox.setObjectName("Praticien_comboBox")
         
         for i in self.arg:
-            self.Praticien_comboBox.addItem("i")
+            self.Praticien_comboBox.addItem(i)
 
         self.TypePratiquelabel = QtWidgets.QLabel(Form)
         self.TypePratiquelabel.setGeometry(QtCore.QRect(20, 120, 151, 31))
