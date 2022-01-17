@@ -50,14 +50,14 @@ def client_patient(socket):
             raise NotImplementedError
 
     rdv_validé = False #On établit que le client n'a pas encore validé de rdv
-    rdv_non_dispo = False #On établit qu'il n'y a pas de rdv dispos sous ces conditions
+    rdv_non_dispo = True #On établit qu'il n'y a pas de rdv dispos sous ces conditions
     while not rdv_validé:
         confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la fenêtre de prise de rdv
         if confirmation_serveur == '03pINITPRISERDV': #Le serveur valide le lancement de la fenêtre de prise de rdv
             str_dico_type_rdv = echanges_donnees.reception(socket) #On réceptionne depuis le serveur le dictionnaire sous form d'un string nécessaire au foncionnement de l'IHM de prise de rdv
             dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv) #On le convertit effectivement en dictionnaire
 
-            launcher.sequence('IIIp',dico_type_rdv) #On lance la fenêtre de prise de rdv
+            launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv
             #On réceptionne les conditions du rdv choisies par le patient
             localisation = fonctions.Clocation()
             type_docteur = fonctions.Cpraticien()
