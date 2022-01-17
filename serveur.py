@@ -2,7 +2,7 @@ import socket
 from modules.thread_for_server import ThreadForServer
 
 
-host, port = ('',5566)
+host, port = ('',5566) #On choisit une adresse vierge et un port non affecté
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Création du socket
 socket.bind((host, port)) #On associe le socket à l'adresse et au port
@@ -14,8 +14,7 @@ while True:
     #print(f'Le client : {conn} est connecté.')
 
     threadclient = ThreadForServer(conn) #Création d'un thread par nouvelle connexion
-    threadclient.start()
+    threadclient.start() #On démarre le thread par nouvelle connexion
 
 conn.close() #On ferme la connexion
-
 socket.close() #On ferme le socket
