@@ -1,26 +1,18 @@
 import sqlite3
-
-def connection(bdd):
-    try:
-        connect = sqlite3.connect(bdd)
-        return connect
-    except Exception as e:
-        print(e)
-        print('La connexion n\'a pas pu être établie.')
+from . import lire_sql as lsql
 
 
 def nom_jour(jour, mois, annee):
-    con_1 = connection('calendrier.db')
+    con_1 = lsql.connection_bdd_calendrier()
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nb_jour=? AND mois_jour=? AND annee=?', (jour, mois, annee))
     req = cursor_1.fetchone()
     con_1.close()
     return req[1]
 
-con = connection('donnees.db')
-cursor = con.cursor()
-
 def construction_edt(medecin, jour, mois, annee, heure, minute, motif):
+    con = lsql.connection_bdd()
+    cursor = con.cursor()
     nom_du_jour = nom_jour(jour, mois, annee)
     cursor.execute('SELECT * FROM rdv_dispos WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', ([medecin], jour, mois, annee, heure, minute))
     dispo = cursor.fetchone()[6]
