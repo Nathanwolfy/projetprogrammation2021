@@ -45,7 +45,7 @@ def rdv_dispo(jour, mois, annee, heure, minute, medecin):
     connection.close()
     if rech[0] == 0 :
         return False
-    else :
+    else:
         return True
 
 

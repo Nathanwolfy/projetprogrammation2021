@@ -1,5 +1,4 @@
 - edt côté docteur fonctionnel ?
-- pour le côté patient, dans Cprise de rdv si je mets un booléen (False cad pas de rdvs dispos) en argument, afficher un truc du genre 'Pas de rdvs dispos sous ces conditions, veuillez réessayer'
 - commennt Nathan (l'extrémiste) peut récupérer les données de l'inscription docteur
 - mettre le nom Doctolibre et pas DoctObélix bordel de merde
 - virer les arguments inutiles au lancement des séquences
