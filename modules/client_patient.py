@@ -1,4 +1,3 @@
-from errno import ECANCELED
 from .modules_IHM.IHM_en_Python import launcher, fonctions
 from .modules_echanges import conversion_types
 from .modules_echanges import echanges_donnees
