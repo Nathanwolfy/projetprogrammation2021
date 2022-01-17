@@ -111,11 +111,11 @@ class ThreadForServer(threading.Thread):
             code_initialisation_recap_patient = 'VpINITRECAP'
             #On réceptionne les coordonnées du docteur pour le patient depuis la base de données
             coordonnées_docteur = rdv_dispo_pris.profil_medecin_complet(nom_docteur_choisi_rdv)
-            rue_docteur = ''
-            ville_docteur = ''
-            code_postal_docteur = ''
-            telephone_docteur = ''
-            mail_docteur = ''
+            rue_docteur = coordonnées_docteur[2]
+            ville_docteur = coordonnées_docteur[4]
+            code_postal_docteur = coordonnées_docteur[3]
+            telephone_docteur = coordonnées_docteur[1]
+            mail_docteur = coordonnées_docteur[0]
             #On envoie l'initialisation du récap du patient ainsi que les données nécessaires
             echanges_donnees.envoi(self.conn,code_initialisation_recap_patient)
             echanges_donnees.envoi(self.conn,rue_docteur)

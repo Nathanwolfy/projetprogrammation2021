@@ -216,42 +216,7 @@ def profil_medecin_complet(string):
 
 
 if __name__ == "__main__" :
-    
-    """
-    creer_journee_vide(27, 1, 2022, "jules.muscle.bg@bing.fr")
-    """
-    
-    """
-    journee_existe_pour_ce_medecin(27, 1, 2022, "sipha@lecheque.com")
-    """
-    
-    """
-    passer_creneau_dispo_en_creneau_pris(27, 1, 2022, 8, 30, "sipha@lecheque.com")
-    """
-    
-    """
-    rdv_dispo(27, 1, 2022, 8, 30, "sipha@lecheque.com")
-    """
-    
-    """
-    temps_motif()
-    """
-    
-    """
-    temps_motif("generaliste", "certificat medical")
-    """
-    
-    """
-    passer_rdv_dispo_en_rdv_pris(27, 1, 2022, 13, 30, "sipha@lecheque.com", 60)
-    """
-    
-    """
-    creneau_possible_max(27, 1, 2022, 11, 15, "sipha@lecheque.com")
-    """
-    
-    """
-    rdv_disponible(27, 1, 2022, "sipha@lecheque.com", 60)
-    """
+    pass
     
     
     
