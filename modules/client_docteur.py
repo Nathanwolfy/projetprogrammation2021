@@ -1,7 +1,9 @@
 import sys
 
-from .IHM.IHM_en_Python import launcher, fonctions
-from . import conversion_types, echanges_donnees
+from .modules_echanges import conversion_types
+
+from .modules_IHM.IHM_en_Python import launcher, fonctions
+from .modules_echanges import echanges_donnees
 
 def client_docteur(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas

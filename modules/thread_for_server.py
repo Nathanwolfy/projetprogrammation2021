@@ -6,7 +6,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 
 import threading
 from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql,exploitation_sql_rendez_vous, rdv_dispo_pris
-from . import echanges_donnees
+from .modules_echanges import echanges_donnees
 
 FORMAT = 'utf-8'
 

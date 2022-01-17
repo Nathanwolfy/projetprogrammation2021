@@ -1,6 +1,8 @@
-from modules import client_docteur, client_patient, echanges_donnees
-from modules.IHM.IHM_en_Python import launcher, fonctions
+from modules import client_docteur, client_patient
+from modules.modules_IHM.IHM_en_Python import launcher, fonctions
 import socket
+
+from modules.modules_echanges import echanges_donnees
 
 host, port = ('localhost',5566) #On choisit comme adresse celle locale et un port non affecté
 
