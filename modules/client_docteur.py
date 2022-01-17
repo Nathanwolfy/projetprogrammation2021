@@ -35,10 +35,10 @@ def client_docteur(socket):
                 
                 #On récupère les informations saisies par le docteur dans l'IHM
                 #TODO
-                nom_docteur = ''
-                prenom_docteur = ''
+                nom_docteur = ''.capitalize() #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
+                prenom_docteur = ''.capitalize()
                 type_docteur = ''
-                ville_de_pratique = ''
+                ville_de_pratique = ''.upper() #upper() car toutes les villes sont en majuscules dans la bdd
                 adresse_docteur = ''
                 code_postal_docteur = ''
                 numero_docteur = ''
