@@ -74,6 +74,10 @@ class Ui_Form(object):
         self.jjmmaaaalabel.setObjectName("jjmmaaaalabel")
 
         self.retranslateUi(Form)
+
+        fonctions.continu(False)
+        self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
+
         self.ValidationpushButton.released.connect(lambda: fonctions.finom(self.NomlineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: fonctions.fiprenom(self.PrenomlineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: fonctions.fijour(self.jourlineEdit.text()))

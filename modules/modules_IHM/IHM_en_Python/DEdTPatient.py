@@ -50,6 +50,10 @@ class Ui_Form(object):
         self.InfolineEdit.setObjectName("InfolineEdit")
 
         self.retranslateUi(Form)
+
+        fonctions.continu(False)
+        self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
+
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.horaire(self.comboBox.currentText()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.infodoc(self.InfolineEdit.text()))

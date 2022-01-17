@@ -30,6 +30,15 @@ horairerdv = ''
 Info = ''
 #Informations supplémentaires pour le docteur
 
+mugi = False
+
+def continu(bool):
+    global mugi
+    mugi = bool
+
+def continus():
+    return mugi
+
 PInom = ''
 PIprenom = ''
 PIjour = ''
