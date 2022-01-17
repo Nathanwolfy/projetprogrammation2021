@@ -42,7 +42,7 @@ class ThreadForServer(threading.Thread):
                     validation = clef_valide
                     echanges_donnees.envoi(self.conn,validation)
 
-                elif reponse == 'YYpINITSENDDATA':
+                elif reponse == '02pCREACOMPTE':
                     nom_patient = echanges_donnees.reception(self.conn)
                     prenom_patient = echanges_donnees.reception(self.conn)
                     date_naissance_patient = echanges_donnees.reception(self.conn)
@@ -51,11 +51,9 @@ class ThreadForServer(threading.Thread):
                     motdepasse_patient = echanges_donnees.reception(self.conn)
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
                     validation_fin_envoi = echanges_donnees.reception(self.conn)
-                    if validation_fin_envoi == 'YYpTERMSENDDATA':
-                        exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient,motdepasse_patient)
-                        clef_valide = 'True'
-                    else:
-                        raise NotImplementedError
+                    
+                    exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient,motdepasse_patient)
+                    clef_valide = 'True'
 
                 else:
                     raise NotImplementedError
@@ -131,7 +129,10 @@ class ThreadForServer(threading.Thread):
                     validation = clef_valide
                     echanges_donnees.envoi(self.conn,validation)
 
-                elif reponse == 'YYdINITSENDDATA':
+                elif reponse == '02dCREACOMPTE':
+                    str_liste_types_docteur = str(lire_sql.liste_type_medecin())
+                    echanges_donnees.envoi(str_liste_types_docteur)
+
                     nom_docteur = echanges_donnees.envoi(self.conn)
                     prenom_docteur = echanges_donnees.envoi(self.conn)
                     ville_de_pratique = echanges_donnees.envoi(self.conn)
@@ -142,11 +143,8 @@ class ThreadForServer(threading.Thread):
                     motdepasse_docteur = echanges_donnees.envoi(self.conn)
                     validation_fin_envoi = echanges_donnees.envoi(self.conn)
 
-                    if validation_fin_envoi == 'YYdTERMSENDDATA':
-                        exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,'',identifiant_docteur,numero_docteur,'adresse à insérer',motdepasse_docteur,motdepasse_docteur)
-                        clef_valide = 'True'
-                    else:
-                        raise NotImplementedError
+                    exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,'',identifiant_docteur,numero_docteur,'adresse à insérer',motdepasse_docteur,motdepasse_docteur)
+                    clef_valide = 'True'
 
                 else:
                     raise NotImplementedError

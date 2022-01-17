@@ -3,16 +3,14 @@ import sys
 from .IHM.IHM_en_Python import launcher, fonctions
 from . import fonctions_transfert, echanges_donnees
 
-FORMAT = 'utf-8'
-
 def client_docteur(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
     identifiant = '' #Il n'y a pas d'identifiant saisi au départ
-    while clef_valide == 'False':
-        confirmation_serveur = echanges_donnees.reception(socket)
+    while clef_valide == 'False': #Tant que la clef n'est pas valide on relance la fenêtre de connexion
+        confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la connexion
         
         if confirmation_serveur == '02dINITCONN':
-            launcher.sequence('IIg',identifiant)
+            launcher.sequence('IIg',identifiant) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
             creationcompte_patient = fonctions.Bcreationcompte()
                         
             if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
@@ -21,16 +19,21 @@ def client_docteur(socket):
                 clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_patient = clef_patient
 
-                envoi_clef_connexion = '02dSENDCLEF'
+                envoi_clef_connexion = '02dSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_patient)
 
                 clef_valide = echanges_donnees.reception(socket)
 
             else: #Le client choisit de créer un compte
-                launcher.sequence('Yd',[0,0])
-                envoi_donnees_inscription_debut = 'YYdINITSENDDATA'
+                requete_liste_types_docteur = '02dCREACOMPTE' #On demande la liste des types de docteurs
+                echanges_donnees.envoi(socket,requete_liste_types_docteur)
+                str_liste_types_docteurs = echanges_donnees.reception(socket) #On réceptionne la liste des types de docteurs sous forme d'une string
+                liste_types_docteurs = fonctions_transfert.strlist_to_list(str_liste_types_docteurs) #On la convertit effectivement en liste
+
+                launcher.sequence('Yd',liste_types_docteurs) #On démarre la fenêtre de création de compte
                 
+                #On récupère les informations saisies par le docteur dans l'IHM
                 nom_docteur = ''
                 prenom_docteur = ''
                 ville_de_pratique = ''
@@ -39,9 +42,8 @@ def client_docteur(socket):
                 numero_docteur = ''
                 identifiant = ''
                 motdepasse = ''
-                envoi_donnees_inscription_fin = 'YYdTERMSENDDATA'
 
-                echanges_donnees.envoi(socket,envoi_donnees_inscription_debut)
+                #On envoie les informaions saisies pas le docteur
                 echanges_donnees.envoi(socket,nom_docteur)
                 echanges_donnees.envoi(socket,prenom_docteur)
                 echanges_donnees.envoi(socket,ville_de_pratique)
@@ -50,8 +52,7 @@ def client_docteur(socket):
                 echanges_donnees.envoi(socket,numero_docteur)
                 echanges_donnees.envoi(socket,identifiant)
                 echanges_donnees.envoi(socket,motdepasse)
-                echanges_donnees.envoi(socket,envoi_donnees_inscription_fin)
                 clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
-        else:
+        else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
             raise NotImplementedError

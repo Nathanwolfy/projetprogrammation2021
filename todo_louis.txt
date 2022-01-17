@@ -4,6 +4,7 @@
 - commennt Nathan (l'extrémiste) peut récupérer les données de l'inscription docteur
 - pour inscription doc, fournir une liste en argument des types de médecin dans laquelle il peut choisir venant du serveur au lieu des trucs prémarqués qu'on pourra pas changer
 - mettre le nom Doctolibre et pas DoctObélix bordel de merde
+- virer les arguments inutiles au lancement des séquences
 
 - si temps bonus, voir pour bouton retour
 

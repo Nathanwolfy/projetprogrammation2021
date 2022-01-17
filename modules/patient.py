@@ -4,17 +4,15 @@ from .IHM.IHM_en_Python import launcher, fonctions
 from . import fonctions_transfert
 from . import echanges_donnees
 
-FORMAT = 'utf-8'
-
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
     identifiant = '' #Il n'y a pas d'identifiant saisi au départ
-    while clef_valide == 'False':
-        confirmation_serveur = echanges_donnees.reception(socket)
+    while clef_valide == 'False': #Tant que la clef n'est pas valide on relance la fenêtre de connexion
+        confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la connexion
         
-        if confirmation_serveur == '02pINITCONN':
-            launcher.sequence('IIg',identifiant)
-            creationcompte_patient = fonctions.Bcreationcompte()
+        if confirmation_serveur == '02pINITCONN': #Le serveur valide de lancement de la fenêtre de connexion
+            launcher.sequence('IIg',identifiant) #On lance la fenêtre de connexion
+            creationcompte_patient = fonctions.Bcreationcompte() #On récupère un booléen pour savoir si le patient se connecte ou non
                         
             if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fonctions.Bidentifiant()
@@ -22,15 +20,16 @@ def client_patient(socket):
                 clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_patient = clef_patient
 
-                envoi_clef_connexion = '02pSENDCLEF'
+                envoi_clef_connexion = '02pSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_patient)
 
                 clef_valide = echanges_donnees.reception(socket)
 
             else: #Le client choisit de créer un compte
-                launcher.sequence('Yp',[0,0])
-                envoi_donnees_inscription_debut = 'YYpINITSENDDATA'
+                launcher.sequence('Yp',[0,0]) #TODO supprimer argument inutile
+                #On récupère les données fournies par le patient lors de son inscription
+                envoi_donnees_inscription = '02pCREACOMPTE'
                 nom_patient = fonctions.Inom()
                 prenom_patient = fonctions.Iprenom()
                 jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fonctions.Ijour(),fonctions.Imois(),fonctions.Iannee()
@@ -39,25 +38,23 @@ def client_patient(socket):
                 numero_patient = fonctions.Inumero()
                 identifiant = fonctions.Bidentifiant()
                 motdepasse = fonctions.Bmotdepass()
-                envoi_donnees_inscription_fin = 'YYpTERMSENDDATA'
 
-                echanges_donnees.envoi(socket,envoi_donnees_inscription_debut)
+                echanges_donnees.envoi(socket,envoi_donnees_inscription)
                 echanges_donnees.envoi(socket,nom_patient)
                 echanges_donnees.envoi(socket,prenom_patient)
                 echanges_donnees.envoi(socket,date_naissance_patient)
                 echanges_donnees.envoi(socket,numero_patient)
                 echanges_donnees.envoi(socket,identifiant)
                 echanges_donnees.envoi(socket,motdepasse)
-                echanges_donnees.envoi(socket,envoi_donnees_inscription_fin)
                 clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
-        else:
+        else: #Si le serveur de valide pas le lancement de la fenêtre de connexion, l'application s'arrête
             raise NotImplementedError
 
-    rdv_validé = False
-    rdv_non_dispo = False
+    rdv_validé = False #On établit que le client n'a pas encore validé de rdv
+    rdv_non_dispo = False #On établit qu'il n'y a pas de rdv dispos sous ces conditions
     while not rdv_validé:
-        confirmation_serveur = echanges_donnees.reception(socket)
+        confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la fenêtre de prise de rdv
 
         if confirmation_serveur == '03pINITPRISERDV':
             str_dico_type_rdv = echanges_donnees.reception(socket)
@@ -77,7 +74,7 @@ def client_patient(socket):
             echanges_donnees.envoi(socket,type_docteur)
             echanges_donnees.envoi(socket,type_rdv)
             echanges_donnees.envoi(socket,date_rdv)
-        else:
+        else: 
             raise NotImplementedError
 
         confirmation_serveur = echanges_donnees.reception(socket)
