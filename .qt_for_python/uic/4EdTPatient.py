@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\modules\IHM\IHM_en_Qt\4EdTPatient.ui'
+# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\modules\modules_IHM\IHM_en_Qt\4EdTPatient.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.1
 #
