@@ -28,8 +28,8 @@ def client_patient(socket):
                 launcher.sequence('Yp',[0,0]) #TODO supprimer argument inutile
                 #On récupère les données fournies par le patient lors de son inscription del'IHM
                 envoi_donnees_inscription = '02pCREACOMPTE'
-                nom_patient = fonctions.Inom()
-                prenom_patient = fonctions.Iprenom()
+                nom_patient = fonctions.Inom().capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
+                prenom_patient = fonctions.Iprenom().capitalize()
                 jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fonctions.Ijour(),fonctions.Imois(),fonctions.Iannee()
                 date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
                 date_naissance_patient = date_naissance_patient
@@ -59,7 +59,7 @@ def client_patient(socket):
 
             launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv
             #On réceptionne les conditions du rdv choisies par le patient
-            localisation = fonctions.Clocation()
+            localisation = fonctions.Clocation().upper() #upper() car toutes les villes sont en masjuscule dans la bdd
             type_docteur = fonctions.Cpraticien()
             type_rdv = fonctions.CRdV()
             date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
