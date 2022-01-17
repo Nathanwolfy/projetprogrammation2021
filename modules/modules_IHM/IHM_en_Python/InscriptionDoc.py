@@ -99,6 +99,10 @@ class Ui_Form(object):
         self.MdPlineEdit.setObjectName("MdPlineEdit")
 
         self.retranslateUi(Form)
+
+        fonctions.continu(False)
+        self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
+    
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.MdPlineEdit.text()))
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.NomlineEdit.text()))
