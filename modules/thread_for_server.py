@@ -110,7 +110,7 @@ class ThreadForServer(threading.Thread):
             #On initie le récap des informations
             code_initialisation_recap_patient = 'VpINITRECAP'
             #On réceptionne les coordonnées du docteur pour le patient depuis la base de données
-            #TODO
+            coordonnées_docteur = rdv_dispo_pris.profil_medecin_complet(nom_docteur_choisi_rdv)
             rue_docteur = ''
             ville_docteur = ''
             code_postal_docteur = ''
