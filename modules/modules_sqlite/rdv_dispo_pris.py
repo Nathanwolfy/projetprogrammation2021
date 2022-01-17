@@ -182,6 +182,10 @@ def affichage_final_rdv_dispo(jour, mois, annee, medecin, temps):
 
 
 def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
+    """cette fonction prends en etree un type de medecin, un motif de rendez 
+    vous, une ville, une date afin de ressortir dans une ville precise, les 
+    emplois du temps des medecins precisement qui peuvent accomplir cette 
+    consultation"""
     medecins_de_ce_type_et_de_cette_ville = []
     medecins_de_ce_type_et_de_cette_ville_id = []
     liste_des_rdv_disponibles = []
@@ -190,11 +194,9 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     cursor.execute("SELECT prenom, nom, ville, mail FROM medecins WHERE travail = ?", (type_de_medecin,))
     medecins_de_ce_type = cursor.fetchall()
     for elt in medecins_de_ce_type:
-        liste_adresse = elt[2].split()
-        for mot in liste_adresse:
-            if mot == ville:
-                medecins_de_ce_type_et_de_cette_ville.append("Dr " + elt[0] + " " + elt[1])
-                medecins_de_ce_type_et_de_cette_ville_id.append(elt[3])
+        if elt[2] == ville :
+            medecins_de_ce_type_et_de_cette_ville.append("Dr " + elt[0] + " " + elt[1])
+            medecins_de_ce_type_et_de_cette_ville_id.append(elt[3])
     connection.close()
     
     temps = temps_motif(type_de_medecin, type_de_rdv)
