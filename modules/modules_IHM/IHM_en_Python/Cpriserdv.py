@@ -44,9 +44,6 @@ class Ui_Form(object):
         self.RdV_comboBox = QtWidgets.QComboBox(Form)
         self.RdV_comboBox.setGeometry(QtCore.QRect(250, 320, 201, 21))
         self.RdV_comboBox.setObjectName("RdV_comboBox")
-        self.C_Retour_commandLinkButton = QtWidgets.QCommandLinkButton(Form)
-        self.C_Retour_commandLinkButton.setGeometry(QtCore.QRect(0, 390, 222, 48))
-        self.C_Retour_commandLinkButton.setObjectName("C_Retour_commandLinkButton")
         self.ValidationpushButton = QtWidgets.QPushButton(Form)
         self.ValidationpushButton.setGeometry(QtCore.QRect(290, 380, 101, 41))
         self.ValidationpushButton.setObjectName("ValidationpushButton")
@@ -72,7 +69,6 @@ class Ui_Form(object):
         fonctions.continu(False)
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.continu(True))
 
-        self.C_Retour_commandLinkButton.released.connect(Form.close) # type: ignore
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
         self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
         self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.location(self.Localisation_LineEdit.text()))
@@ -102,8 +98,7 @@ class Ui_Form(object):
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
         self.TypePraticien_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Type de Praticien :</span></p></body></html>"))
         self.RdV_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:9pt;\">Type de Rendez-Vous :</span></p></body></html>"))
-        self.C_Retour_commandLinkButton.setText(_translate("Form", "Retour"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
         self.Date_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt;\">Date (jj/mm/aaaa) :</span></p></body></html>"))
         if self.bool == False:
-            self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\">Pas de rendez-vous disponible</p></body></html>"))
+            self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" color:#ff0000;\">Pas de rendez-vous disponible.</span></p></body></html>"))
