@@ -13,7 +13,7 @@ from . import fonctions
 
 class Ui_Form(object):
     def __init__(self, arg):
-        self.dico = arg
+        self.arg = arg
         
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -57,22 +57,10 @@ class Ui_Form(object):
         self.Praticien_comboBox = QtWidgets.QComboBox(Form)
         self.Praticien_comboBox.setGeometry(QtCore.QRect(180, 120, 201, 31))
         self.Praticien_comboBox.setObjectName("Praticien_comboBox")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
-        self.Praticien_comboBox.addItem("")
+        
+        for i in self.arg:
+            self.Praticien_comboBox.addItem("i")
+
         self.TypePratiquelabel = QtWidgets.QLabel(Form)
         self.TypePratiquelabel.setGeometry(QtCore.QRect(20, 120, 151, 31))
         self.TypePratiquelabel.setObjectName("TypePratiquelabel")
@@ -119,23 +107,7 @@ class Ui_Form(object):
         self.Prenomlabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Prénom :</span></p></body></html>"))
         self.Villelabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Ville de Pratique :</span></p></body></html>"))
         self.CodePostallabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Code Postal :</span></p></body></html>"))
-        self.Adresselabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Adresse du cabine :</span></p></body></html>"))
-        self.Praticien_comboBox.setItemText(0, _translate("Form", "Addictologue"))
-        self.Praticien_comboBox.setItemText(1, _translate("Form", "Allergologue‎ "))
-        self.Praticien_comboBox.setItemText(2, _translate("Form", "Cancérologue‎"))
-        self.Praticien_comboBox.setItemText(3, _translate("Form", "Cardiologue‎"))
-        self.Praticien_comboBox.setItemText(4, _translate("Form", "Dentiste"))
-        self.Praticien_comboBox.setItemText(5, _translate("Form", "Dermatologue"))
-        self.Praticien_comboBox.setItemText(6, _translate("Form", "Médecin généraliste"))
-        self.Praticien_comboBox.setItemText(7, _translate("Form", "Neurologue‎"))
-        self.Praticien_comboBox.setItemText(8, _translate("Form", "Ophtalmologue‎"))
-        self.Praticien_comboBox.setItemText(9, _translate("Form", "Pédiatre‎"))
-        self.Praticien_comboBox.setItemText(10, _translate("Form", "Pneumologue‎"))
-        self.Praticien_comboBox.setItemText(11, _translate("Form", "Psychiatre‎"))
-        self.Praticien_comboBox.setItemText(12, _translate("Form", "Radiologue‎"))
-        self.Praticien_comboBox.setItemText(13, _translate("Form", "Rhumatologue‎"))
-        self.Praticien_comboBox.setItemText(14, _translate("Form", "Vétérinaire‎"))
-        self.Praticien_comboBox.setItemText(14, _translate("Form", "Orthophoniste"))       
+        self.Adresselabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Adresse du cabine :</span></p></body></html>"))      
         self.TypePratiquelabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:11pt;\">Type de Pratique :</span></p></body></html>"))
         self.AdresseMaillabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:10pt;\">Adresse Mail :</span></p></body></html>"))
         self.ValidationpushButton.setText(_translate("Form", "Validation"))
