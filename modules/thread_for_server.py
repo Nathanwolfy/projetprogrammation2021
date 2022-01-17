@@ -148,14 +148,16 @@ class ThreadForServer(threading.Thread):
                     #On réceptionne les données saisies par le docteur lors de son inscription
                     nom_docteur = echanges_donnees.reception(self.conn)
                     prenom_docteur = echanges_donnees.reception(self.conn)
-                    ville_de_pratique = echanges_donnees.reception(self.conn)
-                    adresse_docteur = echanges_donnees.reception(self.conn)
+                    #TODO type de docteur ?
+                    type_docteur = echanges_donnees.reception(self.conn)
+                    ville_docteur = echanges_donnees.reception(self.conn)
+                    rue_docteur = echanges_donnees.reception(self.conn)
                     code_postal_docteur = echanges_donnees.reception(self.conn)
-                    numero_docteur = echanges_donnees.reception(self.conn)
+                    telephone_docteur = echanges_donnees.reception(self.conn)
                     identifiant_docteur = echanges_donnees.reception(self.conn)
                     motdepasse_docteur = echanges_donnees.reception(self.conn)
                     #On inscrit effecivement le docteur dans la base de données
-                    exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,'',identifiant_docteur,numero_docteur,'adresse à insérer',motdepasse_docteur,motdepasse_docteur)
+                    exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,motdepasse_docteur,motdepasse_docteur)
                     clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
 
                 else: #Si le docteur n'envoie pas sa clef de connexion ou ne décide pas de créer un profil docteur, c'est un erreur, le thread s'arrête donc

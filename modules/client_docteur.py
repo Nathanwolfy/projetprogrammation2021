@@ -36,6 +36,7 @@ def client_docteur(socket):
                 #On récupère les informations saisies par le docteur dans l'IHM
                 nom_docteur = ''
                 prenom_docteur = ''
+                type_docteur = ''
                 ville_de_pratique = ''
                 adresse_docteur = ''
                 code_postal_docteur = ''
