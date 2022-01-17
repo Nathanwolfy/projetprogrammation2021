@@ -2,7 +2,8 @@ MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout"
 
 class Profil:
     """les parametres communs a tous les profils sont le prenom le nom le mail 
-    et telephone, on rajoutera des choses pour le docteur/patient"""
+    et telephone, on rajoutera des choses specifiques pour le 
+    docteur/patient"""
     
     def __init__(self):
         self.prenom = "" #STR
@@ -20,20 +21,24 @@ class Profil:
 class Docteur(Profil):
     """le docteur prends en plus en parametre de lui meme son metier 
     ie si c'est un dentiste il va pas faire des trucs de generaliste et 
-    l'adresse de son cabinet"""
+    l'adresse de son cabinet (rue, code postal, ville)"""
     
     def __init__(self):
         Profil.__init__(self)
         self.metier = "metier"#STR
-        self.adresse = "" #STR
+        self.rue = "" #STR
+        self.code_postal = ""#STR
+        self.ville = ""#STR
 
-    def saisie(self, prenom, nom, mail, telephone, adresse, metier):
+    def saisie(self, prenom, nom, metier, mail, telephone, rue, code_postal, ville):
         Profil.saisie(self, prenom, nom, mail, telephone)
         self.metier = str(metier)
-        self.adresse = str(adresse)
+        self.rue = str(rue)
+        self.code_postal = str(code_postal)
+        self.ville = str(ville)
 
     def __repr__(self):
-        return "FICHE DOCTEUR : Medecin " + str(self.metier) + " " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.adresse
+        return "FICHE DOCTEUR : Medecin " + str(self.metier) + " " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.rue + " " + self.code_postal + " " + self.ville
 
 
 class Patient(Profil):
@@ -82,7 +87,7 @@ if __name__ == "__main__" :
     
     """
     doc1 = Docteur()
-    doc1.saisie("Vic-Eline", "Carré", "vic.carre@alumni.enac.fr", "0656849331", "87 rue de la vallée de Dana PARIS FRANCE 75 000", "generaliste")
+    doc1.saisie("Vic-Eline", "Carré", "generaliste", "vic.carre@alumni.enac.fr", "0656849331", "72 rue Marceau", "35300", "FOUGERES")
     print(doc1)
     """
     

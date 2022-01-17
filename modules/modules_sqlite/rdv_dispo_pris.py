@@ -1,5 +1,4 @@
 import sqlite3
-from unittest import result
 from . import profil as p
 from . import lire_sql as lsql
 
@@ -182,7 +181,7 @@ def affichage_final_rdv_dispo(jour, mois, annee, medecin, temps):
     return [date(jour, mois, annee), rdv_disponible(jour, mois, annee, medecin, temps)]
 
 
-def medecins_disponibilites_avec_localisation_liste(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
+def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
     medecins_de_ce_type_et_de_cette_ville = []
     medecins_de_ce_type_et_de_cette_ville_id = []
     liste_des_rdv_disponibles = []
@@ -204,51 +203,20 @@ def medecins_disponibilites_avec_localisation_liste(type_de_medecin, type_de_rdv
     
     return [medecins_de_ce_type_et_de_cette_ville, liste_des_rdv_disponibles]
 
-def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
-    resultat = medecins_disponibilites_avec_localisation_liste(type_de_medecin, type_de_rdv, ville, jour, mois, annee)
-    dico = {}
-    for i in range(len(resultat[0])):
-        dico[resultat[0][i]] = resultat[1][i]
-    return dico
+def profil_medecin_complet(string):
+    liste_attribut = string.split()
+    prenom = liste_attribut[1]
+    nom = liste_attribut[2]
+    connection = lsql.connection_bdd()
+    cursor = connection.cursor()
+    cursor.execute("SELECT mail,telephone,rue,code_postal,ville FROM medecins WHERE prenom = ? AND nom = ?", (prenom, nom))
+    donnees_personnelles_du_medecin_demande = cursor.fetchone()
+    connection.close()
+    return donnees_personnelles_du_medecin_demande
 
 
 if __name__ == "__main__" :
-    
-    """
-    creer_journee_vide(27, 1, 2022, "jules.muscle.bg@bing.fr")
-    """
-    
-    """
-    journee_existe_pour_ce_medecin(27, 1, 2022, "sipha@lecheque.com")
-    """
-    
-    """
-    passer_creneau_dispo_en_creneau_pris(27, 1, 2022, 8, 30, "sipha@lecheque.com")
-    """
-    
-    """
-    rdv_dispo(27, 1, 2022, 8, 30, "sipha@lecheque.com")
-    """
-    
-    """
-    temps_motif()
-    """
-    
-    """
-    temps_motif("generaliste", "certificat medical")
-    """
-    
-    """
-    passer_rdv_dispo_en_rdv_pris(27, 1, 2022, 13, 30, "sipha@lecheque.com", 60)
-    """
-    
-    """
-    creneau_possible_max(27, 1, 2022, 11, 15, "sipha@lecheque.com")
-    """
-    
-    """
-    rdv_disponible(27, 1, 2022, "sipha@lecheque.com", 60)
-    """
+    pass
     
     
     

@@ -28,7 +28,7 @@ def bdd_recherche(table, string):
 def lire_sql_medecin(row):
     """cette fonction cree le medecin a partir du document sql"""
     doc = p.Docteur()
-    doc.saisie(row[0], row[1], row[3], row[4], row[5], row[2])
+    doc.saisie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
     return doc
 
 def liste_medecin():

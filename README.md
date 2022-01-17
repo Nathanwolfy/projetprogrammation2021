@@ -8,7 +8,6 @@
 <br/> Élèves : Vic-Éline Carré - Ewen Dagorn - Louis-Ferdinand Dartencet - Nathan Ledergerber
 <br/> 
 <br/>Prochains objectifs :
-<br/>-coder client serveur
-<br/>-coder client patient
-<br/>-coder client docteur
-<br/>-discriminer patient ou docteur à l'aide des requêtes, savoir reconnaître les patients, pouvoir modifier les données rentrées après coup et mettre en place une manière de revenir à l'étape précédente pendant leur saisie
+<br/>-épurer code, commenter, supprimer fichiers inutiles
+<br/>-régler les derniers bugs avec les rdvs
+<br/>-finir partie docteur

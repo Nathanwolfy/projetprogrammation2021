@@ -1,15 +1,14 @@
 
 def strlist_to_list(strlist):
+    """(str) -> (list)
+    Fonction qui pour un string donné représentant une liste renvoie la liste correspondante.
+    """
     return strlist.strip('[]').replace("'", '').split(', ')
 
-def strlist2_to_list(strlist2):
-    resultat = []
-    l1 = strlist2.strip('[]').split("], [")
-    for sublist in l1:
-        resultat.append(sublist.replace("'","").split(", "))
-    return resultat
-
 def from_string_to_dict(string):
+    """(str) -> (dict)
+    Fonction qui pour un string donné représentant un dictionnaire renvoie le dittionnaire correspondant.
+    """
     version1_str = string.split("{")[1]
     version2_str = version1_str.split("}")[0]
     version3_list = version2_str.split("[")
@@ -37,3 +36,13 @@ def from_string_to_dict(string):
     for i in range(n//2):
         le_dico_enfin[version7_list[2*i]] = version7_list[2*i + 1]
     return le_dico_enfin
+
+
+"""
+def strlist2_to_list(strlist2):
+    resultat = []
+    l1 = strlist2.strip('[]').split("], [")
+    for sublist in l1:
+        resultat.append(sublist.replace("'","").split(", "))
+    return resultat
+"""

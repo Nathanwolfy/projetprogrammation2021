@@ -1,8 +1,0 @@
-- conversion str -> dico pourquoi retourner un dico vide ?
-- bien gérer si le dico est vide -> relancer la fenêtre avec une erreur à la manière d'une mauvaise combinaison
-
-- bien gérer les fermetures fenêtres
-- ne pas faire suivre si rien n'est rentré comme données
-- côté docteur avec inscription
-- que faire si pas de rdv dispo
-- bien afficher les rdvs dispo
