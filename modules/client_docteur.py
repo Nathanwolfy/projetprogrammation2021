@@ -1,5 +1,3 @@
-import sys
-
 from .modules_echanges import conversion_types
 
 from .modules_IHM.IHM_en_Python import launcher, fonctions

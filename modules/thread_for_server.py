@@ -109,8 +109,20 @@ class ThreadForServer(threading.Thread):
 
             #On initie le récap des informations
             code_initialisation_recap_patient = 'VpINITRECAP'
+            #On réceptionne les coordonnées du docteur pour le patient depuis la base de données
+            #TODO
+            rue_docteur = ''
+            ville_docteur = ''
+            code_postal_docteur = ''
+            telephone_docteur = ''
+            mail_docteur = ''
+            #On envoie l'initialisation du récap du patient ainsi que les données nécessaires
             echanges_donnees.envoi(self.conn,code_initialisation_recap_patient)
-            #TODO envoyer adresse, numéro de téléphone et email du docteur au patient pour le récap
+            echanges_donnees.envoi(self.conn,rue_docteur)
+            echanges_donnees.envoi(self.conn,ville_docteur)
+            echanges_donnees.envoi(self.conn,code_postal_docteur)
+            echanges_donnees.envoi(self.conn,telephone_docteur)
+            echanges_donnees.envoi(self.conn,mail_docteur)
             #Une fois l'initialisation du récap et les données envoyées, le thread peut s'arrêter
 
         elif choix_client == 'XXd': #Le client choisi est celui du docteur
