@@ -1,5 +1,4 @@
 - #TODO valider le rdv dans la base de données avec les notes associées
-- #TODO envoyer adresse, numéro de téléphone et email du docteur au patient pour le récap
 - #TODO supprimer argument inutile
 - #TODO type de docteur ?
 
