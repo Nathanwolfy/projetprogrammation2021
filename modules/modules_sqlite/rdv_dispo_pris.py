@@ -16,7 +16,7 @@ def journee_existe_pour_ce_medecin(jour, mois, annee, medecin):
     cursor.execute("SELECT DISTINCT medecin FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND medecin = ?", (jour, mois, annee, medecin))
     rech = cursor.fetchall()
     connection.close()
-    if rech == [] :
+    if rech == None or rech == [] :
         return False
     else :
         return True
@@ -32,7 +32,10 @@ def temps_motif(type_de_medecin, motif):
     cursor.execute("SELECT temps FROM rdvs WHERE type_de_medecin = ? AND motif = ?", (type_de_medecin, motif))
     rech = cursor.fetchone()
     connection.close()
-    return rech[0]
+    if rech == None :
+        pass
+    else :
+        return rech[0]
 
 
 def rdv_dispo(jour, mois, annee, heure, minute, medecin):
@@ -140,7 +143,7 @@ def creer_journee_vide(jour, mois, annee, medecin):
 
 def rdv_disponible(jour, mois, annee, medecin, temps):
     """renvoie une liste pour louis des rendez vous disponibles selon le temps
-    qu'il souhaite et le medecin qu'il souhaite"""
+    qu'il souhaite que le rendez vous dure et le medecin qu'il souhaite"""
     creneau = temps//15
     liste_creneaux_possibles = []
     for i in range(8,12):
