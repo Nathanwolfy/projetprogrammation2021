@@ -5,7 +5,7 @@ import sys
 
 from modules.modules_echanges import echanges_donnees
 
-host, port = ('localhost',5566) #On choisit comme adresse celle locale et un port non affecté
+host, port = ('localhost',6655) #On choisit comme adresse celle locale et un port non affecté
 
 #Création du socket
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

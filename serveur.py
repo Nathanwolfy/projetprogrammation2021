@@ -2,7 +2,7 @@ import socket
 from modules.thread_for_server import ThreadForServer
 
 
-host, port = ('',5566) #On choisit une adresse vierge et un port non affecté
+host, port = ('',6655) #On choisit une adresse vierge et un port non affecté
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Création du socket
 socket.bind((host, port)) #On associe le socket à l'adresse et au port
