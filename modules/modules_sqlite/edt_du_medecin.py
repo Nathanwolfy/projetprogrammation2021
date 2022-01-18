@@ -111,9 +111,7 @@ def return_edt(medecin):
                 mois_i += 1
             jour_i = 1
     return edt
-                
-edt = return_edt('zelvac_mc_pro@gmail.com', 'Lundi', 17, 1, 2022)   
-print(edt)        
+                      
 
 con.close()
 
