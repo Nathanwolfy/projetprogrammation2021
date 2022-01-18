@@ -206,6 +206,8 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     return [medecins_de_ce_type_et_de_cette_ville, liste_des_rdv_disponibles]
 
 def profil_medecin_complet(string):
+        """cette fonction prends une string du type "Dr Prenom Nom" et les
+    donnees personnelles du medecin sont renvoyes"""
     liste_attribut = string.split()
     prenom = liste_attribut[1]
     nom = liste_attribut[2]
@@ -215,10 +217,6 @@ def profil_medecin_complet(string):
     donnees_personnelles_du_medecin_demande = cursor.fetchone()
     connection.close()
     return donnees_personnelles_du_medecin_demande
-
-
-if __name__ == "__main__" :
-    pass
     
     
     
