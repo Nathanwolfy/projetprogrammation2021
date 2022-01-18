@@ -209,7 +209,7 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     return dictionnaire_medecins_et_leur_disponibilites
 
 def profil_medecin_complet(string):
-        """cette fonction prends une string du type "Dr Prenom Nom" et les
+    """cette fonction prends une string du type "Dr Prenom Nom" et les
     donnees personnelles du medecin sont renvoyes"""
     liste_attribut = string.split()
     prenom = liste_attribut[1]

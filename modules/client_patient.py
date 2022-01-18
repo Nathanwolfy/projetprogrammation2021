@@ -66,14 +66,14 @@ def client_patient(socket):
             str_dico_type_rdv = echanges_donnees.reception(socket) #On réceptionne depuis le serveur le dictionnaire sous form d'un string nécessaire au foncionnement de l'IHM de prise de rdv
             dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv) #On le convertit effectivement en dictionnaire
 
-            launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv
+            launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions du patient préalablement remplies 
             continuation = fonctions.continus()
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
                 stop_continuation.arret_processus(socket)
             else: #Dans les autres cas le processus se déroule normalement
                 #On réceptionne les conditions du rdv choisies par le patient
-                localisation = fonctions.Clocation().upper() #upper() car toutes les villes sont en masjuscule dans la bdd
+                localisation = fonctions.Clocation() #upper() car toutes les villes sont en masjuscule dans la bdd
                 type_docteur = fonctions.Cpraticien()
                 type_rdv = fonctions.CRdV()
                 date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
@@ -92,9 +92,8 @@ def client_patient(socket):
 
         if confirmation_serveur == '04pINITAFFDISPO': #Le serveur confirme qu'il existe des rdvs dispos sous ces conditions
             str_dico_disponibilites = echanges_donnees.reception(socket) #On réceptionne sous forme d'un string le dictionnaire permettant l'affichage des rdvs dispos
-            dico_disponibilites = conversion_types.from_string_to_dict(str_dico_disponibilites) #One le convertit effectivement sous la forme d'un dictionnaore
-
-            launcher.sequence('IVp',(dico_disponibilites, rdv_non_dispo)) #On lance la fenêtre d'affichage des rdvs dispos avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions remplies par le patient
+            dico_disponibilites = conversion_types.from_string_to_dict(str_dico_disponibilites) #On le convertit effectivement sous la forme d'un dictionnaore
+            launcher.sequence('IVp',dico_disponibilites) #On lance la fenêtre d'affichage des rdvs dispossous les conditions remplies par le patient
             continuation = fonctions.continus()
 
             if continuation: #Si le rdv est validé par le patient
