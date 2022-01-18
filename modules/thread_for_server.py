@@ -79,7 +79,7 @@ class ThreadForServer(threading.Thread):
                     #Le serveur récupère de la base de données les disponibilités selon les conditions
                     dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee))
 
-                    if dico_disponibilités != b'{}': #S'il existe des rdvs dispo sous ces conditions
+                    if dico_disponibilités != '{}': #S'il existe des rdvs dispo sous ces conditions
                         code_initialisation_affichage_disponibilites = '04pINITAFFDISPO' #On initialise l'affichage des disponibilités
 
                         echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites) #Le serveur envoie successivement la validation qu'il existe des rdvs sous ces conditions et les disponibilités
