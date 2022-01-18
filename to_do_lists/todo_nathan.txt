@@ -1,5 +1,7 @@
 - #TODO supprimer argument inutile
 
 - bien gérer les fermetures fenêtres
+- fenêtre quels jours de la semaine pour docteur
+- edt docteur
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
