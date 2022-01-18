@@ -1,4 +1,5 @@
 FORMAT = 'utf-8'
+import time
 
 def exposant_p2_sup(nbr):
     """(int) -> (str)
@@ -26,4 +27,6 @@ def envoi(support,message):
     nbr = exposant_p2_sup(len(message)).encode(FORMAT)
     print(message)
     support.sendall(nbr)
+    time.sleep(0.001)
     support.sendall(message)
+    time.sleep(0.001)
