@@ -203,7 +203,10 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     for elt in medecins_de_ce_type_et_de_cette_ville_id:
         liste_des_rdv_disponibles.append(rdv_disponible(jour, mois, annee, elt, temps))
     
-    return [medecins_de_ce_type_et_de_cette_ville, liste_des_rdv_disponibles]
+    dictionnaire_medecins_et_leur_disponibilites = {}
+    for i in range(len(medecins_de_ce_type_et_de_cette_ville)):
+        dictionnaire_medecins_et_leur_disponibilites[medecins_de_ce_type_et_de_cette_ville[i]] = liste_des_rdv_disponibles[i]
+    return dictionnaire_medecins_et_leur_disponibilites
 
 def profil_medecin_complet(string):
         """cette fonction prends une string du type "Dr Prenom Nom" et les
