@@ -14,7 +14,7 @@ def construction_edt(medecin, jour, mois, annee, heure, minute, motif, note):
     con = lsql.connection_bdd()
     cursor = con.cursor()
     nom_du_jour = nom_jour(jour, mois, annee)
-    cursor.execute('SELECT * FROM rdv_dispos WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', ([medecin], jour, mois, annee, heure, minute))
+    cursor.execute('SELECT * FROM rdv_dispos WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', (medecin, jour, mois, annee, heure, minute))
     dispo = cursor.fetchone()[6]
     if dispo == 1:
         cursor.execute('SELECT * FROM rdvs WHERE motif=?', [motif])
