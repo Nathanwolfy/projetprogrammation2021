@@ -3,3 +3,4 @@
 - bien gérer les dates, ex: si on donne le 27012022 ou 2712022, est-ce que ça change qqchose ?
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
+ça c'est good
