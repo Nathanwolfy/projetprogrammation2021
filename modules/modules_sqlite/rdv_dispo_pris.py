@@ -45,7 +45,7 @@ def rdv_dispo(jour, mois, annee, heure, minute, medecin):
     connection.close()
     if rech == None or rech[0] == 0 :
         return False
-    else:
+    else :
         return True
 
 
@@ -220,23 +220,3 @@ def profil_medecin_complet(string):
     donnees_personnelles_du_medecin_demande = cursor.fetchone()
     connection.close()
     return donnees_personnelles_du_medecin_demande
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
