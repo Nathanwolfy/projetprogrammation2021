@@ -22,4 +22,6 @@ def construction_edt(nom_medecin, jour, mois, annee, heure, minute, motif, note)
         cursor.execute('SELECT * FROM rdvs WHERE motif=?', [motif])
         duree = cursor.fetchone()[2]
         cursor.execute('INSERT INTO edt VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (identifiant_medecin, nom_du_jour, jour, mois, annee, heure, minute, motif, duree, note))
-    print('Le rendez-vou a été ajouté.') 
+        con.commit()
+    con.close()
+    print('Le rendez-vous a été ajouté.') 

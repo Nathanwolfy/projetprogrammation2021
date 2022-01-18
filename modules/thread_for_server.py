@@ -147,7 +147,7 @@ class ThreadForServer(threading.Thread):
 
                 elif reponse == '02dCREACOMPTE': #Le docteur choisir de créer son compte
                     str_liste_types_docteur = str(lire_sql.liste_type_medecin()) #Le serveur envoie la liste des types de médecins
-                    echanges_donnees.envoi(str_liste_types_docteur)
+                    echanges_donnees.envoi(self.conn,str_liste_types_docteur)
                     #On réceptionne les données saisies par le docteur lors de son inscription
                     nom_docteur = echanges_donnees.reception(self.conn)
                     prenom_docteur = echanges_donnees.reception(self.conn)
