@@ -43,7 +43,7 @@ def rdv_dispo(jour, mois, annee, heure, minute, medecin):
     cursor.execute("SELECT dispo FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND heure = ? AND minute = ? AND medecin = ?", (jour, mois, annee, heure, minute, medecin))
     rech = cursor.fetchone()
     connection.close()
-    if rech[0] == 0 :
+    if rech == None or rech[0] == 0 :
         return False
     else:
         return True
@@ -194,7 +194,7 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     cursor.execute("SELECT prenom, nom, ville, mail FROM medecins WHERE travail = ?", (type_de_medecin,))
     medecins_de_ce_type = cursor.fetchall()
     for elt in medecins_de_ce_type:
-        if elt[2] == ville :
+        if elt[2] == ville.upper() :
             medecins_de_ce_type_et_de_cette_ville.append("Dr " + elt[0] + " " + elt[1])
             medecins_de_ce_type_et_de_cette_ville_id.append(elt[3])
     connection.close()
