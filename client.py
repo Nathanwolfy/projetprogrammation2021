@@ -1,6 +1,7 @@
 from modules import client_docteur, client_patient
 from modules.modules_IHM.IHM_en_Python import launcher, fonctions
 import socket
+import sys
 
 from modules.modules_echanges import echanges_donnees
 
@@ -16,6 +17,7 @@ reponse = echanges_donnees.reception(socket) #On attend la validation du serveur
 if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix du client par le serveur
     #Afficher l'interface Qt de choix
     launcher.sequence('Ig',[0,0]) #TODO supprimer argument inutile
+    continuation = fonctions.continus()
     choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
 
     if choix_client == 'XXp': #Le client patient est choisi
@@ -25,7 +27,14 @@ if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix d
     elif choix_client == 'XXd': #Le client docteur est choisi
         echanges_donnees.envoi(socket,choix_client) #On informe le serveur du choix du client docteur
         client_docteur.client_docteur(socket) #On démarre le client docteur
-    else: 
+
+    elif not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+        requete_fermeture = 'XXgKILLTHREAD'
+        echanges_donnees.envoi(socket,requete_fermeture)
+        sys.exit()
+
+    else: #Dans tous les autres cas, c'est un erreur
         raise NotImplementedError
+
 else: #Si le serveur ne valide pas, l'application s'arrête
     raise NotImplementedError

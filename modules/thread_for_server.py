@@ -5,7 +5,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 '''
 
 import threading
-from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql,exploitation_sql_rendez_vous, rdv_dispo_pris
+from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt
 from .modules_echanges import echanges_donnees
 
 FORMAT = 'utf-8'
@@ -79,7 +79,7 @@ class ThreadForServer(threading.Thread):
                     #Le serveur récupère de la base de données les disponibilités selon les conditions
                     dico_disponibilités = str(rdv_dispo_pris.medecins_disponibilites_avec_localisation(type_docteur,type_rdv,localisation,jour,mois,annee))
 
-                    if dico_disponibilités != b'{}': #S'il existe des rdvs dispo sous ces conditions
+                    if dico_disponibilités != '{}': #S'il existe des rdvs dispo sous ces conditions
                         code_initialisation_affichage_disponibilites = '04pINITAFFDISPO' #On initialise l'affichage des disponibilités
 
                         echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites) #Le serveur envoie successivement la validation qu'il existe des rdvs sous ces conditions et les disponibilités
@@ -90,9 +90,12 @@ class ThreadForServer(threading.Thread):
                         if reponse_patient == '04pVALIDATIONRDV': #Le patient valide son rdv
                             #On réceptionne le nom du docteur, l'horaire et les notes pour le docteur suite à la validation du rdv
                             nom_docteur_choisi_rdv = echanges_donnees.reception(self.conn)
-                            horaire_rdv_choisi = echanges_donnees.reception(self.conn)
+                            horaire_rdv_choisi = echanges_donnees.reception(self.conn).split(':')
                             notes_pour_docteur = echanges_donnees.reception(self.conn)
-                            #TODO valider le rdv dans la base de données avec les notes associées
+                            heure = str(horaire_rdv_choisi[0])
+                            minute = str(horaire_rdv_choisi[1])
+                            
+                            construction_edt.construction_edt(nom_docteur_choisi_rdv, jour, mois, annee, heure, minute, type_rdv, notes_pour_docteur) #On ajoute le rdv dans la base de données
                             rdv_validé = True #Le rdv est effectivement validé
                         elif False: #Dans le cas où le client revient en arrière
                             pass

@@ -14,6 +14,7 @@ class Ui_Form(object):
 
     def __init__(self,arg):
         self.arg = arg
+        self.choix = ''
 
     def setupUi(self, Form):
         Form.setObjectName("Form")

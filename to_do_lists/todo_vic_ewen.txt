@@ -1,5 +1,4 @@
-- que faire si mauvais format de données pendant inscription ? (penser à comparer les valeurs tout en minuscule/majuscule en mode caps(Toulouse) == caps(TOULOUSE) : True)
 - les rdvs sont-ils bien inscrits une fois pris ? (voir avec Vic pour Nathan)
-- bien gérer les dates, ex: si on donne le 27012022 ou 2712022, est-ce que ça change qqchose ?
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
+ça c'est good

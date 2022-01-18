@@ -16,7 +16,7 @@ def journee_existe_pour_ce_medecin(jour, mois, annee, medecin):
     cursor.execute("SELECT DISTINCT medecin FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND medecin = ?", (jour, mois, annee, medecin))
     rech = cursor.fetchall()
     connection.close()
-    if rech == [] :
+    if rech == None or rech == [] :
         return False
     else :
         return True
@@ -32,7 +32,10 @@ def temps_motif(type_de_medecin, motif):
     cursor.execute("SELECT temps FROM rdvs WHERE type_de_medecin = ? AND motif = ?", (type_de_medecin, motif))
     rech = cursor.fetchone()
     connection.close()
-    return rech[0]
+    if rech == None :
+        pass
+    else :
+        return rech[0]
 
 
 def rdv_dispo(jour, mois, annee, heure, minute, medecin):
@@ -43,9 +46,9 @@ def rdv_dispo(jour, mois, annee, heure, minute, medecin):
     cursor.execute("SELECT dispo FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND heure = ? AND minute = ? AND medecin = ?", (jour, mois, annee, heure, minute, medecin))
     rech = cursor.fetchone()
     connection.close()
-    if rech[0] == 0 :
+    if rech == None or rech[0] == 0 :
         return False
-    else:
+    else :
         return True
 
 
@@ -140,7 +143,7 @@ def creer_journee_vide(jour, mois, annee, medecin):
 
 def rdv_disponible(jour, mois, annee, medecin, temps):
     """renvoie une liste pour louis des rendez vous disponibles selon le temps
-    qu'il souhaite et le medecin qu'il souhaite"""
+    qu'il souhaite que le rendez vous dure et le medecin qu'il souhaite"""
     creneau = temps//15
     liste_creneaux_possibles = []
     for i in range(8,12):
@@ -182,6 +185,10 @@ def affichage_final_rdv_dispo(jour, mois, annee, medecin, temps):
 
 
 def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, ville, jour, mois, annee):
+    """cette fonction prends en etree un type de medecin, un motif de rendez 
+    vous, une ville, une date afin de ressortir dans une ville precise, les 
+    emplois du temps des medecins precisement qui peuvent accomplir cette 
+    consultation"""
     medecins_de_ce_type_et_de_cette_ville = []
     medecins_de_ce_type_et_de_cette_ville_id = []
     liste_des_rdv_disponibles = []
@@ -190,20 +197,23 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     cursor.execute("SELECT prenom, nom, ville, mail FROM medecins WHERE travail = ?", (type_de_medecin,))
     medecins_de_ce_type = cursor.fetchall()
     for elt in medecins_de_ce_type:
-        liste_adresse = elt[2].split()
-        for mot in liste_adresse:
-            if mot == ville:
-                medecins_de_ce_type_et_de_cette_ville.append("Dr " + elt[0] + " " + elt[1])
-                medecins_de_ce_type_et_de_cette_ville_id.append(elt[3])
+        if elt[2] == ville.upper() :
+            medecins_de_ce_type_et_de_cette_ville.append("Dr " + elt[0] + " " + elt[1])
+            medecins_de_ce_type_et_de_cette_ville_id.append(elt[3])
     connection.close()
     
     temps = temps_motif(type_de_medecin, type_de_rdv)
     for elt in medecins_de_ce_type_et_de_cette_ville_id:
         liste_des_rdv_disponibles.append(rdv_disponible(jour, mois, annee, elt, temps))
     
-    return [medecins_de_ce_type_et_de_cette_ville, liste_des_rdv_disponibles]
+    dictionnaire_medecins_et_leur_disponibilites = {}
+    for i in range(len(medecins_de_ce_type_et_de_cette_ville)):
+        dictionnaire_medecins_et_leur_disponibilites[medecins_de_ce_type_et_de_cette_ville[i]] = liste_des_rdv_disponibles[i]
+    return dictionnaire_medecins_et_leur_disponibilites
 
 def profil_medecin_complet(string):
+    """cette fonction prends une string du type "Dr Prenom Nom" et les
+    donnees personnelles du medecin sont renvoyes"""
     liste_attribut = string.split()
     prenom = liste_attribut[1]
     nom = liste_attribut[2]
@@ -213,27 +223,3 @@ def profil_medecin_complet(string):
     donnees_personnelles_du_medecin_demande = cursor.fetchone()
     connection.close()
     return donnees_personnelles_du_medecin_demande
-
-
-if __name__ == "__main__" :
-    pass
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

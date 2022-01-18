@@ -13,6 +13,7 @@ from . import fonctions
 class Ui_Form(object):
     def __init__(self, arg):
         self.dico = arg
+        self
     
     def setupUi(self, Form):
         Form.setObjectName("Form")

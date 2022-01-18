@@ -1,7 +1,7 @@
-- #TODO valider le rdv dans la base de données avec les notes associées
 - #TODO supprimer argument inutile
 
 - bien gérer les fermetures fenêtres
-- ne pas faire suivre si rien n'est rentré comme données
+- fenêtre quels jours de la semaine pour docteur
+- edt docteur
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles

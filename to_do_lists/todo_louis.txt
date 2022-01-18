@@ -1,6 +1,7 @@
-- edt côté docteur fonctionnel ?
-- commennt Nathan (l'extrémiste) peut récupérer les données de l'inscription docteur
-- mettre le nom Doctolibre et pas DoctObélix bordel de merde
 - virer les arguments inutiles au lancement des séquences
+- fenêtre détails rdv
+- supprimer variable globale
+EDTdocteur : arguments :  un dico par jour, clé: horaire et valeurs : motif et nom du patient
+après création compte, fenêtre Lundi mardi... pour rentrer heure de début et heure de fin
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
