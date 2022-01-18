@@ -18,17 +18,6 @@ def nb_jours_dans_un_mois(mois, annee):
         return 31
     return 30
 
-'''S'il y a besoin de renvoyer l'emploi du temps de la semaine à partir de la date d'aujourd'hui'''
-now = time.localtime(time.time())
-actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) nb_jour mois annee
-nom_jour = JOURS[DAYS.index(actual_time[:3])]
-date_actuelle = nom_jour + ' ' + actual_time[4:]
-D = date_actuelle.split()
-nom_jour = D[0]
-jour = int(D[1])
-mois = int(D[2])
-annee = int(D[3])
-
 def connection(bdd):
     try:
         connect = sqlite3.connect(bdd)
@@ -69,7 +58,7 @@ def return_edt(medecin):
     '''Cette fonction retourne l'emploi du temps de la semaine d'un medecin particulier, 
     en prenant comme argument n'importe quel jour de la semaine'''
     edt = {}
-    #S'il y a besoin de renvoyer l'emploi du temps de la semaine à partir de la date d'aujourd'hui
+    #Il y a besoin de renvoyer l'emploi du temps de la semaine actuelle, donc de savoir le jour actuel
     now = time.localtime(time.time())
     actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) nb_jour mois annee
     nom_jour = JOURS[DAYS.index(actual_time[:3])]
