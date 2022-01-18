@@ -43,9 +43,9 @@ def rdv_dispo(jour, mois, annee, heure, minute, medecin):
     cursor.execute("SELECT dispo FROM rdv_dispos WHERE jour = ? AND mois = ? AND annee = ? AND heure = ? AND minute = ? AND medecin = ?", (jour, mois, annee, heure, minute, medecin))
     rech = cursor.fetchone()
     connection.close()
-    if rech[0] == 0 :
+    if rech == None or rech[0] == 0 :
         return False
-    else:
+    else :
         return True
 
 
@@ -194,7 +194,7 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     cursor.execute("SELECT prenom, nom, ville, mail FROM medecins WHERE travail = ?", (type_de_medecin,))
     medecins_de_ce_type = cursor.fetchall()
     for elt in medecins_de_ce_type:
-        if elt[2] == ville :
+        if elt[2] == ville.upper() :
             medecins_de_ce_type_et_de_cette_ville.append("Dr " + elt[0] + " " + elt[1])
             medecins_de_ce_type_et_de_cette_ville_id.append(elt[3])
     connection.close()
@@ -209,7 +209,7 @@ def medecins_disponibilites_avec_localisation(type_de_medecin, type_de_rdv, vill
     return dictionnaire_medecins_et_leur_disponibilites
 
 def profil_medecin_complet(string):
-        """cette fonction prends une string du type "Dr Prenom Nom" et les
+    """cette fonction prends une string du type "Dr Prenom Nom" et les
     donnees personnelles du medecin sont renvoyes"""
     liste_attribut = string.split()
     prenom = liste_attribut[1]
@@ -220,23 +220,3 @@ def profil_medecin_complet(string):
     donnees_personnelles_du_medecin_demande = cursor.fetchone()
     connection.close()
     return donnees_personnelles_du_medecin_demande
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
