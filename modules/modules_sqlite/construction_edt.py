@@ -10,7 +10,7 @@ def nom_jour(jour, mois, annee):
     con_1.close()
     return req[1]
 
-def construction_edt(medecin, jour, mois, annee, heure, minute, motif):
+def construction_edt(medecin, jour, mois, annee, heure, minute, motif, note):
     con = lsql.connection_bdd()
     cursor = con.cursor()
     nom_du_jour = nom_jour(jour, mois, annee)
@@ -19,7 +19,7 @@ def construction_edt(medecin, jour, mois, annee, heure, minute, motif):
     if dispo == 1:
         cursor.execute('SELECT * FROM rdvs WHERE motif=?', [motif])
         duree = cursor.fetchone()[2]
-        cursor.execute('INSERT INTO edt VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', ([medecin], nom_du_jour, jour, mois, annee, heure, minute, motif, duree))
+        cursor.execute('INSERT INTO edt VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', ([medecin], nom_du_jour, jour, mois, annee, heure, minute, motif, duree, note))
     return 'Le rendez-vous a été ajouté'
 
     
