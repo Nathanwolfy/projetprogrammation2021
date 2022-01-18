@@ -58,7 +58,7 @@ def return_edt(medecin):
     '''Cette fonction retourne l'emploi du temps de la semaine d'un medecin particulier, 
     en prenant comme argument n'importe quel jour de la semaine'''
     edt = {}
-    #Il y a besoin de renvoyer l'emploi du temps de la semaine actuelle, donc de savoir le jour actuel
+    #Renvoie l'emploi du temps de la semaine actuelle donc on a besoin de la date d'aujourd'hui
     now = time.localtime(time.time())
     actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) nb_jour mois annee
     nom_jour = JOURS[DAYS.index(actual_time[:3])]
@@ -75,8 +75,6 @@ def return_edt(medecin):
         cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=?', (medecin, jour_i, mois_i, annee_i))
         rows = cursor.fetchall()
         liste_horaire = []
-        if len(rows) == 0:
-            a = 1 #ne fait rien
         for row in rows:
             heure = row[5]
             minute = row[6]
