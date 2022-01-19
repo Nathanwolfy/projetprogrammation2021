@@ -9,11 +9,13 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from . import fonctions
+
+
 
 class Ui_Form(object):
     def __init__(self, arg):
         self.arg = arg
+        self.continuation = False
 
     def setupUi(self, Form):
         n = max((len(self.arg[0]), len(self.arg[1]), len(self.arg[2]), len(self.arg[3]), len(self.arg[4]), len(self.arg[5])))
@@ -60,11 +62,14 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.continu(False)
-        self.FermepushButton.released.connect(lambda: fonctions.continu(True))
+        self.FermepushButton.released.connect(lambda: self.add(self.continuation, True))
 
         self.FermepushButton.released.connect(Form.close)
+
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def add(self, var, arg):
+        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

@@ -9,12 +9,20 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from . import fonctions
+
+
 
 class Ui_Form(object):
     def __init__(self, arg):
         self.dico = arg[0]
         self.bool = arg[1]
+        self.continuation = False
+        self.localisation = ''
+        self.type_docteur = ''
+        self.type_rdv = ''
+        self.jour_rdv = ''
+        self.mois_rdv = ''
+        self.annee_rdv =''
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -66,22 +74,26 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.continu(False)
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.continu(True))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
+
+        self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
+        self.Praticien_comboBox.currentTextChanged.connect(self.update_rdv_type_combobox)
+
+        self.ValidationpushButton.released.connect(lambda: self.add(self.localisation, self.Localisation_LineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.type_docteur, self.Praticien_comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.type_rdv, self.RdV_comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.jour_rdv, self.jourLineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.mois_rdv, self.moisLineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.annee_rdv, self.anneeLineEdit.text()))
 
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
-        self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.location(self.Localisation_LineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.praticien(self.Praticien_comboBox.currentText()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.Rdv(self.RdV_comboBox.currentText()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fijour(self.jourLineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fimois(self.moisLineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiannee(self.anneeLineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(Form.close)
-        self.Praticien_comboBox.currentTextChanged.connect(self.update_rdv_type_combobox)
+        self.ValidationpushButton.released.connect(Form.close)
+
         QtCore.QMetaObject.connectSlotsByName(Form)
         
-
+    def add(self, var, arg):
+        var = arg
+    
     #slot permettant de mettre à jour la rdv_combobox
     def update_rdv_type_combobox(self, docteur_type):
         self.RdV_comboBox.clear()

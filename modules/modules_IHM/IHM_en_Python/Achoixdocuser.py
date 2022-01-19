@@ -8,10 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from . import fonctions
+
 
 class Ui_Form(object):
-
     def __init__(self,arg):
         self.arg = arg
         self.choix = ''
@@ -33,13 +32,15 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.DoctorButton.released.connect(lambda: self.add(self.choix, 'XXd'))
-        self.PatientButton.released.connect(lambda: self.add(self.choix, 'XXp'))  
         self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
         self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
 
+        self.DoctorButton.released.connect(lambda: self.add(self.choix, 'XXd'))
+        self.PatientButton.released.connect(lambda: self.add(self.choix, 'XXp'))  
+
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
+
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def add(self, var, arg):
