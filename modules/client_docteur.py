@@ -1,7 +1,7 @@
 from .modules_echanges import conversion_types
 
 from .modules_IHM.IHM_en_Python import launcher, fonctions
-from .modules_echanges import echanges_donnees
+from .modules_echanges import echanges_donnees, types_exception
 
 def client_docteur(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
@@ -70,9 +70,9 @@ def client_docteur(socket):
                     
 
                 else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
-                    raise NotImplementedError
+                    raise types_exception.InvalidServerReponseError
 
                 clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
-            raise NotImplementedError
+            raise types_exception.InvalidServerReponseError
