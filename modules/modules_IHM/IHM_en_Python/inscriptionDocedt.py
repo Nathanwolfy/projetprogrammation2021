@@ -10,8 +10,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
 
 
-class Ui_Form(object):
 
+class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
         self.continuation = False
@@ -157,17 +157,20 @@ class Ui_Form(object):
         self.info1label.setGeometry(QtCore.QRect(0, 100, 401, 16))
         self.info1label.setObjectName("info1label")
 
+
         self.retranslateUi(Form)
 
         self.ValidationButton.released.connect(lambda: self.add(self.continuation, True))
-        
-        self.ValidationButton.released.connect(Form.close)
+
         self.ValidationButton.released.connect(lambda: self.add(self.lundi, [self.deblunlineEdit.text(), self.finlunlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.mardi, [self.debmarlineEdit.text(), self.finmarlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.mercredi, [self.debmerlineEdit.text(), self.finmerlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.jeudi, [self.debjeulineEdit.text(), self.finjeulineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.vendredi, [self.debvenlineEdit.text(), self.finvenlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.samedi, [self.debsamlineEdit.text(), self.finsamlineEdit.text()]))
+  
+        self.ValidationButton.released.connect(Form.close)
+
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def add(self, var, arg):
