@@ -55,8 +55,7 @@ def lundi_de_la_semaine(nom_jour, jour, mois, annee):
     return (jour, mois, annee)
 
 def return_edt(medecin):
-    '''Cette fonction retourne l'emploi du temps de la semaine d'un medecin particulier, 
-    en prenant comme argument n'importe quel jour de la semaine'''
+    '''Cette fonction retourne l'emploi du temps de la semaine actuelle d'un medecin particulier '''
     edt = {}
     #Renvoie l'emploi du temps de la semaine actuelle donc on a besoin de la date d'aujourd'hui
     now = time.localtime(time.time())
@@ -74,14 +73,14 @@ def return_edt(medecin):
     for i in range(6):
         cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=?', (medecin, jour_i, mois_i, annee_i))
         rows = cursor.fetchall()
-        liste_horaire = []
+        liste_horaire = [] #prend les heures du début du rendez-vous
         for row in rows:
             heure = row[5]
             minute = row[6]
             horaire = e.Heure(heure, minute)
             liste_horaire.append(horaire)
             liste_horaire.sort()
-        liste_creneau = []
+        liste_creneau = [] #prend les créneaux : ex : [08:00-08:45, 15:15-16:30]
         for h in liste_horaire:
             cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', (medecin, jour_i, mois_i, annee_i, h.heure, h.minute))
             duree = int(cursor.fetchone()[8])
