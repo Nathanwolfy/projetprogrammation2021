@@ -5,10 +5,10 @@ from . import Bconnexionouinscription
 from . import Cpriserdv
 from . import DEdTPatient
 from . import DEdTDoc
-from . import InscriptionDoc
-from . import InscriptionPat
 from . import Erecap
+from . import InscriptionDoc
 from . import InscriptionDocedt
+from . import InscriptionPat
 
 seq={'Yp':InscriptionPat, 'YdA':InscriptionDoc, 'YdB': InscriptionDocedt, 'Ig':Achoixdocuser, 'IIg':Bconnexionouinscription, 'IIIp':Cpriserdv, 'IVp' :DEdTPatient, 'IVd' : DEdTDoc, 'Vp': Erecap}
 
