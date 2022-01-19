@@ -14,6 +14,10 @@ from . import fonctions
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
+        self.continuation = False
+        self.creation_compte = False
+        self.identifiant_client = ''
+        self.motdepasse_client = ''
         
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -48,11 +52,10 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         
-        fonctions.continu(False)
-        self.InscriptionButton.released.connect(lambda: fonctions.continu(True))
-        self.ConnexionButton.released.connect(lambda: fonctions.continu(True))  
+        self.InscriptionButton.released.connect(lambda: add(self.continuation, True))
+        self.ConnexionButton.released.connect(lambda: add(self.continuation, True))  
 
-        self.ConnexionButton.released.connect(lambda: fonctions.verificationId(self.NomPrenom_LineEdit.text()))
+        self.ConnexionButton.released.connect(lambda: add(self.continuation, True))
         self.ConnexionButton.released.connect(lambda: fonctions.verificationMdP(self.Mdp_LineEdit.text()))
         self.ConnexionButton.released.connect(lambda: fonctions.con_ins(False))
         self.InscriptionButton.released.connect(lambda: fonctions.con_ins(True))
@@ -61,6 +64,9 @@ class Ui_Form(object):
         if self.arg != '':
             self.NomPrenom_LineEdit.insert(self.arg)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def add(self, var, arg):
+        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

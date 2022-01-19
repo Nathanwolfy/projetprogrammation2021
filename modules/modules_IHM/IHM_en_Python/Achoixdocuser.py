@@ -38,8 +38,8 @@ class Ui_Form(object):
         self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
         self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
 
-        def add(self, var, arg):
-            var = arg
+    def add(self, var, arg):
+        var = arg
 
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
