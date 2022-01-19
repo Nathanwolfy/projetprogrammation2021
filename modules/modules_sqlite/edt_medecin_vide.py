@@ -4,6 +4,7 @@ from . import lire_sql as lsql
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
+
 def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi):
     '''Crée l'emploi du temps vide pour un médecin pendant un an (mêmes horaires pour toute l'année)'''
     heure_lundi_debut, heure_lundi_fin = horaire_lundi
@@ -12,6 +13,7 @@ def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, ho
     heure_jeudi_debut, heure_jeudi_fin = horaire_jeudi
     heure_vendredi_debut, heure_vendredi_fin = horaire_vendredi
     heure_samedi_debut, heure_samedi_fin = horaire_samedi
+       
     #convertit le string en objet de classe Heure
     if heure_lundi_debut != "" and heure_lundi_fin != "":
             horaire_lundi_debut = e.convert(heure_lundi_debut)
@@ -49,46 +51,45 @@ def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, ho
     else:
         horaire_samedi_debut = None
         horaire_samedi_fin = None
-    Liste_heures = [horaire_lundi_debut, horaire_lundi_fin, horaire_mardi_debut, horaire_mardi_fin, horaire_mercredi_debut, horaire_mercredi_fin, horaire_jeudi_debut, horaire_jeudi_fin, horaire_vendredi_debut, horaire_vendredi_fin, horaire_samedi_debut, horaire_samedi_fin]
-    edt = {}
+    liste_heures = [horaire_lundi_debut, horaire_lundi_fin, horaire_mardi_debut, horaire_mardi_fin, horaire_mercredi_debut, horaire_mercredi_fin, horaire_jeudi_debut, horaire_jeudi_fin, horaire_vendredi_debut, horaire_vendredi_fin, horaire_samedi_debut, horaire_samedi_fin]
     #construit l'emploi du temps semaine par semaine
     con_1 = lsql.connection_bdd_calendrier()
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nom_jour=?', ['Lundi'])
     rows = cursor_1.fetchall()
-    for (i, row) in enumerate(rows): #Un row = un lundi
-        id_lundi = row[0]
-        liste_id = []
-        for i in range(6):
-            liste_id.append(id_lundi)
-            id_lundi += 1
-        cursor_1.executemany('SELECT * FROM calendrier WHERE id_jour=?', liste_id)
-        semaine = cursor_1.fetchall()
-        con = lsql.connection_bdd()
-        cursor = con.cursor()
-        liste_jour_i = []
-        liste_jour_i_pour_rdv_dispos = []
-        heure_debut = Liste_heures[2*i]
-        heure_fin = Liste_heures[2*i+1]
-        if heure_debut != None and heure_fin != None:
-            if heure_debut < e.Heure(12, 0):
-                for heure in range(heure_debut.heure, 12):
-                    if heure_debut.minute != 0:
-                        for minute in range(heure_debut.minute, 46, 15):
-                            liste_jour_i.append(e.Heure(heure, minute))
-                    else:
-                        for minute in range(0, 46, 15):
-                            liste_jour_i.append(e.Heure(heure, minute))
-            if heure_fin > e.Heure(13, 0):
-                for heure in range(13, heure_fin.heure):
-                    for minute in range(0, 46, 15):
-                        liste_jour_i.append(e.Heure(heure, minute))
-            liste_jour_i.append(heure_fin)
-            liste_jour_i_pour_rdv_dispos.append((medecin, semaine[i][1], semaine[i][2], semaine[i][3], semaine[i][4]))
-            liste_jour_i_pour_rdv_dispos += liste_jour_i
-        cursor.executemany('INSERT INTO rdv_dispos VALUES (?, ?, ?, ?, ?, ?, ?)', liste_jour_i_pour_rdv_dispos)
-        edt[JOURS[i]] = liste_jour_i
-    return edt
+    premier_mois = rows[0][3]
+    annee = rows[0][4]
+    for row in rows: #Un row = un lundi
+        if ((row[3] == premier_mois and row[4] == annee) or (row[3] == premier_mois + 1 and row[4] == annee)) or (premier_mois == 12 and (row[3] == 12 or row[3] == 1)): #Arbitrairement on s'arrête au bout de 2 mois
+            id_lundi = row[0]
+            liste_id = []
+            for j in range(6): #pour la semaine (sauf le dimanche)
+                liste_id.append(id_lundi)
+                cursor_1.execute('SELECT * FROM calendrier WHERE id_jour=?', (id_lundi,)) #prend chaque jour de la semaine
+                jour_de_la_semaine = cursor_1.fetchone()
+                id_lundi += 1
+                con = lsql.connection_bdd()
+                cursor = con.cursor()
+                liste_jour_j_pour_rdv_dispos = [] #va être remplie des horaires de la journée
+                heure_debut = liste_heures[2*j]
+                heure_fin = liste_heures[2*j+1]
+                if heure_debut != None and heure_fin != None:
+                    if heure_debut < e.Heure(12, 0): #Si le médecin travaille le matin
+                        for heure in range(heure_debut.heure, 12):
+                            if heure_debut.minute != 0: #S'il commence à une heure pas ronde
+                                for minute in range(heure_debut.minute, 46, 15):
+                                    liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure, minute, medecin, 1))
+                            else:
+                                for minute in range(0, 46, 15):
+                                    liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure, minute, medecin, 1))
+                    if heure_fin > e.Heure(13, 0): #Si le médecin travaille l'après-midi
+                        for heure in range(13, heure_fin.heure):
+                            for minute in range(0, 46, 15):
+                                liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure, minute, medecin, 1))
+                    liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure_fin.heure, heure_fin.minute, medecin, 1)) #dernier horaire de la journée
+                cursor.executemany('INSERT INTO rdv_dispos VALUES (?, ?, ?, ?, ?, ?, ?)', liste_jour_j_pour_rdv_dispos)
+                con.commit()
+    con_1.close()
+    con.close()
+    return('L\'emploi du temps a été ajouté') 
 
-edt = edt_medecin_vide("rourajules@bing.fr", "08:00", "19:00", "09:00", "17:00", "08:30", "17:45", "09:45", "18:00", "08:15", "19:00", "", "")
-print(edt)
