@@ -1,7 +1,7 @@
 from .modules_echanges import conversion_types
 
 from .modules_IHM.IHM_en_Python import launcher
-from .modules_echanges import echanges_donnees, types_exception
+from .modules_echanges import echanges_donnees, types_exception, hashage_mdp
 
 def client_docteur(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
@@ -15,8 +15,8 @@ def client_docteur(socket):
                         
             if not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_docteur.identifiant_client
-                motdepasse = fenetre_connexion_docteur.motdepasse_client
-                clef_docteur = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
+                hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_docteur.motdepasse_client)
+                clef_docteur = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_docteur = clef_docteur
 
                 envoi_clef_connexion = '02dSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
@@ -44,7 +44,7 @@ def client_docteur(socket):
                 echanges_donnees.envoi(socket,fenetre_inscription_docteur.code_postal_docteur)
                 echanges_donnees.envoi(socket,fenetre_inscription_docteur.numero_docteur)
                 echanges_donnees.envoi(socket,identifiant)
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.mot_de_passe_docteur)
+                echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur))
 
                 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
