@@ -1,4 +1,5 @@
 - edt docteur
+- validation dans client docteur
 - hashage
 - fonction supprimer rdv ?
 
