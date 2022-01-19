@@ -6,7 +6,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 '''
 
 import threading, sys
-from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt
+from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt, edt_medecin_vide
 from .modules_echanges import echanges_donnees, conversion_types, types_exception
 
 FORMAT = 'utf-8'
@@ -179,7 +179,8 @@ class ThreadForServer(threading.Thread):
                     horaire_jeudi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
                     horaire_vendredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
                     horaire_samedi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    #TODO On inscrit les rdv disponibles inscrits par le médecin dans la bdd
+                    #On inscrit les rdv disponibles inscrits par le médecin dans la bdd
+                    edt_medecin_vide.edt_medecin_vide(identifiant_docteur,horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi)
 
                     clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
                 

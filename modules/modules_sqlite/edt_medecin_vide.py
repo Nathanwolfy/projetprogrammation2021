@@ -1,11 +1,17 @@
 import sqlite3
-import emploidutemps as e
+from . import emploidutemps as e
 from . import lire_sql as lsql
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
-def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_debut, heure_mardi_fin, heure_mercredi_debut, heure_mercredi_fin, heure_jeudi_debut, heure_jeudi_fin, heure_vendredi_debut, heure_vendredi_fin, heure_samedi_debut, heure_samedi_fin):
+def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi):
     '''Crée l'emploi du temps vide pour un médecin pendant un an (mêmes horaires pour toute l'année)'''
+    heure_lundi_debut, heure_lundi_fin = horaire_lundi
+    heure_mardi_debut, heure_mardi_fin = horaire_mardi
+    heure_mercredi_debut, heure_mercredi_fin = horaire_mercredi
+    heure_jeudi_debut, heure_jeudi_fin = horaire_jeudi
+    heure_vendredi_debut, heure_vendredi_fin = horaire_vendredi
+    heure_samedi_debut, heure_samedi_fin = horaire_samedi
     #convertit le string en objet de classe Heure
     if heure_lundi_debut != "" and heure_lundi_fin != "":
             horaire_lundi_debut = e.convert(heure_lundi_debut)
