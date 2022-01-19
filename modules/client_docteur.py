@@ -1,6 +1,6 @@
 from .modules_echanges import conversion_types
 
-from .modules_IHM.IHM_en_Python import launcher, fonctions
+from .modules_IHM.IHM_en_Python import launcher
 from .modules_echanges import echanges_donnees, types_exception
 
 def client_docteur(socket):
@@ -10,18 +10,18 @@ def client_docteur(socket):
         confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la connexion
         
         if confirmation_serveur == '02dINITCONN':
-            launcher.sequence('IIg',identifiant) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
-            creationcompte_patient = fonctions.Bcreationcompte()
+            fenetre_connexion_docteur = launcher.sequence('IIg',identifiant) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
+            creationcompte_docteur = fenetre_connexion_docteur.creationcompte_docteur
                         
-            if not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
-                identifiant = fonctions.Bidentifiant()
-                motdepasse = fonctions.Bmotdepass()
-                clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
-                clef_patient = clef_patient
+            if not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
+                identifiant = fenetre_connexion_docteur.identifiant_docteur
+                motdepasse = fenetre_connexion_docteur.motdepasse_docteur
+                clef_docteur = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
+                clef_docteur = clef_docteur
 
                 envoi_clef_connexion = '02dSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
-                echanges_donnees.envoi(socket,clef_patient)
+                echanges_donnees.envoi(socket,clef_docteur)
 
                 clef_valide = echanges_donnees.reception(socket)
 
@@ -31,35 +31,25 @@ def client_docteur(socket):
                 str_liste_types_docteurs = echanges_donnees.reception(socket) #On réceptionne la liste des types de docteurs sous forme d'une string
                 liste_types_docteurs = conversion_types.strlist_to_list(str_liste_types_docteurs) #On la convertit effectivement en liste
 
-                launcher.sequence('YdA',liste_types_docteurs) #On démarre la fenêtre de création de compte
+                fenetre_inscription_docteur = launcher.sequence('YdA',liste_types_docteurs) #On démarre la fenêtre de création de compte
                 
-                #On récupère les informations saisies par le docteur dans l'IHM
-                #TODO
-                nom_docteur = ''.capitalize() #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
-                prenom_docteur = ''.capitalize()
-                type_docteur = ''
-                ville_de_pratique = ''.upper() #upper() car toutes les villes sont en majuscules dans la bdd
-                adresse_docteur = ''
-                code_postal_docteur = ''
-                numero_docteur = ''
-                identifiant = ''
-                motdepasse = ''
+                #On récupère les informations saisies par le docteur dans l'IHM et on les envoie directement (on garde que l'identifiant du docteur car on en aura besoin par la suite)
+                identifiant = fenetre_inscription_docteur.mail_docteur
 
-                #On envoie les informaions saisies pas le docteur
-                echanges_donnees.envoi(socket,nom_docteur)
-                echanges_donnees.envoi(socket,prenom_docteur)
-                echanges_donnees.envoi(socket,type_docteur)
-                echanges_donnees.envoi(socket,ville_de_pratique)
-                echanges_donnees.envoi(socket,adresse_docteur)
-                echanges_donnees.envoi(socket,code_postal_docteur)
-                echanges_donnees.envoi(socket,numero_docteur)
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.nom_docteur.capitalize()) #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.prenom_docteur.capitalize())
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.type_docteur)
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.ville_docteur.upper()) #upper() car toutes les villes sont en majuscules dans la bdd
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.adresse_docteur)
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.code_postal_docteur)
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.numero_docteur)
                 echanges_donnees.envoi(socket,identifiant)
-                echanges_donnees.envoi(socket,motdepasse)
+                echanges_donnees.envoi(socket,fenetre_inscription_docteur.mot_de_passe_docteur)
 
                 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
                 if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
-                    inscription_edt_doc = launcher.sequence('YdB',[0,0]) #On lance l'inscription de l'emploi du temps du docteur
+                    inscription_edt_doc = launcher.sequence('YdB') #On lance l'inscription de l'emploi du temps du docteur
                     #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.lundi))
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.mardi))
