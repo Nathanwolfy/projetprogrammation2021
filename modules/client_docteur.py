@@ -25,7 +25,7 @@ def client_docteur(socket):
 
                 clef_valide = echanges_donnees.reception(socket)
 
-            else: #Le client choisit de créer un compte
+            else: #Le docteur choisit de créer un compte
                 requete_liste_types_docteur = '02dCREACOMPTE' #On demande la liste des types de docteurs
                 echanges_donnees.envoi(socket,requete_liste_types_docteur)
                 str_liste_types_docteurs = echanges_donnees.reception(socket) #On réceptionne la liste des types de docteurs sous forme d'une string
@@ -58,11 +58,19 @@ def client_docteur(socket):
 
                 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
-                if reponse == '02dINITINSCEDTDOC':
-                    launch
+                if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
+                    inscription_edt_doc = launcher.sequence('') #On lance l'inscription de l'emploi du temps du docteur #TODO
+                    #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.lundi))
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.mardi))
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.mercredi))
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.jeudi))
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.vendredi))
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.samedi))
+                    
+
                 else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
                     raise NotImplementedError
-
 
                 clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
