@@ -57,7 +57,6 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nom_jour=?', ['Lundi'])
     rows = cursor_1.fetchall()
-    print(rows)
     premier_mois = rows[0][3]
     annee = rows[0][4]
     for row in rows: #Un row = un lundi
@@ -69,7 +68,7 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
                 cursor_1.execute('SELECT * FROM calendrier WHERE id_jour=?', (id_lundi,))
                 jour_de_la_semaine = cursor_1.fetchone()
                 id_lundi += 1
-                con = connection('donnees.db')
+                con = lsql.connection_bdd()
                 cursor = con.cursor()
                 liste_jour_j_pour_rdv_dispos = []
                 heure_debut = Liste_heures[2*j]
@@ -94,5 +93,3 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
     con.close()
     return('L\'emploi du temps a été ajouté') 
 
-edt = edt_medecin_vide('docteurpelle@chu.grenoble.fr', "08:00", "17:30", "09:00", "15:45", "08:15", "16:00", "08:00", "18:00", "08:30", "17:00", "", "")
-print(edt)
