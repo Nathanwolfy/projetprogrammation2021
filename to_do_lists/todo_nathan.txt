@@ -1,6 +1,5 @@
 - edt docteur
-- validation dans client docteur
-- hashage
+- continuation dans client docteur
 - fonction supprimer rdv ?
 
 => pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
