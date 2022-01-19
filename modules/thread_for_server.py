@@ -1,12 +1,13 @@
+from ast import Not
 from os import error
 ''' Ce fichier créer la classe dont une instance sera créée pour chaque nouveau client connecté.
 Il détaille dans la méthode 'run' toutes les actions que le serveur devra effectué quand un client se connecte.
 Du côté client seule la réception de la requête de choix sera identique entre patient et docteur.
 '''
 
-import threading
+import threading, sys
 from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt
-from .modules_echanges import echanges_donnees
+from .modules_echanges import echanges_donnees, conversion_types, types_exception
 
 FORMAT = 'utf-8'
 
@@ -55,8 +56,11 @@ class ThreadForServer(threading.Thread):
                     exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient,motdepasse_patient)
                     clef_valide = 'True' #Le patient s'est créé un compte, il est donc bien connecté
 
+                elif reponse == 'XXgKILLTHREAD':
+                    raise types_exception.ClientDisconnectedError
+
                 else: #Si le client renvoie autre chose, c'est une erreur, le thread s'arrête
-                    raise NotImplementedError
+                    raise types_exception.InvalidClientReponseError
 
             #On initie la suite la prise de rdv
             dico_type_rdv = str(lire_sql.dictionnaire_pour_qt()) #On réceptionne depuis la base de donnée le dictionnaire nécessaire au foncionnement de l'IHM de prise de rdv
@@ -97,18 +101,23 @@ class ThreadForServer(threading.Thread):
                             
                             construction_edt.construction_edt(nom_docteur_choisi_rdv, jour, mois, annee, heure, minute, type_rdv, notes_pour_docteur) #On ajoute le rdv dans la base de données
                             rdv_validé = True #Le rdv est effectivement validé
-                        elif False: #Dans le cas où le client revient en arrière
-                            pass
-                        else: #Dans le cas où le client ferme la fenêtre
-                            pass
+
+                        elif reponse_patient == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
+                            raise types_exception.ClientDisconnectedError
+
+                        else: #Dans le cas où le client renvoie autre chose, c'est un erreur
+                            raise types_exception.InvalidClientReponseError
 
                     else: #S'il n'y a pas de rdv dispos sous ces conditions, on revient au début de la boucle
                         code_initialisation_affichage_disponibilites = '04pRDVNONDISPO' #On confirme au patient qu'il n'existe pas de rdv dispo sous ces conditions
                         echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites)
                         rdv_validé = False #Le rdv n'est pas validé
-                        
-                else: #Si le client ne confirme pas que la patient a choisi les conditions de son rdv, c'est un erreur, le thread s'arrête donc
-                    raise NotImplementedError
+
+                elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
+                    raise types_exception.ClientDisconnectedError 
+
+                else: #Si le client renvoie autre chose, c'est une erreur, le thread s'arrête
+                    raise types_exception.InvalidClientReponseError
 
             #On initie le récap des informations
             code_initialisation_recap_patient = 'VpINITRECAP'
@@ -161,15 +170,27 @@ class ThreadForServer(threading.Thread):
                     #On inscrit effecivement le docteur dans la base de données
                     exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,motdepasse_docteur,motdepasse_docteur)
 
-                    code_initialisation_inscription_edt_docteur = '02dINITINSCEDTDOC'
+                    code_initialisation_inscription_edt_docteur = '02dINITINSCEDTDOC' #On valide au client le lancement de la fenêtre d'inscription de l'edt du docteur
                     echanges_donnees.envoi(self.conn, code_initialisation_inscription_edt_docteur)
-                    
+                    #On réceptionne une string représentant une liste des horaires de début et de fin pour chaque jour, on les convertit directement en liste de deux string
+                    horaire_lundi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                    horaire_mardi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                    horaire_mercredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                    horaire_jeudi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                    horaire_vendredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                    horaire_samedi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                    #TODO On inscrit les rdv disponibles inscrits par le médecin dans la bdd
 
                     clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
+                
+                elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
+                    raise types_exception.ClientDisconnectedError
 
-                else: #Si le docteur n'envoie pas sa clef de connexion ou ne décide pas de créer un profil docteur, c'est un erreur, le thread s'arrête donc
-                    raise NotImplementedError
+                else: #Dans le cas où le client renvoie autre chose, c'est un erreur
+                    raise types_exception.InvalidClientReponseError
 
+        elif choix_client == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
+            raise types_exception.ClientDisconnectedError
 
         else: #Si le client ne choisit pas le client docteur ou patient c'est une erreyr, le thread s'arrête
-            raise NotImplementedError
+            raise types_exception.InvalidClientReponseError
