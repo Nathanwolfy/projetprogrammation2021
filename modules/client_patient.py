@@ -16,8 +16,8 @@ def client_patient(socket):
                 stop_continuation.arret_processus(socket)
           
             elif not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
-                identifiant = fenetre_connexion_patient.identifiant_patient
-                motdepasse = fenetre_connexion_patient.motdepasse_patient
+                identifiant = fenetre_connexion_patient.identifiant_client
+                motdepasse = fenetre_connexion_patient.motdepasse_client
                 clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_patient = clef_patient
 
