@@ -13,6 +13,16 @@ from . import fonctions
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
+        self.continuation = False
+        self.nom_patient = ''
+        self.prenom_patient = ''
+        self.jour_patient = ''
+        self.mois_patient = ''
+        self.annee_patient = ''
+        self.mail_patient = ''
+        self.motdepasse_patient = ''
+        self.numero_patient = ''
+
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -75,19 +85,21 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.continu(False)
-        self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
 
-        self.ValidationpushButton.released.connect(lambda: fonctions.finom(self.NomlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.fiprenom(self.PrenomlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.fijour(self.jourlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.fimois(self.moislineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.fiannee(self.anneelineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.finumero(self.NumerolineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.verificationId(self.AdresseMaillineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: fonctions.verificationMdP(self.MdPlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.nom_patient, self.NomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.prenom_patient, self.PrenomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.jour_patient, self.jourlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.mois_patient, self.moislineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.annee_patient, self.anneelineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.numero_patient, self.NumerolineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.mail_patient, self.AdresseMaillineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.motdepasse_patient, self.MdPlineEdit.text()))
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def add(self, var, arg):
+        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
