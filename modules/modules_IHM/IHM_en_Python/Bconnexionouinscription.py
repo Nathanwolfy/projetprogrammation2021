@@ -34,9 +34,9 @@ class Ui_Form(object):
         self.Brand_Label = QtWidgets.QLabel(Form)
         self.Brand_Label.setGeometry(QtCore.QRect(30, 20, 171, 71))
         self.Brand_Label.setObjectName("Brand_Label")
-        self.NomPrenom_LineEdit = QtWidgets.QLineEdit(Form)
-        self.NomPrenom_LineEdit.setGeometry(QtCore.QRect(340, 240, 241, 31))
-        self.NomPrenom_LineEdit.setObjectName("NomPrenom_LineEdit")
+        self.Identifiant_LineEdit = QtWidgets.QLineEdit(Form)
+        self.Identifiant_LineEdit.setGeometry(QtCore.QRect(340, 240, 241, 31))
+        self.Identifiant_LineEdit.setObjectName("NomPrenom_LineEdit")
         self.Mdp_LineEdit = QtWidgets.QLineEdit(Form)
         self.Mdp_LineEdit.setGeometry(QtCore.QRect(340, 390, 241, 31))
         self.Mdp_LineEdit.setObjectName("Mdp_LineEdit")
@@ -52,13 +52,12 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         
-        self.InscriptionButton.released.connect(lambda: add(self.continuation, True))
-        self.ConnexionButton.released.connect(lambda: add(self.continuation, True))  
+        self.InscriptionButton.released.connect(lambda: self.add(self.continuation, True))
+        self.ConnexionButton.released.connect(lambda: self.add(self.continuation, True))  
 
-        self.ConnexionButton.released.connect(lambda: add(self.continuation, True))
-        self.ConnexionButton.released.connect(lambda: fonctions.verificationMdP(self.Mdp_LineEdit.text()))
-        self.ConnexionButton.released.connect(lambda: fonctions.con_ins(False))
-        self.InscriptionButton.released.connect(lambda: fonctions.con_ins(True))
+        self.ConnexionButton.released.connect(lambda: self.add(self.identifiant_client, self.Identifiant_LineEdit.text()))
+        self.ConnexionButton.released.connect(lambda: self.add(self.motdepasse_client,self.Mdp_LineEdit.text()))
+        self.InscriptionButton.released.connect(lambda: self.add(self.creation_compte,(False)))
         self.ConnexionButton.released.connect(Form.close)
         self.InscriptionButton.released.connect(Form.close) # type: ignore
         if self.arg != '':

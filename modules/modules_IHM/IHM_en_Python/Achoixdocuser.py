@@ -38,17 +38,12 @@ class Ui_Form(object):
         self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
         self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
 
-    def add(self, var, arg):
-        var = arg
-
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
-        self.PatientButton.released.connect(lambda: fonctions.affiche("XXp")) #XXp pour patient
-        self.DoctorButton.released.connect(lambda: fonctions.affiche("XXd")) #XXd pour docteur
-        self.PatientButton.released.connect(lambda: fonctions.connection("continue"))
-        self.DoctorButton.released.connect(lambda: fonctions.connection("continue"))
- #       self.DoctorButton.released.connect(lambda: launcher.sequence("continue"))
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def add(self, var, arg):
+        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
