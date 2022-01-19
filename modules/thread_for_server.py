@@ -5,7 +5,7 @@ Il détaille dans la méthode 'run' toutes les actions que le serveur devra effe
 Du côté client seule la réception de la requête de choix sera identique entre patient et docteur.
 '''
 
-import threading, sys
+import threading
 from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt, edt_medecin_vide
 from .modules_echanges import echanges_donnees, conversion_types, types_exception
 
@@ -37,9 +37,9 @@ class ThreadForServer(threading.Thread):
 
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ") #On réceptionne la clef de connexion (email espacé d'un espace du mdp)
-                    identifiant_patient, motdepasse_patient = clef_connexion[0], clef_connexion[1]
+                    identifiant_patient, hash_motdepasse_patient = clef_connexion[0], clef_connexion[1]
                     
-                    clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,motdepasse_patient)) #On vérifie que la clef de connexion est valide
+                    clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,hash_motdepasse_patient)) #On vérifie que la clef de connexion est valide
                     echanges_donnees.envoi(self.conn,clef_valide) #On envoie le résultat de l'évaluation de la validité de la clef de connexion
 
                 elif reponse == '02pCREACOMPTE': #Le patient choisit de créer un compte
@@ -49,11 +49,11 @@ class ThreadForServer(threading.Thread):
                     date_naissance_patient = echanges_donnees.reception(self.conn)
                     numero_patient = echanges_donnees.reception(self.conn)
                     identifiant_patient = echanges_donnees.reception(self.conn)
-                    motdepasse_patient = echanges_donnees.reception(self.conn)
+                    hash_motdepasse_patient = echanges_donnees.reception(self.conn)
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient=date_naissance_patient.split('/')
                     
                     #On inscrit effectivement le patient dans la base de données
-                    exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,motdepasse_patient,motdepasse_patient)
+                    exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,hash_motdepasse_patient,hash_motdepasse_patient)
                     clef_valide = 'True' #Le patient s'est créé un compte, il est donc bien connecté
 
                 elif reponse == 'XXgKILLTHREAD':
@@ -149,9 +149,9 @@ class ThreadForServer(threading.Thread):
 
                 if reponse == '02dSENDCLEF': #Le docteur choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ")
-                    identifiant_docteur, motdepasse_docteur = clef_connexion[0], clef_connexion[1]
+                    identifiant_docteur, hash_motdepasse_docteur = clef_connexion[0], clef_connexion[1]
                     
-                    clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,motdepasse_docteur)) #On vérifie que la clef de connexion est valide
+                    clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,hash_motdepasse_docteur)) #On vérifie que la clef de connexion est valide
                     echanges_donnees.envoi(self.conn,clef_valide)
 
                 elif reponse == '02dCREACOMPTE': #Le docteur choisir de créer son compte
@@ -166,9 +166,9 @@ class ThreadForServer(threading.Thread):
                     code_postal_docteur = echanges_donnees.reception(self.conn)
                     telephone_docteur = echanges_donnees.reception(self.conn)
                     identifiant_docteur = echanges_donnees.reception(self.conn)
-                    motdepasse_docteur = echanges_donnees.reception(self.conn)
+                    hash_motdepasse_docteur = echanges_donnees.reception(self.conn)
                     #On inscrit effecivement le docteur dans la base de données
-                    exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,motdepasse_docteur,motdepasse_docteur)
+                    exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,hash_motdepasse_docteur,hash_motdepasse_docteur)
 
                     code_initialisation_inscription_edt_docteur = '02dINITINSCEDTDOC' #On valide au client le lancement de la fenêtre d'inscription de l'edt du docteur
                     echanges_donnees.envoi(self.conn, code_initialisation_inscription_edt_docteur)
