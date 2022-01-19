@@ -157,6 +157,7 @@ class Ui_Form(object):
         self.info1label.setObjectName("info1label")
 
         self.retranslateUi(Form)
+        self.validation.released.connect(Form.close)
         self.ValidationButton.released.connect(lambda: self.add(self.lundi, [self.deblunlineEdit.text(), self.finlunlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.mardi, [self.debmarlineEdit.text(), self.finmarlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.mercredi, [self.debmerlineEdit.text(), self.finmerlineEdit.text()]))
