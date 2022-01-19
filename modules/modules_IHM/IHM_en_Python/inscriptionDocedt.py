@@ -10,7 +10,6 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
 
 
-
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg

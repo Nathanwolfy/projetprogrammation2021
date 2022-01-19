@@ -14,9 +14,11 @@ print('Connecté au serveur...')
 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la fenêtre de choix du client
 if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix du client par le serveur
     #Afficher l'interface Qt de choix
-    fenetre_choix_client = launcher.sequence('Ig')
+    fenetre_choix_client = launcher.Achoixdocuser_herit()
+    launcher.exec_fenetre(fenetre_choix_client)
     continuation = fenetre_choix_client.continuation
-    choix_client = fenetre_choix_client.choix_client #'XXp' ou 'XXd'
+    choix_client = fenetre_choix_client.choix_client
+    print(choix_client) #'XXp' ou 'XXd'
 
     if choix_client == 'XXp': #Le client patient est choisi
         echanges_donnees.envoi(socket,choix_client) #On informe le serveur du choix du client patient
@@ -27,7 +29,7 @@ if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix d
         client_docteur.client_docteur(socket) #On démarre le client docteur
 
     elif not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-        stop_continuation.arret_processus()
+        stop_continuation.arret_processus(socket)
 
     else: #Dans tous les autres cas, c'est un erreur
         raise types_exception.InvalidServerReponseError

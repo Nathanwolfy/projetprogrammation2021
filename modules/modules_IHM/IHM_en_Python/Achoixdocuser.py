@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\IHM\1_choix_doc_user.ui'
+# Form implementation generated from reading ui file 'c:\Users\Dartencet\Documents\GitHub\projetprogrammation2021\IHM\1_choix_client_doc_user.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.1
 #
@@ -13,7 +13,7 @@ import sys
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
-        self.choix = ''
+        self.choix_client = ''
         self.continuation = False
         
 
@@ -35,8 +35,8 @@ class Ui_Form(object):
         self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
         self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
 
-        self.DoctorButton.released.connect(lambda: self.add(self.choix, 'XXd'))
-        self.PatientButton.released.connect(lambda: self.add(self.choix, 'XXp'))  
+        self.DoctorButton.released.connect(lambda: self.add(self.choix_client, 'XXd'))
+        self.PatientButton.released.connect(lambda: self.add(self.choix_client, 'XXp'))  
 
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
