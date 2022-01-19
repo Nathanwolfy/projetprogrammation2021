@@ -11,11 +11,11 @@ def client_docteur(socket):
         
         if confirmation_serveur == '02dINITCONN':
             fenetre_connexion_docteur = launcher.sequence('IIg',identifiant) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
-            creationcompte_docteur = fenetre_connexion_docteur.creationcompte_docteur
+            creationcompte_docteur = fenetre_connexion_docteur.creation_compte
                         
             if not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
-                identifiant = fenetre_connexion_docteur.identifiant_docteur
-                motdepasse = fenetre_connexion_docteur.motdepasse_docteur
+                identifiant = fenetre_connexion_docteur.identifiant_client
+                motdepasse = fenetre_connexion_docteur.motdepasse_client
                 clef_docteur = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_docteur = clef_docteur
 

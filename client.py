@@ -1,9 +1,7 @@
 from modules import client_docteur, client_patient
-from modules.modules_IHM.IHM_en_Python import launcher, fonctions
+from modules.modules_IHM.IHM_en_Python import launcher
+from modules.modules_echanges import echanges_donnees,types_exception,stop_continuation
 import socket
-import sys
-
-from modules.modules_echanges import echanges_donnees
 
 host, port = ('localhost',5566) #On choisit comme adresse celle locale et un port non affecté
 
@@ -16,9 +14,9 @@ print('Connecté au serveur...')
 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la fenêtre de choix du client
 if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix du client par le serveur
     #Afficher l'interface Qt de choix
-    launcher.sequence('Ig',[0,0]) #TODO supprimer argument inutile
-    continuation = fonctions.continus()
-    choix_client = fonctions.Ametier() #'XXp' ou 'XXd'
+    fenetre_choix_client = launcher.sequence('Ig')
+    continuation = fenetre_choix_client.continuation
+    choix_client = fenetre_choix_client.choix_client #'XXp' ou 'XXd'
 
     if choix_client == 'XXp': #Le client patient est choisi
         echanges_donnees.envoi(socket,choix_client) #On informe le serveur du choix du client patient
@@ -29,12 +27,10 @@ if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix d
         client_docteur.client_docteur(socket) #On démarre le client docteur
 
     elif not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-        requete_fermeture = 'XXgKILLTHREAD'
-        echanges_donnees.envoi(socket,requete_fermeture)
-        sys.exit()
+        stop_continuation.arret_processus()
 
     else: #Dans tous les autres cas, c'est un erreur
-        raise NotImplementedError
+        raise types_exception.InvalidServerReponseError
 
 else: #Si le serveur ne valide pas, l'application s'arrête
-    raise NotImplementedError
+    raise types_exception.InvalidServerReponseError
