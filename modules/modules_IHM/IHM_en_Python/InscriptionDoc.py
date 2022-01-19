@@ -8,12 +8,22 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from . import fonctions
+
 
 
 class Ui_Form(object):
     def __init__(self, arg):
         self.arg = arg
+        self.continuation = False
+        self.nom_docteur = ''
+        self.prenom_docteur = ''
+        self.type_docteur = ''
+        self.ville_docteur = ''
+        self.adresse_docteur = ''
+        self.code_postal_docteur = ''
+        self.numero_docteur = ''
+        self.mail_docteur = ''
+        self.mot_de_passe_docteur = ''
         
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -88,20 +98,24 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.continu(False)
-        self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
     
+        self.ValidationpushButton.released.connect(lambda: self.add(self.nom_docteur, self.NomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.prenom_docteur, self.PrenomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.ville_docteur, self.VillelineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.adresse_docteur, self.AdresselineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.code_postal_docteur, self.CodePostallineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.numero_docteur, self.NumerolineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.mail_docteur, self.AdresseMaillineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.type_docteur, self.Praticien_comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.mot_de_passe_docteur, self.MdPlineEdit.text()))
+
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.verificationMdP(self.MdPlineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.finom(self.NomlineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiprenom(self.PrenomlineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiville(self.VillelineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.fiadresse(self.AdresselineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.ficodepostale(self.CodePostallineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.finumero(self.NumerolineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.verificationId(self.AdresseMaillineEdit.text()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.imprime(self.Praticien_comboBox.currentText()))
+
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def add(self, var, arg):
+        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

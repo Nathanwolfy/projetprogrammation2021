@@ -8,12 +8,16 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from . import fonctions
+
+
 
 class Ui_Form(object):
     def __init__(self, arg):
         self.dico = arg
-        self
+        self.continuation = False
+        self.nom_docteur_rdv_choisi = ''
+        self.horaire_rdv_choisi = ''
+        self.infos_pour_docteur = ''
     
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -49,22 +53,26 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.continu(False)
-        self.ValidationpushButton.released.connect(lambda: fonctions.continu(True))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
+
+        self.ValidationpushButton.released.connect(lambda: self.add(self.horaire_rdv_choisi, self.comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.add(self.infos_pour_docteur, self.InfolineEdit.text()))
+        
+        self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)
 
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.horaire(self.comboBox.currentText()))
-        self.ValidationpushButton.clicked['bool'].connect(lambda: fonctions.infodoc(self.InfolineEdit.text()))
-        self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)
         QtCore.QMetaObject.connectSlotsByName(Form)
         
     def update_rdv_type_combobox(self, docteur_type):
-        fonctions.medecin(docteur_type)
+        self.nom_docteur_rdv_choisi(docteur_type)
         self.comboBox.clear()
         if docteur_type in self.dico.keys():
             type_rdv = self.dico[docteur_type]
             for rdv in type_rdv:
                 self.comboBox.addItem(rdv)
+
+    def add(self, var, arg):
+        var = arg
 
 
     def retranslateUi(self, Form):

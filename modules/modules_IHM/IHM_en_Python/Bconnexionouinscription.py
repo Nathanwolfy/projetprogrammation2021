@@ -8,7 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from . import fonctions
 
 
 class Ui_Form(object):
@@ -58,10 +57,13 @@ class Ui_Form(object):
         self.ConnexionButton.released.connect(lambda: self.add(self.identifiant_client, self.Identifiant_LineEdit.text()))
         self.ConnexionButton.released.connect(lambda: self.add(self.motdepasse_client,self.Mdp_LineEdit.text()))
         self.InscriptionButton.released.connect(lambda: self.add(self.creation_compte,(False)))
-        self.ConnexionButton.released.connect(Form.close)
-        self.InscriptionButton.released.connect(Form.close) # type: ignore
+
         if self.arg != '':
             self.NomPrenom_LineEdit.insert(self.arg)
+
+        self.ConnexionButton.released.connect(Form.close)
+        self.InscriptionButton.released.connect(Form.close) # type: ignore
+        
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def add(self, var, arg):
