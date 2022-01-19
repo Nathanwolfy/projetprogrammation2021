@@ -53,7 +53,7 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
         horaire_samedi_fin = None
     Liste_heures = [horaire_lundi_debut, horaire_lundi_fin, horaire_mardi_debut, horaire_mardi_fin, horaire_mercredi_debut, horaire_mercredi_fin, horaire_jeudi_debut, horaire_jeudi_fin, horaire_vendredi_debut, horaire_vendredi_fin, horaire_samedi_debut, horaire_samedi_fin]
     #construit l'emploi du temps semaine par semaine
-    con_1 = connection('calendrier.db')
+    con_1 = lsql.connection_bdd_calendrier()
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nom_jour=?', ['Lundi'])
     rows = cursor_1.fetchall()
