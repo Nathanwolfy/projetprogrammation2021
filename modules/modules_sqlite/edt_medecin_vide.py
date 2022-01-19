@@ -4,14 +4,6 @@ from . import lire_sql as lsql
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
-def connection(bdd):
-    try:
-        connect = sqlite3.connect(bdd)
-        return connect
-    except Exception as e:
-        print(e)
-        print('La connexion n\'a pas pu être établie.')
-
 def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_debut, heure_mardi_fin, heure_mercredi_debut, heure_mercredi_fin, heure_jeudi_debut, heure_jeudi_fin, heure_vendredi_debut, heure_vendredi_fin, heure_samedi_debut, heure_samedi_fin):
     '''Peut créer l'emploi du temps vide pour un médecin pour un an (mêmes horaires pour toute l'année), mais va construire l'emploi du temps vide pour 2 mois'''
     #convertit le string en objet de classe Heure
