@@ -43,7 +43,7 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
     else:
         horaire_samedi_debut = None
         horaire_samedi_fin = None
-    Liste_heures = [horaire_lundi_debut, horaire_lundi_fin, horaire_mardi_debut, horaire_mardi_fin, horaire_mercredi_debut, horaire_mercredi_fin, horaire_jeudi_debut, horaire_jeudi_fin, horaire_vendredi_debut, horaire_vendredi_fin, horaire_samedi_debut, horaire_samedi_fin]
+    liste_heures = [horaire_lundi_debut, horaire_lundi_fin, horaire_mardi_debut, horaire_mardi_fin, horaire_mercredi_debut, horaire_mercredi_fin, horaire_jeudi_debut, horaire_jeudi_fin, horaire_vendredi_debut, horaire_vendredi_fin, horaire_samedi_debut, horaire_samedi_fin]
     #construit l'emploi du temps semaine par semaine
     con_1 = lsql.connection_bdd_calendrier()
     cursor_1 = con_1.cursor()
@@ -63,8 +63,8 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
                 con = lsql.connection_bdd()
                 cursor = con.cursor()
                 liste_jour_j_pour_rdv_dispos = []
-                heure_debut = Liste_heures[2*j]
-                heure_fin = Liste_heures[2*j+1]
+                heure_debut = liste_heures[2*j]
+                heure_fin = liste_heures[2*j+1]
                 if heure_debut != None and heure_fin != None:
                     if heure_debut < e.Heure(12, 0):
                         for heure in range(heure_debut.heure, 12):
