@@ -23,8 +23,8 @@ def sequence(i, arg=[0,0]):
     appS.exec()"""
 
 class Achoixdocuser_herit(Achoixdocuser.Ui_Form):
-    def __init__(self,arg=[0,0]):
-        super().__init__(arg)
+    def __init__(self):
+        super().__init__()
 
 appS = QtWidgets.QApplication(sys.argv)
 

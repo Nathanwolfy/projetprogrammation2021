@@ -11,11 +11,9 @@ import sys
 
 
 class Ui_Form(object):
-    def __init__(self,arg):
-        self.arg = arg
+    def __init__(self):
         self.choix_client = ''
         self.continuation = False
-        
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
