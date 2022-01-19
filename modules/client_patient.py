@@ -1,4 +1,4 @@
-from .modules_IHM.IHM_en_Python import launcher, fonctions
+from .modules_IHM.IHM_en_Python import launcher
 from .modules_echanges import conversion_types, echanges_donnees, stop_continuation, types_exception
 
 def client_patient(socket):
@@ -8,16 +8,16 @@ def client_patient(socket):
         confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la connexion
         
         if confirmation_serveur == '02pINITCONN': #Le serveur valide de lancement de la fenêtre de connexion
-            launcher.sequence('IIg',identifiant) #On lance la fenêtre de connexion
-            continuation = fonctions.continus()
-            creationcompte_patient = fonctions.Bcreationcompte() #On récupère un booléen pour savoir si le patient se connecte ou non
+            fenetre_connexion_patient = launcher.sequence('IIg',identifiant) #On lance la fenêtre de connexion
+            continuation = fenetre_connexion_patient.continuation
+            creationcompte_patient = fenetre_connexion_patient.creation_compte #On récupère un booléen pour savoir si le patient se connecte ou non
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
                 stop_continuation.arret_processus(socket)
           
             elif not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
-                identifiant = fonctions.Bidentifiant()
-                motdepasse = fonctions.Bmotdepass()
+                identifiant = fenetre_connexion_patient.identifiant_patient
+                motdepasse = fenetre_connexion_patient.motdepasse_patient
                 clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_patient = clef_patient
 
@@ -28,8 +28,8 @@ def client_patient(socket):
                 clef_valide = echanges_donnees.reception(socket) #Le serveur renvoie la validité de la clef de connexion du patient
 
             else: #Le client choisit de créer un compte
-                launcher.sequence('Yp',[0,0]) #TODO supprimer argument inutile
-                continuation = fonctions.continus()
+                fenetre_creation_compte_patient = launcher.sequence('Yp')
+                continuation = fenetre_creation_compte_patient.continuatuon
 
                 if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
                     stop_continuation.arret_processus(socket)
@@ -37,14 +37,14 @@ def client_patient(socket):
                 else: #Dans les autres cas, le processus se déroule normalement
                     #On récupère les données fournies par le patient lors de son inscription de l'IHM
                     envoi_donnees_inscription = '02pCREACOMPTE'
-                    nom_patient = fonctions.Inom().capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
-                    prenom_patient = fonctions.Iprenom().capitalize()
-                    jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fonctions.Ijour(),fonctions.Imois(),fonctions.Iannee()
+                    nom_patient = fenetre_creation_compte_patient.nom_patient.capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
+                    prenom_patient = fenetre_creation_compte_patient.prenom_patient.capitalize()
+                    jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fenetre_creation_compte_patient.jour_patient,fenetre_creation_compte_patient.mois_patient, fenetre_creation_compte_patient.annee_patient
                     date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
                     date_naissance_patient = date_naissance_patient
-                    numero_patient = fonctions.Inumero()
-                    identifiant = fonctions.Bidentifiant()
-                    motdepasse = fonctions.Bmotdepass()
+                    numero_patient = fenetre_creation_compte_patient.numero_patient
+                    identifiant = fenetre_creation_compte_patient.mail_patient
+                    motdepasse = fenetre_creation_compte_patient.motdepasse_patient
                     #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
                     echanges_donnees.envoi(socket,envoi_donnees_inscription)
                     echanges_donnees.envoi(socket,nom_patient)
@@ -66,18 +66,17 @@ def client_patient(socket):
             str_dico_type_rdv = echanges_donnees.reception(socket) #On réceptionne depuis le serveur le dictionnaire sous form d'un string nécessaire au foncionnement de l'IHM de prise de rdv
             dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv) #On le convertit effectivement en dictionnaire
 
-            launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions du patient préalablement remplies 
-            continuation = fonctions.continus()
+            fenetre_prise_de_rdv = launcher.sequence('IIIp',(dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions du patient préalablement remplies 
+            continuation = fenetre_prise_de_rdv.continuation
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
                 stop_continuation.arret_processus(socket)
             else: #Dans les autres cas le processus se déroule normalement
                 #On réceptionne les conditions du rdv choisies par le patient
-                localisation = fonctions.Clocation() #upper() car toutes les villes sont en masjuscule dans la bdd
-                type_docteur = fonctions.Cpraticien()
-                type_rdv = fonctions.CRdV()
-                date_rdv = fonctions.Cjour() + "/" + fonctions.Cmois() + "/" + fonctions.Cannee()
-                date_rdv = date_rdv
+                localisation = fenetre_prise_de_rdv.localisation #upper() car toutes les villes sont en masjuscule dans la bdd
+                type_docteur = fenetre_prise_de_rdv.type_docteur
+                type_rdv = fenetre_prise_de_rdv.type_rdv
+                date_rdv = fenetre_prise_de_rdv.jour_rdv + "/" + fenetre_prise_de_rdv.mois_rdv + "/" + fenetre_prise_de_rdv.annee_rdv
 
                 envoi_donnees_prise_rdv = '03pSENDDATARDV' #On signale au serveur que le patient a effectivement saisi ses conditions de rdv
                 echanges_donnees.envoi(socket,envoi_donnees_prise_rdv)
@@ -94,15 +93,15 @@ def client_patient(socket):
         if confirmation_serveur == '04pINITAFFDISPO': #Le serveur confirme qu'il existe des rdvs dispos sous ces conditions
             str_dico_disponibilites = echanges_donnees.reception(socket) #On réceptionne sous forme d'un string le dictionnaire permettant l'affichage des rdvs dispos
             dico_disponibilites = conversion_types.from_string_to_dict(str_dico_disponibilites) #On le convertit effectivement sous la forme d'un dictionnaore
-            launcher.sequence('IVp',dico_disponibilites) #On lance la fenêtre d'affichage des rdvs dispossous les conditions remplies par le patient
-            continuation = fonctions.continus()
+            fenetre_affichage_rdv_dispos = launcher.sequence('IVp',dico_disponibilites) #On lance la fenêtre d'affichage des rdvs dispossous les conditions remplies par le patient
+            continuation = fenetre_affichage_rdv_dispos.continuation
 
             if continuation: #Si le rdv est validé par le patient
                 envoi_validation_rdv = '04pVALIDATIONRDV' #Confirmation au serveur que le patient a bien validé un rdv
                 #On réceptionne les données validées par le patient
-                nom_docteur_rdv_choisi = fonctions.Ddocname()
-                horaire_rdv_choisi = fonctions.DHoraireRdv()
-                infos_supp_pour_docteur = fonctions.DInfos()
+                nom_docteur_rdv_choisi = fenetre_affichage_rdv_dispos.nom_docteur_rdv_choisi
+                horaire_rdv_choisi = fenetre_affichage_rdv_dispos.horaire_rdv_choisi
+                infos_supp_pour_docteur = fenetre_affichage_rdv_dispos.infos_pour_docteur
                 #On envoie les données au serveur
                 echanges_donnees.envoi(socket,envoi_validation_rdv)
                 echanges_donnees.envoi(socket,nom_docteur_rdv_choisi)
