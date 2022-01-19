@@ -160,10 +160,16 @@ class ThreadForServer(threading.Thread):
                     motdepasse_docteur = echanges_donnees.reception(self.conn)
                     #On inscrit effecivement le docteur dans la base de données
                     exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,motdepasse_docteur,motdepasse_docteur)
+
+                    code_initialisation_inscription_edt_docteur = '02dINITINSCEDTDOC'
+                    echanges_donnees.envoi(self.conn, code_initialisation_inscription_edt_docteur)
+                    
+
                     clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
 
                 else: #Si le docteur n'envoie pas sa clef de connexion ou ne décide pas de créer un profil docteur, c'est un erreur, le thread s'arrête donc
                     raise NotImplementedError
+
 
         else: #Si le client ne choisit pas le client docteur ou patient c'est une erreyr, le thread s'arrête
             raise NotImplementedError

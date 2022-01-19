@@ -55,6 +55,15 @@ def client_docteur(socket):
                 echanges_donnees.envoi(socket,numero_docteur)
                 echanges_donnees.envoi(socket,identifiant)
                 echanges_donnees.envoi(socket,motdepasse)
+
+                reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
+
+                if reponse == '02dINITINSCEDTDOC':
+                    launch
+                else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
+                    raise NotImplementedError
+
+
                 clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
