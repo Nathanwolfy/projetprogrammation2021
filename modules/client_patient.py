@@ -1,5 +1,5 @@
 from .modules_IHM.IHM_en_Python import launcher
-from .modules_echanges import conversion_types, echanges_donnees, stop_continuation, types_exception
+from .modules_echanges import conversion_types, echanges_donnees, stop_continuation, types_exception, hashage_mdp
 
 def client_patient(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
@@ -17,8 +17,8 @@ def client_patient(socket):
           
             elif not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_patient.identifiant_client
-                motdepasse = fenetre_connexion_patient.motdepasse_client
-                clef_patient = identifiant + " " + motdepasse #On récupère identifiants et mot de passe rentrés par le client
+                hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_patient.motdepasse_client)
+                clef_patient = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
                 clef_patient = clef_patient
 
                 envoi_clef_connexion = '02pSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
@@ -35,24 +35,20 @@ def client_patient(socket):
                     stop_continuation.arret_processus(socket)
 
                 else: #Dans les autres cas, le processus se déroule normalement
-                    #On récupère les données fournies par le patient lors de son inscription de l'IHM
+                    #On récupère les données fournies par le patient lors de son inscription de l'IHM et on les envoie directement
                     envoi_donnees_inscription = '02pCREACOMPTE'
-                    nom_patient = fenetre_creation_compte_patient.nom_patient.capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
-                    prenom_patient = fenetre_creation_compte_patient.prenom_patient.capitalize()
+                      
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fenetre_creation_compte_patient.jour_patient,fenetre_creation_compte_patient.mois_patient, fenetre_creation_compte_patient.annee_patient
                     date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
-                    date_naissance_patient = date_naissance_patient
-                    numero_patient = fenetre_creation_compte_patient.numero_patient
-                    identifiant = fenetre_creation_compte_patient.mail_patient
-                    motdepasse = fenetre_creation_compte_patient.motdepasse_patient
+
                     #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
                     echanges_donnees.envoi(socket,envoi_donnees_inscription)
-                    echanges_donnees.envoi(socket,nom_patient)
-                    echanges_donnees.envoi(socket,prenom_patient)
+                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.nom_patient.capitalize()) #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
+                    echanges_donnees.envoi(socket,prenom_patient = fenetre_creation_compte_patient.prenom_patient.capitalize())
                     echanges_donnees.envoi(socket,date_naissance_patient)
-                    echanges_donnees.envoi(socket,numero_patient)
-                    echanges_donnees.envoi(socket,identifiant)
-                    echanges_donnees.envoi(socket,motdepasse)
+                    echanges_donnees.envoi(socket,nnumero_patient = fenetre_creation_compte_patient.numero_patient)
+                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.mail_patient)
+                    echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_creation_compte_patient.motdepasse_patient))
                     clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la fenêtre de connexion, l'application s'arrête
