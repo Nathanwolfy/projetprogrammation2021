@@ -14,7 +14,7 @@ from . import InscriptionDocedt
 seq={'Yp':InscriptionPat, 'YdA':InscriptionDoc, 'YdB': InscriptionDocedt, 'Ig':Achoixdocuser, 'IIg':Bconnexionouinscription, 'IIIp':Cpriserdv, 'IVp' :DEdTPatient, 'IVd' : DEdTDoc, 'Vp': Erecap}
 
 appS = QtWidgets.QApplication(sys.argv)
-def sequence(i, arg):
+def sequence(i, arg=[0,0]):
     widget = QtWidgets.QWidget()
     mycustomwidget = seq[i].Ui_Form(arg)
     mycustomwidget.setupUi(widget)
