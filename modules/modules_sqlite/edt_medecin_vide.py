@@ -1,5 +1,6 @@
 import sqlite3
 import emploidutemps as e
+from . import lire_sql as lsql
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
