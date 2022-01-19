@@ -57,28 +57,28 @@ def edt_medecin_vide(medecin, heure_lundi_debut, heure_lundi_fin, heure_mardi_de
             liste_id = []
             for j in range(6): #pour la semaine (sauf le dimanche)
                 liste_id.append(id_lundi)
-                cursor_1.execute('SELECT * FROM calendrier WHERE id_jour=?', (id_lundi,))
+                cursor_1.execute('SELECT * FROM calendrier WHERE id_jour=?', (id_lundi,)) #prend chaque jour de la semaine
                 jour_de_la_semaine = cursor_1.fetchone()
                 id_lundi += 1
                 con = lsql.connection_bdd()
                 cursor = con.cursor()
-                liste_jour_j_pour_rdv_dispos = []
+                liste_jour_j_pour_rdv_dispos = [] #va être remplie des horaires de la journée
                 heure_debut = liste_heures[2*j]
                 heure_fin = liste_heures[2*j+1]
                 if heure_debut != None and heure_fin != None:
-                    if heure_debut < e.Heure(12, 0):
+                    if heure_debut < e.Heure(12, 0): #Si le médecin travaille le matin
                         for heure in range(heure_debut.heure, 12):
-                            if heure_debut.minute != 0:
+                            if heure_debut.minute != 0: #S'il commence à une heure pas ronde
                                 for minute in range(heure_debut.minute, 46, 15):
                                     liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure, minute, medecin, 1))
                             else:
                                 for minute in range(0, 46, 15):
                                     liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure, minute, medecin, 1))
-                    if heure_fin > e.Heure(13, 0):
+                    if heure_fin > e.Heure(13, 0): #Si le médecin travaille l'après-midi
                         for heure in range(13, heure_fin.heure):
                             for minute in range(0, 46, 15):
                                 liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure, minute, medecin, 1))
-                    liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure_fin.heure, heure_fin.minute, medecin, 1))
+                    liste_jour_j_pour_rdv_dispos.append((jour_de_la_semaine[2], jour_de_la_semaine[3], jour_de_la_semaine[4], heure_fin.heure, heure_fin.minute, medecin, 1)) #dernier horaire de la journée
                 cursor.executemany('INSERT INTO rdv_dispos VALUES (?, ?, ?, ?, ?, ?, ?)', liste_jour_j_pour_rdv_dispos)
                 con.commit()
     con_1.close()
