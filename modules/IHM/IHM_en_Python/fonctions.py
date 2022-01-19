@@ -1,6 +1,8 @@
 #Import ce fichier dans tous les fichiers venant de Qt
 #import fonctions
 
+cont = False
+
 #module A
 metier = ''
 #métier de l'utilisateur (patient ou médecin)
@@ -30,23 +32,12 @@ horairerdv = ''
 Info = ''
 #Informations supplémentaires pour le docteur
 
-mugi = False
-
-def continu(bool):
-    global mugi
-    mugi = bool
-
-def continus():
-    return mugi
-
 PInom = ''
 PIprenom = ''
 PIjour = ''
 PImois = ''
 PIannee = ''
 PInumero = ''
-
-
 
 def finom(texte):
     global PInom
@@ -72,23 +63,6 @@ def finumero(texte):
     global PInumero
     PInumero = texte
 
-DIville = ''
-DIadresse = ''
-DIcodepostal = ''
-
-def fiville(texte):
-    global DIville
-    DIville = texte
-
-def fiadresse(texte):
-    global DIadresse
-    DIadresse = texte
-
-def ficodepostale(texte):
-    global DIcodepostal
-    DIcodepostal = texte
-
-
 def Inom():
     return PInom
 
@@ -107,14 +81,7 @@ def Iannee():
 def Inumero():
     return PInumero
 
-def Iville():
-    return DIville
 
-def Iadresse():
-    return DIadresse
-
-def Icodepostal():
-    return DIcodepostal
 
 def affiche(texte):
     global metier
@@ -206,6 +173,12 @@ def DHoraireRdv():
 def DInfos():
     return Info
 
+def continu(bool):
+    global cont
+    cont = bool
+
+def continus():
+    return cont
 
 """
         self.retranslateUi(Form)
