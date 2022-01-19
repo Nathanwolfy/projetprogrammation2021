@@ -82,6 +82,7 @@ class Ui_Form(object):
         self.jjmmaaaalabel = QtWidgets.QLabel(Form)
         self.jjmmaaaalabel.setGeometry(QtCore.QRect(290, 190, 91, 21))
         self.jjmmaaaalabel.setObjectName("jjmmaaaalabel")
+        
 
         self.retranslateUi(Form)
 
@@ -95,7 +96,9 @@ class Ui_Form(object):
         self.ValidationpushButton.released.connect(lambda: self.add(self.numero_patient, self.NumerolineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.add(self.mail_patient, self.AdresseMaillineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.add(self.motdepasse_patient, self.MdPlineEdit.text()))
+
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
+
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def add(self, var, arg):

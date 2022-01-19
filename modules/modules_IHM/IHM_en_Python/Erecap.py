@@ -78,6 +78,7 @@ class Ui_Form(object):
         self.infodonneesmodiflabel.setGeometry(QtCore.QRect(190, 390, 211, 16))
         self.infodonneesmodiflabel.setObjectName("infodonneesmodiflabel")
 
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
     

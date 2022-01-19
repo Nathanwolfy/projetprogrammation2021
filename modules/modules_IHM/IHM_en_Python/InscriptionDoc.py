@@ -96,6 +96,7 @@ class Ui_Form(object):
         self.MdPlineEdit.setGeometry(QtCore.QRect(180, 450, 171, 21))
         self.MdPlineEdit.setObjectName("MdPlineEdit")
 
+
         self.retranslateUi(Form)
 
         self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
