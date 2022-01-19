@@ -4,6 +4,7 @@ from . import rdv_dispo_pris
 
 
 def nom_jour(jour, mois, annee):
+    '''Renvoie le nom du jour grâce à la base de données calendrier'''
     con_1 = lsql.connection_bdd_calendrier()
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nb_jour=? AND mois_jour=? AND annee=?', (jour, mois, annee))
@@ -12,6 +13,7 @@ def nom_jour(jour, mois, annee):
     return req[1]
 
 def construction_edt(nom_medecin, jour, mois, annee, heure, minute, motif, note):
+    '''Insert dans edt le rendez-vous pris'''
     identifiant_medecin = rdv_dispo_pris.profil_medecin_complet(nom_medecin)[0]
     con = lsql.connection_bdd()
     cursor = con.cursor()
