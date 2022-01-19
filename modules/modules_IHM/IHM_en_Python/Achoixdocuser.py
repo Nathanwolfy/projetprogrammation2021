@@ -15,6 +15,7 @@ class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
         self.choix = ''
+        self.continuation = False
         
 
     def setupUi(self, Form):
@@ -32,9 +33,10 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        fonctions.continu(False)
         self.DoctorButton.released.connect(lambda: self.add(self.choix, 'XXd'))
         self.PatientButton.released.connect(lambda: self.add(self.choix, 'XXp'))  
+        self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
+        self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
 
         def add(self, var, arg):
             var = arg
