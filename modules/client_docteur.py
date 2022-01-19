@@ -31,7 +31,7 @@ def client_docteur(socket):
                 str_liste_types_docteurs = echanges_donnees.reception(socket) #On réceptionne la liste des types de docteurs sous forme d'une string
                 liste_types_docteurs = conversion_types.strlist_to_list(str_liste_types_docteurs) #On la convertit effectivement en liste
 
-                launcher.sequence('Yd',liste_types_docteurs) #On démarre la fenêtre de création de compte
+                launcher.sequence('YdA',liste_types_docteurs) #On démarre la fenêtre de création de compte
                 
                 #On récupère les informations saisies par le docteur dans l'IHM
                 #TODO
@@ -59,15 +59,14 @@ def client_docteur(socket):
                 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
                 if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
-                    inscription_edt_doc = launcher.sequence('') #On lance l'inscription de l'emploi du temps du docteur #TODO
+                    inscription_edt_doc = launcher.sequence('YdB',[0,0]) #On lance l'inscription de l'emploi du temps du docteur
                     #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.lundi))
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.mardi))
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.mercredi))
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.jeudi))
                     echanges_donnees.envoi(socket,str(inscription_edt_doc.vendredi))
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.samedi))
-                    
+                    echanges_donnees.envoi(socket,str(inscription_edt_doc.samedi))                  
 
                 else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
                     raise types_exception.InvalidServerReponseError

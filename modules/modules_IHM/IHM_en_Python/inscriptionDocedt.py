@@ -162,7 +162,7 @@ class Ui_Form(object):
         self.ValidationButton.released.connect(lambda: self.add(self.mercredi, [self.debmerlineEdit.text(), self.finmerlineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.jeudi, [self.debjeulineEdit.text(), self.finjeulineEdit.text()]))
         self.ValidationButton.released.connect(lambda: self.add(self.vendredi, [self.debvenlineEdit.text(), self.finvenlineEdit.text()]))
-        self.ValidationButton.released.connect(lambda: self.add(self.samedi, [self.debsamlineEdit.text(), self.finsamlineEdit.text()])))
+        self.ValidationButton.released.connect(lambda: self.add(self.samedi, [self.debsamlineEdit.text(), self.finsamlineEdit.text()]))
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def add(self, var, arg):
