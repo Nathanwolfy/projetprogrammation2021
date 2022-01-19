@@ -1,76 +1,180 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-import Achoixdocuser
-import Bconnexionouinscription
-import Cpriserdv
-import DEdTPatient
-import InscriptionDoc
-import InscriptionPat
-import fonctions
 
-x = InscriptionPat
-y = InscriptionDoc 
-a = Achoixdocuser
-b = Bconnexionouinscription
-c = Cpriserdv
-d = DEdTPatient
-f = fonctions
+edt2 = {'lundi':['8:00-9:30', '11:30-12:00'], 'mardi':['15:00-15:30'], 'mercredi':[], 'jeudi':['8:00-8:30', '8:30-9:00', '9:00-9:30', '9:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00', '13:00-13:30', '13:30-14:00', '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00', '16:00-16:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', '18:00-18:30', '18:30-19:00'], 'vendredi':['18:30-19:00'], 'samedi':['8:00-8:30', '8:30-9:00', '9:00-9:30', '9:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00', '13:00-13:30', '13:30-14:00', '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00', '16:00-16:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', '18:00-18:30', '18:30-19:00']}
 
-seq={1:a, 2:b, 2:c, 3:c, 4:d}
-
-#fonction qui pour un entier donné renvoie l'IHM lié à ce même entier
-
-l =[['8:00-9:30', '11:30-12:00'], ['15:00-15:30'], [], ['8:00-8:30', '8:30-9:00', '9:00-9:30', '9:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00', '13:00-13:30', '13:30-14:00', '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00', '16:00-16:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', '18:00-18:30', '18:30-19:00'], ['18:30-19:00'], ['8:00-8:30', '8:30-9:00', '9:00-9:30', '9:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00', '13:00-13:30', '13:30-14:00', '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00', '16:00-16:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', '18:00-18:30', '18:30-19:00']]
-
-def main():
-    
-    #Création de l'application, en passant en argumant argv (vecteur contenant dans les arguments en ligne de commande)
-    app1 = QtWidgets.QApplication(sys.argv)
-    #Création de la fenêtre
+def launch(horaire, liste):
+    app = QtWidgets.QApplication(sys.argv)
     widget = QtWidgets.QWidget()
-    #Création de notre widget custom, en le parentant à la fenêtre
-    mycustomwidget = b.Ui_Form([0, 0])
-    mycustomwidget.setupUi(widget)
-    #On montre la fenêtre
-    widget.show()
-    #On execute la mainloop
-    app1.exec()
-    print(fonctions.metier)
-    #on a ici le signal pour le métier du client que l'on peut ensuoite comparer dans une base de donnée
-
-    app2 = QtWidgets.QApplication(sys.argv)
-    widget = QtWidgets.QWidget()
-    mycustomwidget = d.Ui_Form()
-    mycustomwidget.setupUi(widget)
-    widget.show()
-    app2.exec()       
-    print(fonctions.identifiant)
-    print(fonctions.motdepass)
-
-if __name__=="__main__":
-    main()
-
-"""
-
-
-
-
-
-if __name__=="__main__":
-    main()
-
-
-
-    app.exec()
-    widget = QtWidgets.QWidget()
-    mycustomwidget = Achoixdocuser.Ui_Form()
+    mycustomwidget = Infosupp(horaire,liste)
     mycustomwidget.setupUi(widget)
     widget.show()
     app.exec()
 
-    print(fonctions.metier)
+edt = {'lundi':['8:00-9:30', '11:30-12:00'], 'mardi':[], 'mercredi':[], 'jeudi':[], 'vendredi':['18:30-19:00'], 'samedi':[]}
+lundi = {'8:00-9:30':['fdp', 'fdp', 'fdp', 'fdp'], '11:30-12:00':['fdp', 'fdp', 'fdp', 'fdp']}
+mardi = {}
+mercredi = {}
+jeudi = {}
+vendredi = {'18:30-19:00':['fdp', 'fdp', 'fdp', 'fdp']}
+samedi = {}
 
-    self.PatientButton.released.connect(lambda: affiche("Patient"))
-    self.DoctorButton.released.connect(lambda: affiche("Doctor"))
+class Ui_Form(object):
+    def __init__(self, arg):
+        self.arg = arg[0]
+        self.dicojour = [arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]]
         
-"""
+    def setupUi(self, Form):
+        n = max((len(self.arg['lundi']), len(self.arg['mardi']), len(self.arg['mercredi']), len(self.arg['jeudi']), len(self.arg['vendredi']), len(self.arg['samedi'])))
+        Form.setObjectName("Form")
+        Form.resize(714, 614)
+        self.EdTtableWidget = QtWidgets.QTableWidget(Form)
+        self.EdTtableWidget.setGeometry(QtCore.QRect(60, 200, 601, 361))
+        self.EdTtableWidget.setObjectName("EdTtableWidget")
+        
+        n = max((len(self.arg['lundi']), len(self.arg['mardi']), len(self.arg['mercredi']), len(self.arg['jeudi']), len(self.arg['vendredi']), len(self.arg['samedi'])))
+        self.EdTtableWidget.setColumnCount(6)
+        self.EdTtableWidget.setRowCount(n)
+        for i in range(n):
+            item = QtWidgets.QTableWidgetItem()
+            self.EdTtableWidget.setVerticalHeaderItem(i, item)
+            
+        item = QtWidgets.QTableWidgetItem()
+        self.EdTtableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.EdTtableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.EdTtableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.EdTtableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.EdTtableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.EdTtableWidget.setHorizontalHeaderItem(5, item)
+        ligne = 0
+        colonne = 0
+        for i in self.arg.keys():
+            ligne = 0
+            for j in self.arg[i]:
+                item = QtWidgets.QTableWidgetItem(j)
+                self.EdTtableWidget.setItem(ligne, colonne, item)
+                ligne += 1 
+            colonne += 1
+                
+        self.EdTtableWidget.horizontalHeader().setDefaultSectionSize(96)
+        self.EdTtableWidget.horizontalHeader().setMinimumSectionSize(80)
+        self.EdTtableWidget.verticalHeader().setDefaultSectionSize(25)
+        self.EdTtableWidget.verticalHeader().setMinimumSectionSize(25)
+        self.EdT_Label = QtWidgets.QLabel(Form)
+        self.EdT_Label.setGeometry(QtCore.QRect(220, 130, 281, 41))
+        self.EdT_Label.setObjectName("EdT_Label")
+        self.Brand_Label = QtWidgets.QLabel(Form)
+        self.Brand_Label.setGeometry(QtCore.QRect(280, 0, 151, 71))
+        self.Brand_Label.setObjectName("Brand_Label")
+        self.FermepushButton = QtWidgets.QPushButton(Form)
+        self.FermepushButton.setGeometry(QtCore.QRect(310, 560, 101, 41))
+        self.FermepushButton.setObjectName("FermepushButton")
+
+        self.retranslateUi(Form)
+        self.EdTtableWidget.clicked.connect(lambda: print(self.EdTtableWidget.selectedIndexes()[0].row()))
+        self.EdTtableWidget.clicked.connect(lambda: print(self.EdTtableWidget.selectedItems()[0].text()))
+        self.EdTtableWidget.clicked.connect(lambda: launch(self.EdTtableWidget.selectedItems()[0].text(), self.dicojour[self.EdTtableWidget.selectedIndexes()[0].row()][self.EdTtableWidget.selectedItems()[0].text()]))
+        
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        item = self.EdTtableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("Form", "Lundi"))
+        item = self.EdTtableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("Form", "Mardi"))
+        item = self.EdTtableWidget.horizontalHeaderItem(2)
+        item.setText(_translate("Form", "Mercredi"))
+        item = self.EdTtableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("Form", "Jeudi"))
+        item = self.EdTtableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("Form", "Vendredi"))
+        item = self.EdTtableWidget.horizontalHeaderItem(5)
+        item.setText(_translate("Form", "Samedi"))
+        __sortingEnabled = self.EdTtableWidget.isSortingEnabled()
+        self.EdTtableWidget.setSortingEnabled(False)      
+        self.EdTtableWidget.setSortingEnabled(__sortingEnabled)
+        self.EdT_Label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Emploi du Temps :</span></p></body></html>"))
+        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctObélix</span></p></body></html>"))
+        self.FermepushButton.setText(_translate("Form", "Fermer"))
+        
+class Infosupp(object):
+
+    def __init__(self, horaire, liste):
+        self.horaire = horaire
+        self.nom = liste[0]
+        self.prenom = liste[1]
+        self.motif = liste[2]
+        self.info = liste[3]
+
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(400, 382)
+        self.Brand_Label = QtWidgets.QLabel(Form)
+        self.Brand_Label.setGeometry(QtCore.QRect(130, 0, 151, 61))
+        self.Brand_Label.setObjectName("Brand_Label")
+        self.nomlabel = QtWidgets.QLabel(Form)
+        self.nomlabel.setGeometry(QtCore.QRect(20, 100, 71, 16))
+        self.nomlabel.setObjectName("nomlabel")
+        self.prenomlabel = QtWidgets.QLabel(Form)
+        self.prenomlabel.setGeometry(QtCore.QRect(20, 150, 71, 16))
+        self.prenomlabel.setObjectName("prenomlabel")
+        self.motiflabel = QtWidgets.QLabel(Form)
+        self.motiflabel.setGeometry(QtCore.QRect(20, 250, 141, 16))
+        self.motiflabel.setObjectName("motiflabel")
+        self.horairelabel = QtWidgets.QLabel(Form)
+        self.horairelabel.setGeometry(QtCore.QRect(20, 200, 55, 16))
+        self.horairelabel.setObjectName("horairelabel")
+        self.nommodiflabel = QtWidgets.QLabel(Form)
+        self.nommodiflabel.setGeometry(QtCore.QRect(110, 100, 281, 16))
+        self.nommodiflabel.setObjectName("nommodiflabel")
+        self.prenommodiflabel = QtWidgets.QLabel(Form)
+        self.prenommodiflabel.setGeometry(QtCore.QRect(110, 150, 281, 16))
+        self.prenommodiflabel.setObjectName("prenommodiflabel")
+        self.horairemodiflabel = QtWidgets.QLabel(Form)
+        self.horairemodiflabel.setGeometry(QtCore.QRect(110, 200, 281, 16))
+        self.horairemodiflabel.setObjectName("horairemodiflabel")
+        self.motifmodiflabel = QtWidgets.QLabel(Form)
+        self.motifmodiflabel.setGeometry(QtCore.QRect(70, 280, 321, 16))
+        self.motifmodiflabel.setObjectName("motifmodiflabel")
+        if self.info != '':
+            self.infosuplabel = QtWidgets.QLabel(Form)
+            self.infosuplabel.setGeometry(QtCore.QRect(20, 320, 191, 16))
+            self.infosuplabel.setObjectName("infosuplabel")
+            self.infomodiflabel = QtWidgets.QLabel(Form)
+            self.infomodiflabel.setGeometry(QtCore.QRect(20, 350, 371, 16))
+            self.infomodiflabel.setObjectName("infomodiflabel")
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
+        self.nomlabel.setText(_translate("Form", "Nom :"))
+        self.prenomlabel.setText(_translate("Form", "Prénom :"))
+        self.motiflabel.setText(_translate("Form", "Motif du rendez-vous :"))
+        self.horairelabel.setText(_translate("Form", "Horaire :"))
+        self.nommodiflabel.setText(_translate("Form", "TextLabel"))
+        self.prenommodiflabel.setText(_translate("Form", "TextLabel"))
+        self.horairemodiflabel.setText(_translate("Form", "TextLabel"))
+        self.motifmodiflabel.setText(_translate("Form", "TextLabel"))
+        if self.info != '':
+            self.infomodiflabel.setText(_translate("Form", self.info))
+            self.infosuplabel.setText(_translate("Form", "Informations supplémentaires :"))
+        
+app2 = QtWidgets.QApplication(sys.argv)
+widget = QtWidgets.QWidget()
+mycustomwidget = Ui_Form([edt, lundi, mardi, mercredi, jeudi, vendredi, samedi])
+mycustomwidget.setupUi(widget)
+widget.show()
+app2.exec() 
+
+    
