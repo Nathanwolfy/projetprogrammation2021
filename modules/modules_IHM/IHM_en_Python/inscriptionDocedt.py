@@ -157,13 +157,16 @@ class Ui_Form(object):
         self.info1label.setObjectName("info1label")
 
         self.retranslateUi(Form)
-        self.ValidationButton.released.connect(self.lundi = [self.deblunlineEdit.text(), self.finlunlineEdit.text()])
-        self.ValidationButton.released.connect(self.mardi = [self.debmarlineEdit.text(), self.finmarlineEdit.text()])
-        self.ValidationButton.released.connect(self.mercredi = [self.debmerlineEdit.text(), self.finmerlineEdit.text()])
-        self.ValidationButton.released.connect(self.jeudi = [self.debjeulineEdit.text(), self.finjeulineEdit.text()])
-        self.ValidationButton.released.connect(self.vendredi = [self.debvenlineEdit.text(), self.finvenlineEdit.text()])
-        self.ValidationButton.released.connect(self.samedi = [self.debsamlineEdit.text(), self.finsamlineEdit.text()])
+        self.ValidationButton.released.connect(lambda: self.add(self.lundi, [self.deblunlineEdit.text(), self.finlunlineEdit.text()]))
+        self.ValidationButton.released.connect(lambda: self.add(self.mardi, [self.debmarlineEdit.text(), self.finmarlineEdit.text()]))
+        self.ValidationButton.released.connect(lambda: self.add(self.mercredi, [self.debmerlineEdit.text(), self.finmerlineEdit.text()]))
+        self.ValidationButton.released.connect(lambda: self.add(self.jeudi, [self.debjeulineEdit.text(), self.finjeulineEdit.text()]))
+        self.ValidationButton.released.connect(lambda: self.add(self.vendredi, [self.debvenlineEdit.text(), self.finvenlineEdit.text()]))
+        self.ValidationButton.released.connect(lambda: self.add(self.samedi, [self.debsamlineEdit.text(), self.finsamlineEdit.text()])))
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def add(self, var, arg):
+        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
