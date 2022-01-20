@@ -7,7 +7,3 @@
 <br/> 
 <br/> Élèves : Vic-Éline Carré - Ewen Dagorn - Louis-Ferdinand Dartencet - Nathan Ledergerber
 <br/> 
-<br/>Prochains objectifs :
-<br/>-épurer code, commenter, supprimer fichiers inutiles
-<br/>-régler les derniers bugs avec les rdvs
-<br/>-finir partie docteur

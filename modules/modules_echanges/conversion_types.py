@@ -36,13 +36,3 @@ def from_string_to_dict(string):
     for i in range(n//2):
         le_dico_enfin[version7_list[2*i]] = version7_list[2*i + 1]
     return le_dico_enfin
-
-
-"""
-def strlist2_to_list(strlist2):
-    resultat = []
-    l1 = strlist2.strip('[]').split("], [")
-    for sublist in l1:
-        resultat.append(sublist.replace("'","").split(", "))
-    return resultat
-"""

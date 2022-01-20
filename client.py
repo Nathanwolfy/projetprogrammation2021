@@ -17,8 +17,7 @@ if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix d
     fenetre_choix_client = launcher.Achoixdocuser_herit()
     launcher.exec_fenetre(fenetre_choix_client)
     continuation = fenetre_choix_client.continuation
-    choix_client = fenetre_choix_client.choix_client
-    print(choix_client) #'XXp' ou 'XXd'
+    choix_client = fenetre_choix_client.choix_client #'XXp' ou 'XXd'
 
     if choix_client == 'XXp': #Le client patient est choisi
         echanges_donnees.envoi(socket,choix_client) #On informe le serveur du choix du client patient
