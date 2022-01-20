@@ -39,19 +39,30 @@ def client_patient(socket):
                 else: #Dans les autres cas, le processus se déroule normalement
                     #On récupère les données fournies par le patient lors de son inscription de l'IHM et on les envoie directement
                     envoi_donnees_inscription = '02pCREACOMPTE'
-                      
+                    
+                    nom_patient = fenetre_creation_compte_patient.nom_patient.capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
+                    prenom_patient = fenetre_creation_compte_patient.prenom_patient.capitalize()
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fenetre_creation_compte_patient.jour_patient,fenetre_creation_compte_patient.mois_patient, fenetre_creation_compte_patient.annee_patient
                     date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
+                    numero_patient = fenetre_creation_compte_patient.numero_patient
+                    mail_patient = fenetre_creation_compte_patient.mail_patient
+                    hash_motdepasse = hashage_mdp.hash_mdp(fenetre_creation_compte_patient.motdepasse_patient)
 
-                    #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
-                    echanges_donnees.envoi(socket,envoi_donnees_inscription)
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.nom_patient.capitalize()) #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.prenom_patient.capitalize())
-                    echanges_donnees.envoi(socket,date_naissance_patient)
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.numero_patient)
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.mail_patient)
-                    echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_creation_compte_patient.motdepasse_patient))
-                    clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
+                    if not echanges_donnees.check_donnes_non_vides((nom_patient,prenom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,numero_patient,mail_patient)) or hash_motdepasse == hashage_mdp.hash_mdp(''):
+                        envoi_donnee_invalide = '02pINVALIDDATA'
+                        echanges_donnees(socket,envoi_donnee_invalide)
+                        clef_valide = 'False' #Si le client a rentré une donnée vide, son inscription n'est pas validé
+
+                    else:
+                        #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
+                        echanges_donnees.envoi(socket,envoi_donnees_inscription)
+                        echanges_donnees.envoi(socket,nom_patient)
+                        echanges_donnees.envoi(socket,prenom_patient)
+                        echanges_donnees.envoi(socket,date_naissance_patient)
+                        echanges_donnees.envoi(socket,numero_patient)
+                        echanges_donnees.envoi(socket,mail_patient)
+                        echanges_donnees.envoi(socket,hash_motdepasse)
+                        clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la fenêtre de connexion, l'application s'arrête
             stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
