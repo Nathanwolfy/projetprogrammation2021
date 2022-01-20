@@ -33,8 +33,9 @@ class Ui_Form(object):
         self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
         self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
 
-        self.DoctorButton.released.connect(lambda: self.add(self.choix_client, 'XXd'))
-        self.PatientButton.released.connect(lambda: self.add(self.choix_client, 'XXp'))  
+        #self.DoctorButton.released.connect(lambda: self.add(self.choix_client, 'XXd'))
+        #self.PatientButton.released.connect(lambda: self.add(self.choix_client, 'XXp'))
+        self.DoctorButton.released.connect(lambda: self.add_choix('XXd'))
 
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
@@ -43,6 +44,9 @@ class Ui_Form(object):
 
     def add(self, var, arg):
         var = arg
+
+    def add_choix(self, arg):
+        self.choix_client = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
