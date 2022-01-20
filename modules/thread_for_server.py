@@ -187,7 +187,7 @@ class ThreadForServer(threading.Thread):
 
                     clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
 
-                elif reponse == '02pINVALIDDATA': #Si le docteur rentre une donnée invalide, son inscription n'est pas validée
+                elif reponse == '02dINVALIDDATA': #Si le docteur rentre une donnée invalide, son inscription n'est pas validée
                     clef_valide = 'False'
                 
                 elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre

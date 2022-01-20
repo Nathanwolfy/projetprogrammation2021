@@ -20,8 +20,7 @@ def client_patient(socket):
                 identifiant = fenetre_connexion_patient.identifiant_client
                 hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_patient.motdepasse_client)
                 clef_patient = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
-                clef_patient = clef_patient
-
+                
                 envoi_clef_connexion = '02pSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_patient)

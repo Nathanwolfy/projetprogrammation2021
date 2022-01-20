@@ -11,8 +11,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
-    def __init__(self,arg):
-        self.arg = arg
+    def __init__(self):
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
         self.nom_patient = ''
         self.prenom_patient = ''

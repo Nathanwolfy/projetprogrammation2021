@@ -22,8 +22,7 @@ def client_docteur(socket):
                 identifiant = fenetre_connexion_docteur.identifiant_client
                 hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_docteur.motdepasse_client)
                 clef_docteur = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
-                clef_docteur = clef_docteur
-
+                
                 envoi_clef_connexion = '02dSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_docteur)
@@ -56,7 +55,7 @@ def client_docteur(socket):
                     hash_motdepasse_docteur = hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur)
 
                     if not echanges_donnees.check_donnes_non_vides((nom_docteur,prenom_docteur,type_docteur,ville_docteur,adresse_docteur,code_postal_docteur,numero_docteur,identifiant)) or hash_motdepasse_docteur == hashage_mdp.hash_mdp(''):
-                        envoi_donnee_invalide = '02pINVALIDDATA'
+                        envoi_donnee_invalide = '02dINVALIDDATA'
                         echanges_donnees.envoi(socket,envoi_donnee_invalide)
                         clef_valide = 'False' #Si le docteur rentre une donnée vide, on ne valide pas son inscription
                     
