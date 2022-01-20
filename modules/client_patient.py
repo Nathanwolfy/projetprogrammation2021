@@ -64,7 +64,8 @@ def client_patient(socket):
             str_dico_type_rdv = echanges_donnees.reception(socket) #On réceptionne depuis le serveur le dictionnaire sous form d'un string nécessaire au foncionnement de l'IHM de prise de rdv
             dico_type_rdv = conversion_types.from_string_to_dict(str_dico_type_rdv) #On le convertit effectivement en dictionnaire
 
-            fenetre_prise_de_rdv = launcher.Cpriserdv_herit((dico_type_rdv,rdv_non_dispo)) #On lance la fenêtre de prise de rdv avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions du patient préalablement remplies 
+            fenetre_prise_de_rdv = launcher.Cpriserdv_herit((dico_type_rdv,rdv_non_dispo))
+            launcher.exec_fenetre(fenetre_prise_de_rdv) #On lance la fenêtre de prise de rdv avec un booléen pour afficher s'il n'y pas de rdvs dispos sous les conditions du patient préalablement remplies 
             continuation = fenetre_prise_de_rdv.continuation
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
@@ -91,7 +92,8 @@ def client_patient(socket):
         if confirmation_serveur == '04pINITAFFDISPO': #Le serveur confirme qu'il existe des rdvs dispos sous ces conditions
             str_dico_disponibilites = echanges_donnees.reception(socket) #On réceptionne sous forme d'un string le dictionnaire permettant l'affichage des rdvs dispos
             dico_disponibilites = conversion_types.from_string_to_dict(str_dico_disponibilites) #On le convertit effectivement sous la forme d'un dictionnaore
-            fenetre_affichage_rdv_dispos = launcher.DEdTPatient_herit(dico_disponibilites) #On lance la fenêtre d'affichage des rdvs dispossous les conditions remplies par le patient
+            fenetre_affichage_rdv_dispos = launcher.DEdTPatient_herit(dico_disponibilites)
+            launcher.exec_fenetre(fenetre_affichage_rdv_dispos) #On lance la fenêtre d'affichage des rdvs dispossous les conditions remplies par le patient
             continuation = fenetre_affichage_rdv_dispos.continuation
 
             if continuation: #Si le rdv est validé par le patient
