@@ -2,16 +2,19 @@ MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout"
 
 class Profil:
     """les parametres communs a tous les profils sont le prenom le nom le mail 
-    et telephone, on rajoutera des choses specifiques pour le 
+    et telephone, on rajoutera des attributs specifiques pour le 
     docteur/patient"""
     
     def __init__(self):
         self.prenom = "" #STR
         self.nom = "" #STR
         self.mail = "" #STR
-        self.telephone = 0 #INT
+        self.telephone = "" #STR (de maniere a garder le 0 au debut du numero)
 
     def saisie(self, prenom, nom, mail, telephone):
+        """cette methode permet de saisir les donnees d'un patient ou d'un
+        medecin en simplifiant la fonction saisie qui leur est attribuee
+        en appelant celle-ci"""
         self.prenom = str(prenom) #STR
         self.nom = str(nom) #STR
         self.mail = str(mail) #STR
@@ -21,7 +24,7 @@ class Profil:
 class Docteur(Profil):
     """le docteur prends en plus en parametre de lui meme son metier 
     ie si c'est un dentiste il va pas faire des trucs de generaliste et 
-    l'adresse de son cabinet (rue, code postal, ville)"""
+    l'adresse de son cabinet sous forme (rue, code postal, ville)"""
     
     def __init__(self):
         Profil.__init__(self)
@@ -35,9 +38,12 @@ class Docteur(Profil):
         self.metier = str(metier)
         self.rue = str(rue)
         self.code_postal = str(code_postal)
-        self.ville = str(ville)
+        self.ville = str(ville.upper())
 
     def __repr__(self):
+        """Pour plus de lisibilite le medecin est affiche sous forme de fiche medecin, 
+        cette fonctionnalite est principalement utilisee pour des tests et des 
+        verifications de bon fonctionnement des fonctions et des methodes"""
         return "FICHE DOCTEUR : Medecin " + str(self.metier) + " " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.rue + " " + self.code_postal + " " + self.ville
 
 
@@ -45,7 +51,7 @@ class Patient(Profil):
     """le patient prends en plus en parametre sa date de naissance, je n'ai 
     intentionnellement pas mis le fait qu'il soit majeur en parametre pour
     moi ça me semble pas enormement important alors j'ai défini une methode
-    en dehors et cela donne patient.est_majeur() = True/False"""
+    en dehors et cela donne patient.est_majeur() => True/False"""
     
     def __init__(self):
         Profil.__init__(self)
@@ -56,6 +62,7 @@ class Patient(Profil):
         self.date = date
     
     def __repr__(self):
+        """cette fonction aussi est essentiellement pour m'aider dans la representation"""
         return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone)
 
 #piste d'amelioration : faire de cette methode un automatisme avec une fonction
