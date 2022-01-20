@@ -127,7 +127,7 @@ class Ui_Form(object):
         self.ville_docteur,self.adresse_docteur,self.code_postal_docteur = ville,adresse,code_postal
 
     def set_numero_docteur(self,valeur):
-        self.set_numero_docteur = valeur
+        self.numero_docteur = valeur
     
     def set_mail_docteur(self,valeur):
         self.mail_docteur = valeur

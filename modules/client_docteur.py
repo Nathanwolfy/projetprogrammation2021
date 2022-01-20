@@ -55,11 +55,14 @@ def client_docteur(socket):
                     hash_motdepasse_docteur = hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur)
 
                     if not echanges_donnees.check_donnes_non_vides((nom_docteur,prenom_docteur,type_docteur,ville_docteur,adresse_docteur,code_postal_docteur,numero_docteur,identifiant)) or hash_motdepasse_docteur == hashage_mdp.hash_mdp(''):
+                        print('aled')
                         envoi_donnee_invalide = '02dINVALIDDATA'
                         echanges_donnees.envoi(socket,envoi_donnee_invalide)
                         clef_valide = 'False' #Si le docteur rentre une donnée vide, on ne valide pas son inscription
                     
                     else: #Dans tous les autres cas, il n'y a pas de problèmes.
+                        envoi_donnee_valide = '02dSENDDATAINSCDOC'
+                        echanges_donnees.envoi(socket,envoi_donnee_valide)
                         echanges_donnees.envoi(socket,nom_docteur)
                         echanges_donnees.envoi(socket,prenom_docteur)
                         echanges_donnees.envoi(socket,type_docteur)
