@@ -168,4 +168,4 @@ if __name__ == "__main__" :
     from_string_to_dict(str_dico)
     """
     
-    #Toutes les foctions semblent fonctionner correctement
+    #Toutes les fonctions semblent fonctionner correctement
