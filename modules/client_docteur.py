@@ -44,18 +44,27 @@ def client_docteur(socket):
                     stop_continuation.arret_processus(socket)
 
                 else: #Si non, le processus se déroule normalement
-                    #On récupère les informations saisies par le docteur dans l'IHM et on les envoie directement (on garde que l'identifiant du docteur car on en aura besoin par la suite)
+                    #On récupère les informations saisies par le docteur dans l'IHM
+                    nom_docteur = fenetre_inscription_docteur.nom_docteur.capitalize() #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
+                    prenom_docteur = fenetre_inscription_docteur.prenom_docteur.capitalize()
+                    type_docteur = fenetre_inscription_docteur.type_docteur
+                    ville_docteur = fenetre_inscription_docteur.ville_docteur.upper() #upper() car toutes les villes sont en majuscules dans la bdd
+                    adresse_docteur = fenetre_inscription_docteur.adresse_docteur
+                    code_postal_docteur = fenetre_inscription_docteur.code_postal_docteur
+                    numero_docteur = fenetre_inscription_docteur.numero_docteur
                     identifiant = fenetre_inscription_docteur.mail_docteur
+                    hash_motdepasse_docteur = hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur)
 
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.nom_docteur.capitalize()) #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.prenom_docteur.capitalize())
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.type_docteur)
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.ville_docteur.upper()) #upper() car toutes les villes sont en majuscules dans la bdd
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.adresse_docteur)
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.code_postal_docteur)
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.numero_docteur)
+
+                    echanges_donnees.envoi(socket,nom_docteur)
+                    echanges_donnees.envoi(socket,prenom_docteur)
+                    echanges_donnees.envoi(socket,type_docteur)
+                    echanges_donnees.envoi(socket,ville_docteur)
+                    echanges_donnees.envoi(socket,adresse_docteur)
+                    echanges_donnees.envoi(socket,code_postal_docteur)
+                    echanges_donnees.envoi(socket,numero_docteur)
                     echanges_donnees.envoi(socket,identifiant)
-                    echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur))
+                    echanges_donnees.envoi(socket,hash_motdepasse_docteur)
 
                     reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 

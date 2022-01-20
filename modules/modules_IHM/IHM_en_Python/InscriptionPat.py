@@ -9,8 +9,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
-    def __init__(self,arg):
-        self.arg = arg
+    def __init__(self):
         self.continuation = False
         self.nom_patient = ''
         self.prenom_patient = ''

@@ -46,9 +46,9 @@ def client_patient(socket):
                     #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
                     echanges_donnees.envoi(socket,envoi_donnees_inscription)
                     echanges_donnees.envoi(socket,fenetre_creation_compte_patient.nom_patient.capitalize()) #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
-                    echanges_donnees.envoi(socket,prenom_patient = fenetre_creation_compte_patient.prenom_patient.capitalize())
+                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.prenom_patient.capitalize())
                     echanges_donnees.envoi(socket,date_naissance_patient)
-                    echanges_donnees.envoi(socket,nnumero_patient = fenetre_creation_compte_patient.numero_patient)
+                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.numero_patient)
                     echanges_donnees.envoi(socket,fenetre_creation_compte_patient.mail_patient)
                     echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_creation_compte_patient.motdepasse_patient))
                     clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
