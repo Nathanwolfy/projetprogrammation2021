@@ -19,7 +19,8 @@ class Ui_Form(object):
         self.vendredi = []
         self.samedi = []
 
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):            #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 473)
         self.Brand_Label = QtWidgets.QLabel(Form)
@@ -170,8 +171,10 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+
     def set_continuation(self,valeur):
         self.continuation = valeur
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -199,5 +202,5 @@ class Ui_Form(object):
         self.label_13.setText(_translate("Form", "à"))
         self.label_14.setText(_translate("Form", "de "))
         self.ValidationButton.setText(_translate("Form", "Valider"))
-        self.info2label.setText(_translate("Form", " écrire l\'heure de début et l\'heure de fin de la journée (ex : 8h00 )"))
-        self.info1label.setText(_translate("Form", " Ne rien écrire en cas de non disponibilité une journée, "))
+        self.info2label.setText(_translate("Form", "   écrire l\'heure de début et l\'heure de fin de la journée (ex : 8:00 )"))
+        self.info1label.setText(_translate("Form", "   Ne rien écrire en cas de non disponibilité une journée, "))
