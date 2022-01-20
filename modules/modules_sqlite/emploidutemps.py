@@ -28,7 +28,7 @@ class Heure:
             else:
                 self.repr = str(self.heure) + ':' + str(self.minute)
 
-    def compare(self, horaire): #compare deux horaires de la classe Heure (<)
+    def __lt__(self, horaire): #compare deux horaires de la classe Heure (<)
         horaire_heure = horaire.heure
         horaire_minute = horaire.minute
         if self.heure == horaire_heure:
