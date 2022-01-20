@@ -77,9 +77,9 @@ class Ui_Form(object):
         self.FermepushButton.setObjectName("FermepushButton")
 
         self.retranslateUi(Form)
-        self.EdTtableWidget.clicked.connect(lambda: print(self.EdTtableWidget.selectedIndexes()[0].row()))
+        self.EdTtableWidget.clicked.connect(lambda: print(self.EdTtableWidget.selectedIndexes()[0].column()))
         self.EdTtableWidget.clicked.connect(lambda: print(self.EdTtableWidget.selectedItems()[0].text()))
-        self.EdTtableWidget.clicked.connect(lambda: launch(self.EdTtableWidget.selectedItems()[0].text(), self.dicojour[self.EdTtableWidget.selectedIndexes()[0].row()][self.EdTtableWidget.selectedItems()[0].text()]))
+        self.EdTtableWidget.clicked.connect(lambda: launch(self.EdTtableWidget.selectedItems()[0].text(), self.dicojour[self.EdTtableWidget.selectedIndexes()[0].column()][self.EdTtableWidget.selectedItems()[0].text()]))
         
         QtCore.QMetaObject.connectSlotsByName(Form)
 
