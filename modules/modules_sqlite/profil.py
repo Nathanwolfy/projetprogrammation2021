@@ -2,16 +2,19 @@ MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout"
 
 class Profil:
     """les parametres communs a tous les profils sont le prenom le nom le mail 
-    et telephone, on rajoutera des choses specifiques pour le 
+    et telephone, on rajoutera des attributs specifiques pour le 
     docteur/patient"""
     
     def __init__(self):
         self.prenom = "" #STR
         self.nom = "" #STR
         self.mail = "" #STR
-        self.telephone = 0 #INT
+        self.telephone = "" #STR (de maniere a garder le 0 au debut du numero)
 
     def saisie(self, prenom, nom, mail, telephone):
+        """cette methode permet de saisir les donnees d'un patient ou d'un
+        medecin en simplifiant la fonction saisie qui leur est attribuee
+        en appelant celle-ci"""
         self.prenom = str(prenom) #STR
         self.nom = str(nom) #STR
         self.mail = str(mail) #STR
@@ -21,7 +24,7 @@ class Profil:
 class Docteur(Profil):
     """le docteur prends en plus en parametre de lui meme son metier 
     ie si c'est un dentiste il va pas faire des trucs de generaliste et 
-    l'adresse de son cabinet (rue, code postal, ville)"""
+    l'adresse de son cabinet sous forme (rue, code postal, ville)"""
     
     def __init__(self):
         Profil.__init__(self)
