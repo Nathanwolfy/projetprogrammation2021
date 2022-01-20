@@ -21,8 +21,8 @@ def client_docteur(socket):
             elif not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_docteur.identifiant_client
                 hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_docteur.motdepasse_client)
-                clef_docteur = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
-                
+                clef_docteur = identifiant + " " + hash_motdepasse if identifiant != '' else "NULL " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client, et on indique au serveur si aucune email n'a été rentré
+
                 envoi_clef_connexion = '02dSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_docteur)

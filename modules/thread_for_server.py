@@ -38,8 +38,13 @@ class ThreadForServer(threading.Thread):
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ") #On réceptionne la clef de connexion (email espacé d'un espace du mdp)
                     identifiant_patient, hash_motdepasse_patient = clef_connexion[0], clef_connexion[1]
+
+                    if identifiant_patient == 'NULL': #Dans le cas où aucun email n'a été rentré, la clef est forcément fausse
+                        clef_valide = 'False'
+
+                    else: #Si ce n'est pas le cas, le processus suit son cours
+                        clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,hash_motdepasse_patient)) #On vérifie que la clef de connexion est valide
                     
-                    clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,hash_motdepasse_patient)) #On vérifie que la clef de connexion est valide
                     echanges_donnees.envoi(self.conn,clef_valide) #On envoie le résultat de l'évaluation de la validité de la clef de connexion
 
                 elif reponse == '02pCREACOMPTE': #Le patient choisit de créer un compte
@@ -116,6 +121,11 @@ class ThreadForServer(threading.Thread):
                         echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites)
                         rdv_validé = False #Le rdv n'est pas validé
 
+                elif reponse == '03pINVALIDDATA': #Dans le cas où le patient n'a pas rentré toutes les données
+                    code_initialisation_affichage_disponibilites = '04pRDVNONDISPO' #On confirme au patient qu'il n'existe pas de rdv dispo sous ces conditions
+                    echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites)
+                    rdv_validé = False #Le rdv n'est pas validé
+
                 elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
                     raise types_exception.ClientDisconnectedError 
 
@@ -153,8 +163,13 @@ class ThreadForServer(threading.Thread):
                 if reponse == '02dSENDCLEF': #Le docteur choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ")
                     identifiant_docteur, hash_motdepasse_docteur = clef_connexion[0], clef_connexion[1]
-                    
-                    clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,hash_motdepasse_docteur)) #On vérifie que la clef de connexion est valide
+
+                    if identifiant_docteur == 'NULL': #Dans le cas où aucun email n'a été rentré, la clef est forcément fausse
+                        clef_valide = 'False'
+
+                    else: #Si ce n'est pas le cas, le processus suit son cours
+                        clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,hash_motdepasse_docteur)) #On vérifie que la clef de connexion est valide
+
                     echanges_donnees.envoi(self.conn,clef_valide)
 
                 elif reponse == '02dCREACOMPTE': #Le docteur choisir de créer son compte

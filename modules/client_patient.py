@@ -19,8 +19,8 @@ def client_patient(socket):
             elif not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_patient.identifiant_client
                 hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_patient.motdepasse_client)
-                clef_patient = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
-                
+                clef_patient = identifiant + " " + hash_motdepasse if identifiant != '' else "NULL " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client, et on indique au serveur si aucune email n'a été rentré
+
                 envoi_clef_connexion = '02pSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
                 echanges_donnees.envoi(socket,clef_patient)
@@ -86,14 +86,23 @@ def client_patient(socket):
                 localisation = fenetre_prise_de_rdv.localisation #upper() car toutes les villes sont en masjuscule dans la bdd
                 type_docteur = fenetre_prise_de_rdv.type_docteur
                 type_rdv = fenetre_prise_de_rdv.type_rdv
-                date_rdv = fenetre_prise_de_rdv.jour_rdv + "/" + fenetre_prise_de_rdv.mois_rdv + "/" + fenetre_prise_de_rdv.annee_rdv
+                jour_rdv = fenetre_prise_de_rdv.jour_rdv
+                mois_rdv = fenetre_prise_de_rdv.mois_rdv
+                annee_rdv = fenetre_prise_de_rdv.annee_rdv
+                date_rdv = jour_rdv + "/" + mois_rdv + "/" + annee_rdv
 
-                envoi_donnees_prise_rdv = '03pSENDDATARDV' #On signale au serveur que le patient a effectivement saisi ses conditions de rdv
-                echanges_donnees.envoi(socket,envoi_donnees_prise_rdv)
-                echanges_donnees.envoi(socket,localisation) #On envoie les conditions du patient au serveur
-                echanges_donnees.envoi(socket,type_docteur)
-                echanges_donnees.envoi(socket,type_rdv)
-                echanges_donnees.envoi(socket,date_rdv)
+                if not echanges_donnees.check_donnes_non_vides((localisation,jour_rdv,mois_rdv,annee_rdv)): #Dans le cas où une donnée n'a pas été remplie par le patient
+                    envoi_donnee_invalide = '03pINVALIDDATA'
+                    echanges_donnees.envoi(socket,envoi_donnee_invalide)
+                    rdv_validé = 'False'
+
+                else: #Sinon le processus suit son cours
+                    envoi_donnees_prise_rdv = '03pSENDDATARDV' #On signale au serveur que le patient a effectivement saisi ses conditions de rdv
+                    echanges_donnees.envoi(socket,envoi_donnees_prise_rdv)
+                    echanges_donnees.envoi(socket,localisation) #On envoie les conditions du patient au serveur
+                    echanges_donnees.envoi(socket,type_docteur)
+                    echanges_donnees.envoi(socket,type_rdv)
+                    echanges_donnees.envoi(socket,date_rdv)
                 
         else: #Si le serveur ne valide pas le lancement de la fenêtre de prise de rdv, c'est une erreur, le client s'arrête donc
             stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
