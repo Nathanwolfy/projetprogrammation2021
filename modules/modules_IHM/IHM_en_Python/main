@@ -3,6 +3,7 @@ import sys
 
 edt2 = {'lundi':['8:00-9:30', '11:30-12:00'], 'mardi':['15:00-15:30'], 'mercredi':[], 'jeudi':['8:00-8:30', '8:30-9:00', '9:00-9:30', '9:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00', '13:00-13:30', '13:30-14:00', '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00', '16:00-16:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', '18:00-18:30', '18:30-19:00'], 'vendredi':['18:30-19:00'], 'samedi':['8:00-8:30', '8:30-9:00', '9:00-9:30', '9:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00', '13:00-13:30', '13:30-14:00', '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00', '16:00-16:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', '18:00-18:30', '18:30-19:00']}
 
+
 def launch(horaire, liste):
     app = QtWidgets.QApplication(sys.argv)
     widget = QtWidgets.QWidget()
@@ -171,10 +172,10 @@ class Infosupp(object):
             self.infosuplabel.setText(_translate("Form", "Informations supplémentaires :"))
         
 app2 = QtWidgets.QApplication(sys.argv)
-widget = QtWidgets.QWidget()
-mycustomwidget = Ui_Form([edt, lundi, mardi, mercredi, jeudi, vendredi, samedi])
-mycustomwidget.setupUi(widget)
-widget.show()
+widget2 = QtWidgets.QWidget()
+mycustomwidget2 = Ui_Form([edt, lundi, mardi, mercredi, jeudi, vendredi, samedi])
+mycustomwidget2.setupUi(widget2)
+widget2.show()
 app2.exec() 
 
     
