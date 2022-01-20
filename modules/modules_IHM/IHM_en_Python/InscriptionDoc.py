@@ -24,7 +24,8 @@ class Ui_Form(object):
         self.mail_docteur = ''
         self.mot_de_passe_docteur = ''
         
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):            #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 562)
         self.Docteurlabel = QtWidgets.QLabel(Form)
@@ -112,6 +113,7 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+
     def set_continuation(self,valeur):
         self.continuation = valeur
     
@@ -135,6 +137,7 @@ class Ui_Form(object):
     
     def set_mot_de_passe_docteur(self,valeur):
         self.mot_de_passe_docteur = valeur
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

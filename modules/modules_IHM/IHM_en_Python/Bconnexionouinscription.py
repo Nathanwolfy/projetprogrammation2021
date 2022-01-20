@@ -17,7 +17,8 @@ class Ui_Form(object):
         self.identifiant_client = ''
         self.motdepasse_client = ''
         
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):                #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(720, 570)
         self.labelNomPrenom = QtWidgets.QLabel(Form)
@@ -48,6 +49,7 @@ class Ui_Form(object):
         self.ConnexionButton.setGeometry(QtCore.QRect(380, 470, 161, 28))
         self.ConnexionButton.setObjectName("ConnexionButton")
 
+
         self.retranslateUi(Form)
         
         self.InscriptionButton.released.connect(lambda: self.set_continuation(True))
@@ -65,6 +67,7 @@ class Ui_Form(object):
         
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+
     def set_continuation(self, valeur):
         self.continuation = valeur
 
@@ -76,6 +79,7 @@ class Ui_Form(object):
 
     def set_creation_compte(self,valeur):
         self.creation_compte = valeur
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

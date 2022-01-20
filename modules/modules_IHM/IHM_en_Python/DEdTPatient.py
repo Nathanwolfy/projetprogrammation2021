@@ -10,7 +10,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 
 
-class Ui_Form(object):
+class Ui_Form(object):          
     def __init__(self, arg):
         self.dico = arg
         self.continuation = False
@@ -18,7 +18,8 @@ class Ui_Form(object):
         self.horaire_rdv_choisi = ''
         self.infos_pour_docteur = ''
     
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):            #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(720, 615)
         self.Brand_Label = QtWidgets.QLabel(Form)
@@ -50,6 +51,7 @@ class Ui_Form(object):
         self.InfolineEdit.setGeometry(QtCore.QRect(410, 380, 251, 31))
         self.InfolineEdit.setObjectName("InfolineEdit")
 
+
         self.retranslateUi(Form)
 
         self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
@@ -59,9 +61,10 @@ class Ui_Form(object):
         
         self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)
 
-        self.ValidationpushButton.released.connect(Form.close) # type: ignore
+        self.ValidationpushButton.released.connect(Form.close)
         QtCore.QMetaObject.connectSlotsByName(Form)
         
+
     def update_rdv_type_combobox(self, docteur_type):
         self.nom_docteur_rdv_choisi = docteur_type
         self.comboBox.clear()

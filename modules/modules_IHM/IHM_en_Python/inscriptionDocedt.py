@@ -9,6 +9,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
+
 class Ui_Form(object):
     def __init__(self):
         self.continuation = False
@@ -24,7 +25,7 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.resize(400, 473)
         self.Brand_Label = QtWidgets.QLabel(Form)
-        self.Brand_Label.setGeometry(QtCore.QRect(130, 0, 151, 71))
+        self.Brand_Label.setGeometry(QtCore.QRect(150, 0, 151, 71))
         self.Brand_Label.setObjectName("Brand_Label")
         self.lundilabel = QtWidgets.QLabel(Form)
         self.lundilabel.setGeometry(QtCore.QRect(30, 170, 71, 16))

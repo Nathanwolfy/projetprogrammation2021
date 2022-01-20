@@ -23,7 +23,8 @@ class Ui_Form(object):
         self.mois_rdv = ''
         self.annee_rdv =''
 
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):                #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(545, 439)
         self.Localisation_Label = QtWidgets.QLabel(Form)
@@ -71,6 +72,7 @@ class Ui_Form(object):
         self.label.setObjectName("label")
         self.update_rdv_type_combobox(self.Praticien_comboBox.currentText())
 
+
         self.retranslateUi(Form)
 
         self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
@@ -87,7 +89,8 @@ class Ui_Form(object):
         self.ValidationpushButton.released.connect(Form.close)
 
         QtCore.QMetaObject.connectSlotsByName(Form)
-        
+
+
     def set_continuation(self, valeur):
         self.continuation = valeur
     

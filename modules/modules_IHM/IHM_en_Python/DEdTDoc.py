@@ -16,7 +16,8 @@ class Ui_Form(object):
         self.arg = arg
         self.continuation = False
 
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):            #Mise en place de l'IHM
         n = max((len(self.arg[0]), len(self.arg[1]), len(self.arg[2]), len(self.arg[3]), len(self.arg[4]), len(self.arg[5])))
         Form.setObjectName("Form")
         Form.resize(714, 614)
@@ -59,6 +60,7 @@ class Ui_Form(object):
         self.FermepushButton.setGeometry(QtCore.QRect(310, 560, 101, 41))
         self.FermepushButton.setObjectName("FermepushButton")
 
+
         self.retranslateUi(Form)
 
         self.FermepushButton.released.connect(lambda: self.set_continuation(True))
@@ -67,8 +69,10 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+
     def set_continuation(self,valeur):
         self.continuation = valeur
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

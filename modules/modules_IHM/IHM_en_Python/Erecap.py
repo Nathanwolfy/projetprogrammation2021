@@ -9,11 +9,13 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
+
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
 
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):            #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 424)
         self.Brand_Label = QtWidgets.QLabel(Form)
@@ -80,6 +82,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
