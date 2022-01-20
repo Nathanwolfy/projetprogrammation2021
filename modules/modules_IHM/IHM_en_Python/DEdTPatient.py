@@ -63,7 +63,7 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
         
     def update_rdv_type_combobox(self, docteur_type):
-        self.nom_docteur_rdv_choisi(docteur_type)
+        self.nom_docteur_rdv_choisi = docteur_type
         self.comboBox.clear()
         if docteur_type in self.dico.keys():
             type_rdv = self.dico[docteur_type]

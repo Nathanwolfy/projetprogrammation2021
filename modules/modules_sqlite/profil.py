@@ -38,9 +38,12 @@ class Docteur(Profil):
         self.metier = str(metier)
         self.rue = str(rue)
         self.code_postal = str(code_postal)
-        self.ville = str(ville)
+        self.ville = str(ville.upper())
 
     def __repr__(self):
+        """Pour plus de lisibilite le medecin est affiche sous forme de fiche medecin, 
+        cette fonctionnalite est principalement utilisee pour des tests et des 
+        verifications de bon fonctionnement des fonctions et des methodes"""
         return "FICHE DOCTEUR : Medecin " + str(self.metier) + " " + str(self.prenom) + " " + str(self.nom) + "\nDe contact : " + self.mail + " " + str(self.telephone) + "\nau cabinet situé : " + self.rue + " " + self.code_postal + " " + self.ville
 
 
@@ -48,7 +51,7 @@ class Patient(Profil):
     """le patient prends en plus en parametre sa date de naissance, je n'ai 
     intentionnellement pas mis le fait qu'il soit majeur en parametre pour
     moi ça me semble pas enormement important alors j'ai défini une methode
-    en dehors et cela donne patient.est_majeur() = True/False"""
+    en dehors et cela donne patient.est_majeur() => True/False"""
     
     def __init__(self):
         Profil.__init__(self)
@@ -59,6 +62,8 @@ class Patient(Profil):
         self.date = date
     
     def __repr__(self):
+        """cette fonction aussi est essentiellement pour m'aider dans la
+        representation et les tests"""
         return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone)
 
 #piste d'amelioration : faire de cette methode un automatisme avec une fonction
@@ -103,3 +108,4 @@ if __name__ == "__main__" :
     """
     print( patient1.est_majeur([27, 6, 2018]) )
     """
+    #Tout a ete teste ici et fonctionne correctement

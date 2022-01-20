@@ -22,7 +22,7 @@ def construction_edt(nom_medecin, jour, mois, annee, heure, minute, motif, note)
     dispo = cursor.fetchone()[6]
     if dispo == 1: #Si le créneau est disponible
         cursor.execute('SELECT * FROM rdvs WHERE motif=?', [motif])
-        duree = cursor.fetchone()[2]
+        duree = cursor.fetchone()[2] #edt inclut la durée du rdv
         cursor.execute('INSERT INTO edt VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (identifiant_medecin, nom_du_jour, jour, mois, annee, heure, minute, motif, duree, note))
         con.commit()
     con.close()
