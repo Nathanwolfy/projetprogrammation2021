@@ -128,7 +128,7 @@ def client_patient(socket):
         telephone_docteur = echanges_donnees.reception(socket)
         mail_docteur = echanges_donnees.reception(socket)
         #On affiche la fenêtre récapitulative
-        fenetre_recap_patient = launcher.Erecap_herit('Vp',(date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,rue_docteur,ville_docteur,code_postal_docteur,telephone_docteur,mail_docteur,infos_supp_pour_docteur))
+        fenetre_recap_patient = launcher.Erecap_herit((date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,rue_docteur,ville_docteur,code_postal_docteur,telephone_docteur,mail_docteur,infos_supp_pour_docteur))
         launcher.exec_fenetre(fenetre_recap_patient)
         stop_continuation.arret_processus(socket) #Une fois le récap passé, on peut arrêter le processus et le thread
 
