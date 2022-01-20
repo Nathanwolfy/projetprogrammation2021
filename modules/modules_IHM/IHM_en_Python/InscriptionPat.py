@@ -22,7 +22,7 @@ class Ui_Form(object):
         self.numero_patient = ''
 
 
-    def setupUi(self, Form):
+    def setupUi(self, Form):            #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 424)
         self.label_2 = QtWidgets.QLabel(Form)
@@ -97,6 +97,7 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+
     def set_continuation(self,valeur):
         self.continuation = valeur
     
@@ -117,6 +118,7 @@ class Ui_Form(object):
     
     def set_motdepasse_patient(self,valeur):
         self.motdepasse_patient = valeur
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
