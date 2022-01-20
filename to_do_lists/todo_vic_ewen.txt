@@ -1,2 +1,0 @@
-=> pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
-ça c'est good
