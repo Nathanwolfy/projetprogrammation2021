@@ -13,7 +13,7 @@ def nb_jours_dans_un_mois(mois, annee):
 
 
 class Heure: 
-
+    '''Cette classe prend en argument une heure et un minute pour créer un horaire, que l'on pourra comparer avec un autre horaire'''
     def __init__(self, heure, minute):
         self.heure = heure
         self.minute = minute
