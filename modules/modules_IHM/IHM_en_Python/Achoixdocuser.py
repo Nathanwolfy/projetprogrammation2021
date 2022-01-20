@@ -30,22 +30,21 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.DoctorButton.released.connect(lambda: self.add(self.continuation, True))
-        self.PatientButton.released.connect(lambda: self.add(self.continuation, True))  
-
-        #self.DoctorButton.released.connect(lambda: self.add(self.choix_client, 'XXd'))
-        #self.PatientButton.released.connect(lambda: self.add(self.choix_client, 'XXp'))
-        self.DoctorButton.released.connect(lambda: self.add_choix('XXd'))
+        self.DoctorButton.released.connect(lambda: self.set_continuation(True))
+        self.PatientButton.released.connect(lambda: self.set_continuation(True))  
+        
+        self.DoctorButton.released.connect(lambda: self.set_choix('XXd'))
+        self.PatientButton.released.connect(lambda: self.set_choix('XXp'))
 
         self.DoctorButton.released.connect(Form.close) # type: ignore
         self.PatientButton.released.connect(Form.close) # type: ignore
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self, arg):
+        self.continuation = arg
 
-    def add_choix(self, arg):
+    def set_choix(self, arg):
         self.choix_client = arg
 
     def retranslateUi(self, Form):

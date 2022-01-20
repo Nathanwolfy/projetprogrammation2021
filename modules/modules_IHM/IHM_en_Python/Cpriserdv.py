@@ -74,25 +74,35 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
 
         self.Localisation_LineEdit.textEdited['QString'].connect(self.Praticien_comboBox.show) # type: ignore
         self.Praticien_comboBox.currentTextChanged.connect(self.update_rdv_type_combobox)
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.localisation, self.Localisation_LineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.type_docteur, self.Praticien_comboBox.currentText()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.type_rdv, self.RdV_comboBox.currentText()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.jour_rdv, self.jourLineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.mois_rdv, self.moisLineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.annee_rdv, self.anneeLineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_localisation(self.Localisation_LineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_type_docteur(self.Praticien_comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.set_type_rdv(self.RdV_comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.set_date_rdv(self.jourLineEdit.text(),self.moisLineEdit.text(),self.anneeLineEdit.text()))
 
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
         self.ValidationpushButton.released.connect(Form.close)
 
         QtCore.QMetaObject.connectSlotsByName(Form)
         
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self, arg):
+        self.continuation = arg
+    
+    def set_localisation(self,arg):
+        self.localisation = arg
+    
+    def set_type_docteur(self,arg):
+        self.type_docteur = arg
+    
+    def set_type_rdv(self,arg):
+        self.type_rdv = arg
+    
+    def set_date_rdv(self,jour,mois,annee):
+        self.jour_rdv,self.mois_rdv,self.annee_rdv = jour,mois,annee
     
     #slot permettant de mettre à jour la rdv_combobox
     def update_rdv_type_combobox(self, docteur_type):

@@ -86,23 +86,39 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.nom_patient, self.NomlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.prenom_patient, self.PrenomlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.jour_patient, self.jourlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.mois_patient, self.moislineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.annee_patient, self.anneelineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.numero_patient, self.NumerolineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.mail_patient, self.AdresseMaillineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.motdepasse_patient, self.MdPlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_nom_patient(self.NomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_prenom_patient(self.PrenomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_date_patient(self.jourlineEdit.text(),self.moislineEdit.text(),self.anneelineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_numero_patient(self.NumerolineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_mail_patient(self.AdresseMaillineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_motdepasse_patient(self.MdPlineEdit.text()))
 
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self,valeur):
+        self.continuation = valeur
+    
+    def set_nom_patient(self,valeur):
+        self.nom_patient = valeur
+
+    def set_prenom_patient(self,valeur):
+        self.prenom_patient = valeur
+    
+    def set_date_patient(self,jour,mois,annee):
+        self.jour_patient,self.mois_patient,self.annee_patient = jour,mois,annee
+
+    def set_numero_patient(self,valeur):
+        self.numero_patient = valeur
+    
+    def set_mail_patient(self,valeur):
+        self.mail_patient = valeur
+    
+    def set_motdepasse_patient(self,valeur):
+        self.motdepasse_patient = valeur
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

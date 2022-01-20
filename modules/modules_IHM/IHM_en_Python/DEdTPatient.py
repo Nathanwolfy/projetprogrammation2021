@@ -53,10 +53,10 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.horaire_rdv_choisi, self.comboBox.currentText()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.infos_pour_docteur, self.InfolineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_horaire_rdv_choisi(self.comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.set_infos_pour_docteur(self.InfolineEdit.text()))
         
         self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)
 
@@ -71,8 +71,14 @@ class Ui_Form(object):
             for rdv in type_rdv:
                 self.comboBox.addItem(rdv)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self,valeur):
+        self.continuation = valeur
+    
+    def set_horaire_rdv_choisi(self,valeur):
+        self.horaire_rdv_choisi = valeur
+    
+    def set_infos_pour_docteur(self,valeur):
+        self.infos_pour_docteur = valeur
 
 
     def retranslateUi(self, Form):

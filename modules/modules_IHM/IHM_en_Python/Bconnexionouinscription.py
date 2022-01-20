@@ -51,23 +51,32 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         
-        self.InscriptionButton.released.connect(lambda: self.add(self.continuation, True))
-        self.ConnexionButton.released.connect(lambda: self.add(self.continuation, True))  
+        self.InscriptionButton.released.connect(lambda: self.set_continuation(True))
+        self.ConnexionButton.released.connect(lambda: self.set_continuation(True)) 
 
-        self.ConnexionButton.released.connect(lambda: self.add(self.identifiant_client, self.Identifiant_LineEdit.text()))
-        self.ConnexionButton.released.connect(lambda: self.add(self.motdepasse_client,self.Mdp_LineEdit.text()))
-        self.InscriptionButton.released.connect(lambda: self.add(self.creation_compte,(False)))
+        self.ConnexionButton.released.connect(lambda: self.set_identifiant_client(self.Identifiant_LineEdit.text()))
+        self.ConnexionButton.released.connect(lambda: self.set_motdepasse_client(self.Mdp_LineEdit.text()))
+        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(False))
 
         if self.arg != '':
-            self.NomPrenom_LineEdit.insert(self.arg)
+            self.Identifiant_LineEdit.insert(self.arg)
 
         self.ConnexionButton.released.connect(Form.close)
         self.InscriptionButton.released.connect(Form.close) # type: ignore
         
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self, arg):
+        self.continuation = arg
+
+    def set_identifiant_client(self,arg):
+        self.identifiant_client = arg
+    
+    def set_motdepasse_client(self,arg):
+        self.motdepasse_client = arg
+
+    def set_creation_compte(self,arg):
+        self.creation_compte = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

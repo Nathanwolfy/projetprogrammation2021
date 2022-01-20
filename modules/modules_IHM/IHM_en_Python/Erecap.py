@@ -81,9 +81,6 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-    
-    def add(self, var, arg):
-        var = arg
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
