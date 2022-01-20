@@ -1,3 +1,4 @@
+'''Fichier Python de classes pour exploiter l'emploi du temps'''
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 MOIS = [i for i in range(1, 13)] #[1 #Janvier, 2 #Février, ...]
 
