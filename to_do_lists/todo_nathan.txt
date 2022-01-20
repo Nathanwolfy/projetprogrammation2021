@@ -1,3 +1,2 @@
 - edt docteur
-- continuation dans client docteur
-=> pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles
+- sys path pour lancer avec un clic droit et que ça bug pas avec les bdd

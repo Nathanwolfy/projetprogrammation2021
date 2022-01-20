@@ -55,7 +55,7 @@ class Ui_Form(object):
 
         self.ConnexionButton.released.connect(lambda: self.set_identifiant_client(self.Identifiant_LineEdit.text()))
         self.ConnexionButton.released.connect(lambda: self.set_motdepasse_client(self.Mdp_LineEdit.text()))
-        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(False))
+        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(True))
 
         if self.arg != '':
             self.Identifiant_LineEdit.insert(self.arg)

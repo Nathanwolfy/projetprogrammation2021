@@ -38,7 +38,7 @@ def client_docteur(socket):
 
                 fenetre_inscription_docteur = launcher.InscriptionDoc_herit(liste_types_docteurs)
                 launcher.exec_fenetre(fenetre_inscription_docteur) #On démarre la fenêtre de création de compte
-                continuation = fenetre_inscription_docteur
+                continuation = fenetre_inscription_docteur.continuation
 
                 if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
                     stop_continuation.arret_processus(socket)
