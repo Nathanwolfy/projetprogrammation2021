@@ -62,7 +62,8 @@ class Patient(Profil):
         self.date = date
     
     def __repr__(self):
-        """cette fonction aussi est essentiellement pour m'aider dans la representation"""
+        """cette fonction aussi est essentiellement pour m'aider dans la
+        representation et les tests"""
         return "FICHE PATIENT : Mr/Mme " + str(self.prenom) + " " + str(self.nom) + "\nné le : " + str(self.date[0]) + " " + MOIS[ self.date[1]-1 ] + " " + str(self.date[2]) + "\nDe contact : " + self.mail + " " + str(self.telephone)
 
 #piste d'amelioration : faire de cette methode un automatisme avec une fonction
@@ -107,3 +108,4 @@ if __name__ == "__main__" :
     """
     print( patient1.est_majeur([27, 6, 2018]) )
     """
+    #Tout a ete teste ici et fonctionne correctement
