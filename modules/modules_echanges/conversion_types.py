@@ -7,7 +7,7 @@ def strlist_to_list(strlist):
 
 def from_string_to_dict(string):
     """(str) -> (dict)
-    Fonction qui pour un string donné représentant un dictionnaire renvoie le dittionnaire correspondant.
+    Fonction qui pour un string donné représentant un dictionnaire renvoie le dictionnaire correspondant.
     """
     version1_str = string.split("{")[1]
     version2_str = version1_str.split("}")[0]
