@@ -6,7 +6,7 @@ JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
 
 def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi):
-    '''Crée l'emploi du temps vide pour un médecin pendant un an (mêmes horaires pour toute l'année)'''
+    '''Créer des rendez-vous disponibles dans rdv_dispos pour un médecin pour 2 mois (mêmes horaires à chaque semaine pendant 2 mois)'''
     heure_lundi_debut, heure_lundi_fin = horaire_lundi
     heure_mardi_debut, heure_mardi_fin = horaire_mardi
     heure_mercredi_debut, heure_mercredi_fin = horaire_mercredi
