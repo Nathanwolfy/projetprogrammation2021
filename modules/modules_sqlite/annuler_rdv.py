@@ -1,3 +1,4 @@
+'''Fonction qui n'a pas servi dans le projet'''
 import sqlite3
 import rdv_dispo_pris as rdp
 
