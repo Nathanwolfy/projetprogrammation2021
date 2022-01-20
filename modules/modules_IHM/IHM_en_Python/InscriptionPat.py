@@ -13,7 +13,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def __init__(self,arg):
         self.arg = arg
-        self.continuation = False
+        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
         self.nom_patient = ''
         self.prenom_patient = ''
         self.jour_patient = ''
@@ -24,7 +24,7 @@ class Ui_Form(object):
         self.numero_patient = ''
 
 
-    def setupUi(self, Form):            #Mise en place de l'IHM
+    def setupUi(self, Form):                #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 424)
         self.label_2 = QtWidgets.QLabel(Form)

@@ -15,7 +15,7 @@ class Ui_Form(object):
     def __init__(self, arg):
         self.dico = arg[0]
         self.bool = arg[1]
-        self.continuation = False
+        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
         self.localisation = ''
         self.type_docteur = ''
         self.type_rdv = ''

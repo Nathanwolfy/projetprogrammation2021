@@ -11,11 +11,11 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
     def __init__(self,arg):
-        self.arg = arg
-        self.continuation = False
-        self.creation_compte = False
-        self.identifiant_client = ''
-        self.motdepasse_client = ''
+        self.arg = arg                      #Str envoyée par le serveur lorsque qu'une connexion n'a pas fonctionnée permettant de signaler à l'utilisateur que sont identifiant ou son mot de passe à un problème 
+        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation. (booléen)
+        self.creation_compte = False        #Information envoyé au serveur sur le choix de l'utilisateur entre Connexion et Inscription. True si il désire créer un compte (booléen)
+        self.identifiant_client = ''        #Identifiant du client sous forme de str envoyée au serveur pour vérification
+        self.motdepasse_client = ''         #Mote de passe du client sous forme de str envoyée au serveur pour vérification
         
 
     def setupUi(self, Form):                #Mise en place de l'IHM
@@ -52,15 +52,15 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         
-        self.InscriptionButton.released.connect(lambda: self.set_continuation(True))
-        self.ConnexionButton.released.connect(lambda: self.set_continuation(True)) 
+        self.InscriptionButton.released.connect(lambda: self.set_continuation(True))        #L'utilisateur appuie sur Inscription, self.continuation passe en True par la fonction set_continuation()
+        self.ConnexionButton.released.connect(lambda: self.set_continuation(True))          #L'utilisateur appuie sur Connexion, self.continuation passe en True par la fonction set_continuation()
 
-        self.ConnexionButton.released.connect(lambda: self.set_identifiant_client(self.Identifiant_LineEdit.text()))
-        self.ConnexionButton.released.connect(lambda: self.set_motdepasse_client(self.Mdp_LineEdit.text()))
-        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(True))
+        self.ConnexionButton.released.connect(lambda: self.set_identifiant_client(self.Identifiant_LineEdit.text()))        #Le bouton connexion renvoie l'identifiant rentré dans la zone de texte LineEdit au moyen de la fonction set_identifiant_client()
+        self.ConnexionButton.released.connect(lambda: self.set_motdepasse_client(self.Mdp_LineEdit.text()))                 #Le bouton connexion renvoie le mot de passe rentré dans la zone de texte LineEdit au moyen de la fonction set_motdepasse_client()
+        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(True))                                     #Le bouton inscription ernvoie le booléen True si il est séléctionné au moyen de la foncction set_creation_compte()
 
         if self.arg != '':
-            self.Identifiant_LineEdit.insert(self.arg)
+            self.Identifiant_LineEdit.insert(self.arg)                                                                      #Si le serveur ouvre cet IHM avec en argument une str non vide, il est créé une zone de texte lui signalant qu'il y a un problème d'identifiant ou de mot de passe
 
         self.ConnexionButton.released.connect(Form.close)
         self.InscriptionButton.released.connect(Form.close) # type: ignore
@@ -68,16 +68,16 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self, valeur):
+    def set_continuation(self, valeur):             #Fonction permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
 
-    def set_identifiant_client(self,valeur):
+    def set_identifiant_client(self,valeur):        #Fonction permettant d'associer à self.identifiant_client la valeur que l'on donne en argument
         self.identifiant_client = valeur
     
-    def set_motdepasse_client(self,valeur):
+    def set_motdepasse_client(self,valeur):         #Fonction permettant d'associer à self.motdepasse_client la valeur que l'on donne en argument
         self.motdepasse_client = valeur
 
-    def set_creation_compte(self,valeur):
+    def set_creation_compte(self,valeur):           #Fonction permettant d'associer à self.creation_compte la valeur que l'on donne en argument
         self.creation_compte = valeur
 
 

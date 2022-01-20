@@ -13,7 +13,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def __init__(self):
         self.choix_client = ''              #Information du choix entre docteur et patient envoyée au serveur
-        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation
+        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
 
 
     def setupUi(self, Form):                #Mise en place de l'IHM
