@@ -45,6 +45,7 @@ class Heure:
         return self.repr
 
 class Motif:
+    '''N'a pas servie dans le projet, associe un motif à sa durée'''
     def __init__(self, motif, duree_rdv):
         self.motif = motif
         self.duree = duree_rdv
@@ -52,11 +53,12 @@ class Motif:
         return str(self.motif)
 
 class Jour: # ex: Lundi 2 Janvier = {06:00 : motif1, 08:45 : carreaux, ...}
-    
-    def __init__(self, nom_jour, nb_jour, mois):
+    '''Cette classe prend comme argument un nom de jour, un jour, un mois et une année, et un jour pouvait être représenté comme un dictionnaire (n'a pas servi)'''
+    def __init__(self, nom_jour, nb_jour, mois, annee):
         self.nom_jour = nom_jour
         self.nb_jour = nb_jour
         self.mois = mois
+        self.annee = annee
         self.jour = {}
     
     def un_horaire(self, horaire):
@@ -89,7 +91,7 @@ class Edt: # Une semaine, juste besoin du lundi
         self.lundi = lundi
         self.nb_lundi = nb_lundi
         self.mois_lundi = mois_lundi
-        Lundi = Jour(lundi, nb_lundi, mois_lundi)
+        Lundi = Jour(lundi, nb_lundi, mois_lundi, annee)
         Liste_jours_de_la_semaine = []
         Liste_jours_de_la_semaine.append(Lundi)
         nb_jour = nb_lundi
