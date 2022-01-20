@@ -99,24 +99,43 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.add(self.continuation, True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
     
-        self.ValidationpushButton.released.connect(lambda: self.add(self.nom_docteur, self.NomlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.prenom_docteur, self.PrenomlineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.ville_docteur, self.VillelineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.adresse_docteur, self.AdresselineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.code_postal_docteur, self.CodePostallineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.numero_docteur, self.NumerolineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.mail_docteur, self.AdresseMaillineEdit.text()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.type_docteur, self.Praticien_comboBox.currentText()))
-        self.ValidationpushButton.released.connect(lambda: self.add(self.mot_de_passe_docteur, self.MdPlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_nom_docteur(self.NomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_prenom_docteur(self.PrenomlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_localisation_docteur(self.VillelineEdit.text(),self.AdresselineEdit.text(),self.CodePostallineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_numero_docteur(self.NumerolineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_mail_docteur(self.AdresseMaillineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_type_docteur(self.Praticien_comboBox.currentText()))
+        self.ValidationpushButton.released.connect(lambda: self.set_mot_de_passe_docteu(self.MdPlineEdit.text()))
 
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self,valeur):
+        self.continuation = valeur
+    
+    def set_nom_docteur(self,valeur):
+        self.nom_docteur = valeur
+    
+    def set_prenom_docteur(self,valeur):
+        self.prenom_docteur = valeur
+    
+    def set_localisation_docteur(self,ville,adresse,code_postal):
+        self.ville_docteur,self.adresse_docteur,self.code_postal_docteur = ville,adresse,code_postal
+
+    def set_numero_docteur(self,valeur):
+        self.set_numero_docteur = valeur
+    
+    def set_mail_docteur(self,valeur):
+        self.mail_docteur = valeur
+    
+    def set_type_docteur(self,valeur):
+        self.type_docteur = valeur
+    
+    def set_mot_de_passe_docteur(self,valeur):
+        self.mot_de_passe_docteur = valeur
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

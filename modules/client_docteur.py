@@ -10,7 +10,8 @@ def client_docteur(socket):
         confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour lancer la connexion
         
         if confirmation_serveur == '02dINITCONN':
-            fenetre_connexion_docteur = launcher.sequence('IIg',identifiant) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
+            fenetre_connexion_docteur = launcher.Bconnexionouinscription_herit(identifiant)
+            launcher.exec_fenetre(fenetre_connexion_docteur) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
             creationcompte_docteur = fenetre_connexion_docteur.creation_compte
                         
             if not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
@@ -31,7 +32,8 @@ def client_docteur(socket):
                 str_liste_types_docteurs = echanges_donnees.reception(socket) #On réceptionne la liste des types de docteurs sous forme d'une string
                 liste_types_docteurs = conversion_types.strlist_to_list(str_liste_types_docteurs) #On la convertit effectivement en liste
 
-                fenetre_inscription_docteur = launcher.sequence('YdA',liste_types_docteurs) #On démarre la fenêtre de création de compte
+                fenetre_inscription_docteur = launcher.InscriptionDoc_herit(liste_types_docteurs)
+                launcher.exec_fenetre(fenetre_inscription_docteur) #On démarre la fenêtre de création de compte
                 
                 #On récupère les informations saisies par le docteur dans l'IHM et on les envoie directement (on garde que l'identifiant du docteur car on en aura besoin par la suite)
                 identifiant = fenetre_inscription_docteur.mail_docteur

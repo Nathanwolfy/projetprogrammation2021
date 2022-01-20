@@ -51,8 +51,8 @@ class InscriptionPat_herit(InscriptionPat.Ui_Form):
         super().__init__()
     
 class InscriptionDoc_herit(InscriptionDoc.Ui_Form):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,arg):
+        super().__init__(arg)
 
 appS = QtWidgets.QApplication(sys.argv)
 
