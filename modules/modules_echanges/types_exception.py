@@ -18,7 +18,7 @@ class InvalidUserInputError(Exception):
     def __init__(self):
         super().__init__("L'utilisateur a fourni une entrée invalide.")
 
-class ClientDisconnectedError(Exception):
+class UserDisconnectedError(Exception):
     """Exception en cas de fermeture d'une fenêtre du client utilisateur."""
     def __init__(self):
         super().__init__("L'utilisateur stoppé le processus.")

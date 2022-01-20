@@ -1,3 +1,4 @@
+'''Fichier Python qui a permis la construction de la base de données calendrier'''
 import sqlite3
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]

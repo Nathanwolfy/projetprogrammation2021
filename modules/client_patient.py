@@ -14,7 +14,7 @@ def client_patient(socket):
             creationcompte_patient = fenetre_connexion_patient.creation_compte #On récupère un booléen pour savoir si le patient se connecte ou non
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                stop_continuation.arret_processus(socket)
+                stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
           
             elif not creationcompte_patient: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_patient.identifiant_client
@@ -34,27 +34,38 @@ def client_patient(socket):
                 continuation = fenetre_creation_compte_patient.continuation
 
                 if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                    stop_continuation.arret_processus(socket)
+                    stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
 
                 else: #Dans les autres cas, le processus se déroule normalement
                     #On récupère les données fournies par le patient lors de son inscription de l'IHM et on les envoie directement
                     envoi_donnees_inscription = '02pCREACOMPTE'
-                      
+                    
+                    nom_patient = fenetre_creation_compte_patient.nom_patient.capitalize() #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
+                    prenom_patient = fenetre_creation_compte_patient.prenom_patient.capitalize()
                     jour_naiss_patient,mois_naiss_patient,annee_naiss_patient = fenetre_creation_compte_patient.jour_patient,fenetre_creation_compte_patient.mois_patient, fenetre_creation_compte_patient.annee_patient
                     date_naissance_patient = jour_naiss_patient + "/" + mois_naiss_patient + "/" + annee_naiss_patient
+                    numero_patient = fenetre_creation_compte_patient.numero_patient
+                    mail_patient = fenetre_creation_compte_patient.mail_patient
+                    hash_motdepasse = hashage_mdp.hash_mdp(fenetre_creation_compte_patient.motdepasse_patient)
 
-                    #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
-                    echanges_donnees.envoi(socket,envoi_donnees_inscription)
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.nom_patient.capitalize()) #capitalize() pour mettre la premirère lettre en majuscule et le reste en minuscule
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.prenom_patient.capitalize())
-                    echanges_donnees.envoi(socket,date_naissance_patient)
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.numero_patient)
-                    echanges_donnees.envoi(socket,fenetre_creation_compte_patient.mail_patient)
-                    echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_creation_compte_patient.motdepasse_patient))
-                    clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
+                    if not echanges_donnees.check_donnes_non_vides((nom_patient,prenom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,numero_patient,mail_patient)) or hash_motdepasse == hashage_mdp.hash_mdp(''):
+                        envoi_donnee_invalide = '02pINVALIDDATA'
+                        echanges_donnees.envoi(socket,envoi_donnee_invalide)
+                        clef_valide = 'False' #Si le client a rentré une donnée vide, son inscription n'est pas validé
+
+                    else:
+                        #On envoie les données fournies par le patient lors de son inscription pour l'inscrire dans la bdd côté serveur
+                        echanges_donnees.envoi(socket,envoi_donnees_inscription)
+                        echanges_donnees.envoi(socket,nom_patient)
+                        echanges_donnees.envoi(socket,prenom_patient)
+                        echanges_donnees.envoi(socket,date_naissance_patient)
+                        echanges_donnees.envoi(socket,numero_patient)
+                        echanges_donnees.envoi(socket,mail_patient)
+                        echanges_donnees.envoi(socket,hash_motdepasse)
+                        clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la fenêtre de connexion, l'application s'arrête
-            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
+            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
 
     rdv_validé = False #On établit que le client n'a pas encore validé de rdv
     rdv_non_dispo = True #On établit qu'il n'y a pas de rdv dispos sous ces conditions
@@ -69,7 +80,8 @@ def client_patient(socket):
             continuation = fenetre_prise_de_rdv.continuation
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                stop_continuation.arret_processus(socket)
+                stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
+
             else: #Dans les autres cas le processus se déroule normalement
                 #On réceptionne les conditions du rdv choisies par le patient
                 localisation = fenetre_prise_de_rdv.localisation #upper() car toutes les villes sont en masjuscule dans la bdd
@@ -85,7 +97,7 @@ def client_patient(socket):
                 echanges_donnees.envoi(socket,date_rdv)
                 
         else: #Si le serveur ne valide pas le lancement de la fenêtre de prise de rdv, c'est une erreur, le client s'arrête donc
-            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
+            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
 
         confirmation_serveur = echanges_donnees.reception(socket) #Le serveur indique s'il y a des rdvs dispos ou non sous ces conditions
 
@@ -110,14 +122,14 @@ def client_patient(socket):
                 rdv_validé = True #Le rdv est donc bien validé
 
             elif not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                stop_continuation.arret_processus(socket)
+                stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
 
         elif confirmation_serveur == '04pRDVNONDISPO': #S'il n'y a pas de rdv dispo pour ces conditions, on revient au début de la boucle
             rdv_validé = False #Le rdv n'est donc pas validé
             rdv_non_dispo = True #Il n'y a donc pas de rdv dispo sous les conditons saisies par le patient
 
         else: #Si le serveur renvoie autre chose que l'information qu'il existe ou non des rdvs dispos sous les conditions du patient, c'est un erreur, le client s'arrête donc
-           stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
+           stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
 
     confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour démarrer la fenêtre récapitulative du rdv une fois celui-ci validé
     if confirmation_serveur == 'VpINITRECAP': #Le serveur valide le lancement de la fenêtre récapitulative du rdv
@@ -130,7 +142,7 @@ def client_patient(socket):
         #On affiche la fenêtre récapitulative
         fenetre_recap_patient = launcher.Erecap_herit((date_rdv,horaire_rdv_choisi,nom_docteur_rdv_choisi,rue_docteur,ville_docteur,code_postal_docteur,telephone_docteur,mail_docteur,infos_supp_pour_docteur))
         launcher.exec_fenetre(fenetre_recap_patient)
-        stop_continuation.arret_processus(socket) #Une fois le récap passé, on peut arrêter le processus et le thread
+        #stop_continuation.arret_processus(socket) #Une fois le récap passé, on peut arrêter le processus et le thread
 
     else: #Si le serveur ne valide pas le lancement de la fenêtre récapitulative du rdv c'est un erreur, le client se ferme
-        stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
+        stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())

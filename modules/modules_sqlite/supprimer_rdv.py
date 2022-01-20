@@ -1,3 +1,4 @@
+'''Fonction qui n'a pas servi dans le projet'''
 import sqlite3
 import emploidutemps as e
 
@@ -23,17 +24,18 @@ cursor = con.cursor()
 
 
 def supprimer_rdv_passe(jour, mois, annee):
+    '''Cette fonction supprime tous les rendez-vous antérieurs à un jour donné'''
     ajd = e.Jour(nom_jour(jour, mois, annee), jour, mois, annee)
     cursor.execute('SELECT * FROM rdv_dispos')
     rows = cursor.fetchall()
-    liste_jour = []
-    for row in rows:
+    liste_jour = [] #prend tous les jours antérieurs au jour donné
+    for row in rows: #chaque row correspond à un rendez-vous
         jour = e.Jour(nom_jour(row[0], row[1], row[2]), row[0], row[1], row[2])
         if jour < ajd:
             liste_jour.append((row[0], row[1], row[2]))
     cursor.executemany('DELETE FROM rdv_dispos WHERE jour=? AND mois=? AND annee=?', liste_jour)
     con.commit()
     con.close()
-    return 'Le rendez-vous a été supprimé'
+    return 'Les rendez-vous ont été supprimés'
 
 

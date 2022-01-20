@@ -55,6 +55,9 @@ class ThreadForServer(threading.Thread):
                     #On inscrit effectivement le patient dans la base de données
                     exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,hash_motdepasse_patient,hash_motdepasse_patient)
                     clef_valide = 'True' #Le patient s'est créé un compte, il est donc bien connecté
+                
+                elif reponse == '02pINVALIDDATA': #Si le patient rentre une donnée invalide, son inscription n'est pas validée
+                    clef_valide = 'False'
 
                 elif reponse == 'XXgKILLTHREAD':
                     raise types_exception.ClientDisconnectedError
@@ -183,6 +186,9 @@ class ThreadForServer(threading.Thread):
                     edt_medecin_vide.edt_medecin_vide(identifiant_docteur,horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi)
 
                     clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
+
+                elif reponse == '02pINVALIDDATA': #Si le docteur rentre une donnée invalide, son inscription n'est pas validée
+                    clef_valide = 'False'
                 
                 elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
                     raise types_exception.ClientDisconnectedError
