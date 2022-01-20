@@ -1,7 +1,7 @@
 from .modules_echanges import conversion_types
 
 from .modules_IHM.IHM_en_Python import launcher
-from .modules_echanges import echanges_donnees, types_exception, hashage_mdp
+from .modules_echanges import echanges_donnees, types_exception, hashage_mdp, stop_continuation
 
 def client_docteur(socket):
     clef_valide = 'False' #On suppose que la clef est fausse de base pour relancer le widget si elle ne l'est pas
@@ -13,8 +13,12 @@ def client_docteur(socket):
             fenetre_connexion_docteur = launcher.Bconnexionouinscription_herit(identifiant)
             launcher.exec_fenetre(fenetre_connexion_docteur) #On démarre la fenêtre de connexion avec un identifiant prélablement rempli par le docteur si mauvaise combinaison
             creationcompte_docteur = fenetre_connexion_docteur.creation_compte
+            continuation = fenetre_connexion_docteur.continuation
+
+            if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                stop_continuation.arret_processus(socket)
                         
-            if not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
+            elif not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_docteur.identifiant_client
                 hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_docteur.motdepasse_client)
                 clef_docteur = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
@@ -34,37 +38,48 @@ def client_docteur(socket):
 
                 fenetre_inscription_docteur = launcher.InscriptionDoc_herit(liste_types_docteurs)
                 launcher.exec_fenetre(fenetre_inscription_docteur) #On démarre la fenêtre de création de compte
-                
-                #On récupère les informations saisies par le docteur dans l'IHM et on les envoie directement (on garde que l'identifiant du docteur car on en aura besoin par la suite)
-                identifiant = fenetre_inscription_docteur.mail_docteur
+                continuation = fenetre_inscription_docteur
 
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.nom_docteur.capitalize()) #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.prenom_docteur.capitalize())
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.type_docteur)
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.ville_docteur.upper()) #upper() car toutes les villes sont en majuscules dans la bdd
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.adresse_docteur)
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.code_postal_docteur)
-                echanges_donnees.envoi(socket,fenetre_inscription_docteur.numero_docteur)
-                echanges_donnees.envoi(socket,identifiant)
-                echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur))
+                if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                    stop_continuation.arret_processus(socket)
 
-                reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
+                else: #Si non, le processus se déroule normalement
+                    #On récupère les informations saisies par le docteur dans l'IHM et on les envoie directement (on garde que l'identifiant du docteur car on en aura besoin par la suite)
+                    identifiant = fenetre_inscription_docteur.mail_docteur
 
-                if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
-                    fenetre_inscription_edt_doc = launcher.InscriptionDocedt_herit()
-                    launcher.exec_fenetre(fenetre_inscription_edt_doc) #On lance l'inscription de l'emploi du temps du docteur
-                    #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
-                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.lundi))
-                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mardi))
-                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mercredi))
-                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.jeudi))
-                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.vendredi))
-                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.samedi))                  
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.nom_docteur.capitalize()) #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.prenom_docteur.capitalize())
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.type_docteur)
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.ville_docteur.upper()) #upper() car toutes les villes sont en majuscules dans la bdd
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.adresse_docteur)
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.code_postal_docteur)
+                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.numero_docteur)
+                    echanges_donnees.envoi(socket,identifiant)
+                    echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur))
 
-                else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
-                    raise types_exception.InvalidServerReponseError
+                    reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
-                clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
+                    if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
+                        fenetre_inscription_edt_doc = launcher.InscriptionDocedt_herit()
+                        launcher.exec_fenetre(fenetre_inscription_edt_doc) #On lance l'inscription de l'emploi du temps du docteur
+                        continuation = fenetre_inscription_edt_doc.continuation
+
+                        if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                            stop_continuation.arret_processus(socket)
+
+                        else: #Si non, le processus se déroule normalement
+                            #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
+                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.lundi))
+                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mardi))
+                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mercredi))
+                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.jeudi))
+                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.vendredi))
+                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.samedi))                  
+
+                    else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
+                        raise types_exception.InvalidServerReponseError
+
+                    clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
             raise types_exception.InvalidServerReponseError

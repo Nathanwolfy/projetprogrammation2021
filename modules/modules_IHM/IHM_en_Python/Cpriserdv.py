@@ -8,7 +8,6 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-import sys
 
 
 
