@@ -13,7 +13,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def __init__(self, arg):
         self.arg = arg
-        self.continuation = False
+        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
         self.nom_docteur = ''
         self.prenom_docteur = ''
         self.type_docteur = ''
@@ -24,7 +24,8 @@ class Ui_Form(object):
         self.mail_docteur = ''
         self.mot_de_passe_docteur = ''
         
-    def setupUi(self, Form):
+
+    def setupUi(self, Form):                #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 562)
         self.Docteurlabel = QtWidgets.QLabel(Form)
@@ -112,6 +113,7 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+
     def set_continuation(self,valeur):
         self.continuation = valeur
     
@@ -135,6 +137,7 @@ class Ui_Form(object):
     
     def set_mot_de_passe_docteur(self,valeur):
         self.mot_de_passe_docteur = valeur
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

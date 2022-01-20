@@ -9,10 +9,11 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
+
 class Ui_Form(object):
     def __init__(self):
-        self.continuation = False
-        self.lundi = []
+        self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
+        self.lundi = []                     
         self.mardi = []
         self.mercredi = []
         self.jeudi = []
@@ -20,11 +21,11 @@ class Ui_Form(object):
         self.samedi = []
 
 
-    def setupUi(self, Form):            #Mise en place de l'IHM
+    def setupUi(self, Form):                #Mise en place de l'IHM
         Form.setObjectName("Form")
         Form.resize(400, 473)
         self.Brand_Label = QtWidgets.QLabel(Form)
-        self.Brand_Label.setGeometry(QtCore.QRect(130, 0, 151, 71))
+        self.Brand_Label.setGeometry(QtCore.QRect(150, 0, 151, 71))
         self.Brand_Label.setObjectName("Brand_Label")
         self.lundilabel = QtWidgets.QLabel(Form)
         self.lundilabel.setGeometry(QtCore.QRect(30, 170, 71, 16))

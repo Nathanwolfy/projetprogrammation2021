@@ -54,7 +54,7 @@ def client_patient(socket):
                     clef_valide = 'True' #Le client a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la fenêtre de connexion, l'application s'arrête
-            raise types_exception.InvalidServerReponseError
+            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
 
     rdv_validé = False #On établit que le client n'a pas encore validé de rdv
     rdv_non_dispo = True #On établit qu'il n'y a pas de rdv dispos sous ces conditions
@@ -85,7 +85,7 @@ def client_patient(socket):
                 echanges_donnees.envoi(socket,date_rdv)
                 
         else: #Si le serveur ne valide pas le lancement de la fenêtre de prise de rdv, c'est une erreur, le client s'arrête donc
-            raise types_exception.InvalidServerReponseError
+            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
 
         confirmation_serveur = echanges_donnees.reception(socket) #Le serveur indique s'il y a des rdvs dispos ou non sous ces conditions
 
@@ -117,7 +117,7 @@ def client_patient(socket):
             rdv_non_dispo = True #Il n'y a donc pas de rdv dispo sous les conditons saisies par le patient
 
         else: #Si le serveur renvoie autre chose que l'information qu'il existe ou non des rdvs dispos sous les conditions du patient, c'est un erreur, le client s'arrête donc
-            raise types_exception.InvalidServerReponseError
+           stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
 
     confirmation_serveur = echanges_donnees.reception(socket) #On attend la validation du serveur pour démarrer la fenêtre récapitulative du rdv une fois celui-ci validé
     if confirmation_serveur == 'VpINITRECAP': #Le serveur valide le lancement de la fenêtre récapitulative du rdv
@@ -133,4 +133,4 @@ def client_patient(socket):
         stop_continuation.arret_processus(socket) #Une fois le récap passé, on peut arrêter le processus et le thread
 
     else: #Si le serveur ne valide pas le lancement de la fenêtre récapitulative du rdv c'est un erreur, le client se ferme
-        raise types_exception.InvalidServerReponseError
+        stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
