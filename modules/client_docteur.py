@@ -51,14 +51,15 @@ def client_docteur(socket):
                 reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
                 if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
-                    inscription_edt_doc = launcher.sequence('YdB') #On lance l'inscription de l'emploi du temps du docteur
+                    fenetre_inscription_edt_doc = launcher.InscriptionDocedt_herit()
+                    launcher.exec_fenetre(fenetre_inscription_edt_doc) #On lance l'inscription de l'emploi du temps du docteur
                     #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.lundi))
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.mardi))
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.mercredi))
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.jeudi))
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.vendredi))
-                    echanges_donnees.envoi(socket,str(inscription_edt_doc.samedi))                  
+                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.lundi))
+                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mardi))
+                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mercredi))
+                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.jeudi))
+                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.vendredi))
+                    echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.samedi))                  
 
                 else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
                     raise types_exception.InvalidServerReponseError

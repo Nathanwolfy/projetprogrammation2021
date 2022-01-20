@@ -107,7 +107,7 @@ class Ui_Form(object):
         self.ValidationpushButton.released.connect(lambda: self.set_numero_docteur(self.NumerolineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_mail_docteur(self.AdresseMaillineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_type_docteur(self.Praticien_comboBox.currentText()))
-        self.ValidationpushButton.released.connect(lambda: self.set_mot_de_passe_docteu(self.MdPlineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_mot_de_passe_docteur(self.MdPlineEdit.text()))
 
         self.ValidationpushButton.released.connect(Form.close) # type: ignore
 

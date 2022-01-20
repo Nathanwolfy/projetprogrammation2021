@@ -89,17 +89,17 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
         
-    def set_continuation(self, arg):
-        self.continuation = arg
+    def set_continuation(self, valeur):
+        self.continuation = valeur
     
-    def set_localisation(self,arg):
-        self.localisation = arg
+    def set_localisation(self,valeur):
+        self.localisation = valeur
     
-    def set_type_docteur(self,arg):
-        self.type_docteur = arg
+    def set_type_docteur(self,valeur):
+        self.type_docteur = valeur
     
-    def set_type_rdv(self,arg):
-        self.type_rdv = arg
+    def set_type_rdv(self,valeur):
+        self.type_rdv = valeur
     
     def set_date_rdv(self,jour,mois,annee):
         self.jour_rdv,self.mois_rdv,self.annee_rdv = jour,mois,annee

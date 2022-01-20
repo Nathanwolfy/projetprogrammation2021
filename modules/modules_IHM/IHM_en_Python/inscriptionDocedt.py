@@ -159,21 +159,21 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationButton.released.connect(lambda: self.add(self.continuation, True))
+        self.ValidationButton.released.connect(lambda: self.set_continuation(True))
 
-        self.ValidationButton.released.connect(lambda: self.add(self.lundi, [self.deblunlineEdit.text(), self.finlunlineEdit.text()]))
-        self.ValidationButton.released.connect(lambda: self.add(self.mardi, [self.debmarlineEdit.text(), self.finmarlineEdit.text()]))
-        self.ValidationButton.released.connect(lambda: self.add(self.mercredi, [self.debmerlineEdit.text(), self.finmerlineEdit.text()]))
-        self.ValidationButton.released.connect(lambda: self.add(self.jeudi, [self.debjeulineEdit.text(), self.finjeulineEdit.text()]))
-        self.ValidationButton.released.connect(lambda: self.add(self.vendredi, [self.debvenlineEdit.text(), self.finvenlineEdit.text()]))
-        self.ValidationButton.released.connect(lambda: self.add(self.samedi, [self.debsamlineEdit.text(), self.finsamlineEdit.text()]))
+        self.ValidationButton.released.connect(lambda: self.lundi.append(self.deblunlineEdit.text(), self.finlunlineEdit.text()))
+        self.ValidationButton.released.connect(lambda: self.mardi.append(self.debmarlineEdit.text(), self.finmarlineEdit.text()))
+        self.ValidationButton.released.connect(lambda: self.mercredi.append(self.debmerlineEdit.text(), self.finmerlineEdit.text()))
+        self.ValidationButton.released.connect(lambda: self.jeudi.append(self.debjeulineEdit.text(), self.finjeulineEdit.text()))
+        self.ValidationButton.released.connect(lambda: self.vendredi.append(self.debvenlineEdit.text(), self.finvenlineEdit.text()))
+        self.ValidationButton.released.connect(lambda: self.samedi.append(self.debsamlineEdit.text(), self.finsamlineEdit.text()))
   
         self.ValidationButton.released.connect(Form.close)
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self,valeur):
+        self.continuation = valeur
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

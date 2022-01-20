@@ -66,17 +66,17 @@ class Ui_Form(object):
         
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def set_continuation(self, arg):
-        self.continuation = arg
+    def set_continuation(self, valeur):
+        self.continuation = valeur
 
-    def set_identifiant_client(self,arg):
-        self.identifiant_client = arg
+    def set_identifiant_client(self,valeur):
+        self.identifiant_client = valeur
     
-    def set_motdepasse_client(self,arg):
-        self.motdepasse_client = arg
+    def set_motdepasse_client(self,valeur):
+        self.motdepasse_client = valeur
 
-    def set_creation_compte(self,arg):
-        self.creation_compte = arg
+    def set_creation_compte(self,valeur):
+        self.creation_compte = valeur
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

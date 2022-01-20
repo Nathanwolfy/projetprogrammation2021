@@ -42,6 +42,10 @@ class InscriptionDoc_herit(InscriptionDoc.Ui_Form):
     def __init__(self,arg):
         super().__init__(arg)
 
+class InscriptionDocedt_herit(InscriptionDocedt.Ui_Form):
+    def __init__(self):
+        super().__init__()
+
 appS = QtWidgets.QApplication(sys.argv)
 
 def exec_fenetre(fenetre):

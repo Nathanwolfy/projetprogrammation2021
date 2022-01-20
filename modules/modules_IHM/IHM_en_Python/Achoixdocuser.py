@@ -41,11 +41,11 @@ class Ui_Form(object):
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def set_continuation(self, arg):
-        self.continuation = arg
+    def set_continuation(self, valeur):
+        self.continuation = valeur
 
-    def set_choix(self, arg):
-        self.choix_client = arg
+    def set_choix(self, valeur):
+        self.choix_client = valeur
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

@@ -62,14 +62,14 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.FermepushButton.released.connect(lambda: self.add(self.continuation, True))
+        self.FermepushButton.released.connect(lambda: self.set_continuation(True))
 
         self.FermepushButton.released.connect(Form.close)
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def add(self, var, arg):
-        var = arg
+    def set_continuation(self,valeur):
+        self.continuation = valeur
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
