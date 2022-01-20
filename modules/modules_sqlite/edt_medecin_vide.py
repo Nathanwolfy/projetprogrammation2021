@@ -6,7 +6,7 @@ JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
 
 def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi):
-    '''Crée l'emploi du temps vide pour un médecin pendant un an (mêmes horaires pour toute l'année)'''
+    '''Créer des rendez-vous disponibles dans rdv_dispos pour un médecin pour 2 mois (mêmes horaires à chaque semaine pendant 2 mois)'''
     heure_lundi_debut, heure_lundi_fin = horaire_lundi
     heure_mardi_debut, heure_mardi_fin = horaire_mardi
     heure_mercredi_debut, heure_mercredi_fin = horaire_mercredi
@@ -60,6 +60,7 @@ def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, ho
     premier_mois = rows[0][3]
     annee = rows[0][4]
     for row in rows: #Un row = un lundi
+            #si l'on s'arrête au bout de 2 mois, cela dépend si le premier mois est décembre ou pas
         if ((row[3] == premier_mois and row[4] == annee) or (row[3] == premier_mois + 1 and row[4] == annee)) or (premier_mois == 12 and (row[3] == 12 or row[3] == 1)): #Arbitrairement on s'arrête au bout de 2 mois
             id_lundi = row[0]
             liste_id = []

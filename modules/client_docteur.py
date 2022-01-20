@@ -16,7 +16,7 @@ def client_docteur(socket):
             continuation = fenetre_connexion_docteur.continuation
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                stop_continuation.arret_processus(socket)
+                stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
                         
             elif not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_docteur.identifiant_client
@@ -41,45 +41,57 @@ def client_docteur(socket):
                 continuation = fenetre_inscription_docteur.continuation
 
                 if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                    stop_continuation.arret_processus(socket)
+                    stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
 
                 else: #Si non, le processus se déroule normalement
-                    #On récupère les informations saisies par le docteur dans l'IHM et on les envoie directement (on garde que l'identifiant du docteur car on en aura besoin par la suite)
+                    #On récupère les informations saisies par le docteur dans l'IHM
+                    nom_docteur = fenetre_inscription_docteur.nom_docteur.capitalize() #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
+                    prenom_docteur = fenetre_inscription_docteur.prenom_docteur.capitalize()
+                    type_docteur = fenetre_inscription_docteur.type_docteur
+                    ville_docteur = fenetre_inscription_docteur.ville_docteur.upper() #upper() car toutes les villes sont en majuscules dans la bdd
+                    adresse_docteur = fenetre_inscription_docteur.adresse_docteur
+                    code_postal_docteur = fenetre_inscription_docteur.code_postal_docteur
+                    numero_docteur = fenetre_inscription_docteur.numero_docteur
                     identifiant = fenetre_inscription_docteur.mail_docteur
+                    hash_motdepasse_docteur = hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur)
 
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.nom_docteur.capitalize()) #capitalize() pour mettre la première lettre du nom et prénom en majuscule et le reste en minuscule
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.prenom_docteur.capitalize())
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.type_docteur)
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.ville_docteur.upper()) #upper() car toutes les villes sont en majuscules dans la bdd
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.adresse_docteur)
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.code_postal_docteur)
-                    echanges_donnees.envoi(socket,fenetre_inscription_docteur.numero_docteur)
-                    echanges_donnees.envoi(socket,identifiant)
-                    echanges_donnees.envoi(socket,hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur))
+                    if not echanges_donnees.check_donnes_non_vides((nom_docteur,prenom_docteur,type_docteur,ville_docteur,adresse_docteur,code_postal_docteur,numero_docteur,identifiant)) or hash_motdepasse_docteur == hashage_mdp.hash_mdp(''):
+                        stop_continuation.arret_processus(socket,types_exception.InvalidClientReponseError) #Si le docteur rentre une donnée vide, on arrête le processus ainsi que le thread associé
+                    
+                    else: #Dans tous les autres cas, il n'y a pas de problèmes.
+                        echanges_donnees.envoi(socket,nom_docteur)
+                        echanges_donnees.envoi(socket,prenom_docteur)
+                        echanges_donnees.envoi(socket,type_docteur)
+                        echanges_donnees.envoi(socket,ville_docteur)
+                        echanges_donnees.envoi(socket,adresse_docteur)
+                        echanges_donnees.envoi(socket,code_postal_docteur)
+                        echanges_donnees.envoi(socket,numero_docteur)
+                        echanges_donnees.envoi(socket,identifiant)
+                        echanges_donnees.envoi(socket,hash_motdepasse_docteur)
 
-                    reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
+                        reponse = echanges_donnees.reception(socket) #On attend la validation du serveur pour l'inscription de l'emploi du temps du docteur
 
-                    if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
-                        fenetre_inscription_edt_doc = launcher.InscriptionDocedt_herit()
-                        launcher.exec_fenetre(fenetre_inscription_edt_doc) #On lance l'inscription de l'emploi du temps du docteur
-                        continuation = fenetre_inscription_edt_doc.continuation
+                        if reponse == '02dINITINSCEDTDOC': #Le serveur valide le lancement de l'inscription de l'emploi du temps du docteur
+                            fenetre_inscription_edt_doc = launcher.InscriptionDocedt_herit()
+                            launcher.exec_fenetre(fenetre_inscription_edt_doc) #On lance l'inscription de l'emploi du temps du docteur
+                            continuation = fenetre_inscription_edt_doc.continuation
 
-                        if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                            stop_continuation.arret_processus(socket)
+                            if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                                stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
 
-                        else: #Si non, le processus se déroule normalement
-                            #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
-                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.lundi))
-                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mardi))
-                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mercredi))
-                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.jeudi))
-                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.vendredi))
-                            echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.samedi))                  
+                            else: #Si non, le processus se déroule normalement
+                                #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
+                                echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.lundi))
+                                echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mardi))
+                                echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.mercredi))
+                                echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.jeudi))
+                                echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.vendredi))
+                                echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.samedi))                  
 
-                    else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
-                        raise types_exception.InvalidServerReponseError
+                        else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
+                            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
 
-                    clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
+                        clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
-            raise types_exception.InvalidServerReponseError
+            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
