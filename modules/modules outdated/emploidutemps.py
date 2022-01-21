@@ -7,7 +7,9 @@ def nb_jours_dans_un_mois(mois, annee):
             return 29 #année bissextile
         else:
             return 28 #année non bissextile
-    elif mois%2 == 0:
+    elif mois < 8 and mois%2 == 1:
+        return 31
+    elif mois >=8 and mois%2 == 0:
         return 31
     return 30
 
