@@ -8,6 +8,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+import os
 
 
 
@@ -15,6 +16,8 @@ class Ui_Form(object):
     def __init__(self, arg):
         self.arg = arg
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
+        self.dicojour = [arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]]
+
 
     def setupUi(self, Form):                #Mise en place de l'IHM
         n = max((len(self.arg[0]), len(self.arg[1]), len(self.arg[2]), len(self.arg[3]), len(self.arg[4]), len(self.arg[5])))
@@ -63,6 +66,7 @@ class Ui_Form(object):
         self.retranslateUi(Form)
 
         self.FermepushButton.released.connect(lambda: self.set_continuation(True))
+        self.EdTtableWidget.clicked.connect(lambda: self.fichier(self.EdTtableWidget.selectedItems()[0].text(), self.dicojour[self.EdTtableWidget.selectedIndexes()[0].column()][self.EdTtableWidget.selectedItems()[0].text()]))
 
         self.FermepushButton.released.connect(Form.close)
 
@@ -71,6 +75,16 @@ class Ui_Form(object):
 
     def set_continuation(self,valeur):
         self.continuation = valeur
+
+    def fichier(self, horaire, liste ):
+        myFile = open("Informations.txt", "w+")
+        myFile.write("Nom : "+liste[0]+'\n')
+        myFile.write("Prénom : "+liste[1]+'\n')
+        myFile.write("Motif : "+liste[2]+'\n')
+        myFile.write("Horaire : "+ horaire+'\n')
+        if liste[3] != '' :
+            myFile.write("Informations supplémentaires : "+liste[3]+'\n')
+        os.startfile("Informations.txt")
 
 
     def retranslateUi(self, Form):
