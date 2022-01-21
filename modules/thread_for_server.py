@@ -1,7 +1,7 @@
 from ast import Not
 from os import error
-''' Ce fichier créer la classe dont une instance sera créée pour chaque nouveau client connecté.
-Il détaille dans la méthode 'run' toutes les actions que le serveur devra effectué quand un client se connecte.
+''' Ce fichier crée la classe dont une instance sera créée pour chaque nouveau client connecté.
+Il détaille dans la méthode 'run' toutes les actions que le serveur devra effectuer quand un client se connecte.
 Du côté client seule la réception de la requête de choix sera identique entre patient et docteur.
 '''
 
