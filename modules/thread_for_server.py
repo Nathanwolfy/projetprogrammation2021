@@ -1,7 +1,7 @@
 from ast import Not
 from os import error
-''' Ce fichier créer la classe dont une instance sera créée pour chaque nouveau client connecté.
-Il détaille dans la méthode 'run' toutes les actions que le serveur devra effectué quand un client se connecte.
+''' Ce fichier crée la classe dont une instance sera créée pour chaque nouveau client connecté.
+Il détaille dans la méthode 'run' toutes les actions que le serveur devra effectuer quand un client se connecte.
 Du côté client seule la réception de la requête de choix sera identique entre patient et docteur.
 '''
 
@@ -38,8 +38,13 @@ class ThreadForServer(threading.Thread):
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ") #On réceptionne la clef de connexion (email espacé d'un espace du mdp)
                     identifiant_patient, hash_motdepasse_patient = clef_connexion[0], clef_connexion[1]
+
+                    if identifiant_patient == 'NULL': #Dans le cas où aucun email n'a été rentré, la clef est forcément fausse
+                        clef_valide = 'False'
+
+                    else: #Si ce n'est pas le cas, le processus suit son cours
+                        clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,hash_motdepasse_patient)) #On vérifie que la clef de connexion est valide
                     
-                    clef_valide = str(exploitation_sql_patient.connexion_patient_reussie(identifiant_patient,hash_motdepasse_patient)) #On vérifie que la clef de connexion est valide
                     echanges_donnees.envoi(self.conn,clef_valide) #On envoie le résultat de l'évaluation de la validité de la clef de connexion
 
                 elif reponse == '02pCREACOMPTE': #Le patient choisit de créer un compte
@@ -55,6 +60,9 @@ class ThreadForServer(threading.Thread):
                     #On inscrit effectivement le patient dans la base de données
                     exploitation_sql_patient.inscription_patient(prenom_patient,nom_patient,jour_naiss_patient,mois_naiss_patient,annee_naiss_patient,identifiant_patient,numero_patient,hash_motdepasse_patient,hash_motdepasse_patient)
                     clef_valide = 'True' #Le patient s'est créé un compte, il est donc bien connecté
+                
+                elif reponse == '02pINVALIDDATA': #Si le patient rentre une donnée invalide, son inscription n'est pas validée
+                    clef_valide = 'False'
 
                 elif reponse == 'XXgKILLTHREAD':
                     raise types_exception.ClientDisconnectedError
@@ -113,6 +121,11 @@ class ThreadForServer(threading.Thread):
                         echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites)
                         rdv_validé = False #Le rdv n'est pas validé
 
+                elif reponse == '03pINVALIDDATA': #Dans le cas où le patient n'a pas rentré toutes les données
+                    code_initialisation_affichage_disponibilites = '04pRDVNONDISPO' #On confirme au patient qu'il n'existe pas de rdv dispo sous ces conditions
+                    echanges_donnees.envoi(self.conn,code_initialisation_affichage_disponibilites)
+                    rdv_validé = False #Le rdv n'est pas validé
+
                 elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
                     raise types_exception.ClientDisconnectedError 
 
@@ -150,39 +163,54 @@ class ThreadForServer(threading.Thread):
                 if reponse == '02dSENDCLEF': #Le docteur choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ")
                     identifiant_docteur, hash_motdepasse_docteur = clef_connexion[0], clef_connexion[1]
-                    
-                    clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,hash_motdepasse_docteur)) #On vérifie que la clef de connexion est valide
+
+                    if identifiant_docteur == 'NULL': #Dans le cas où aucun email n'a été rentré, la clef est forcément fausse
+                        clef_valide = 'False'
+
+                    else: #Si ce n'est pas le cas, le processus suit son cours
+                        clef_valide = str(exploitation_sql_medecin.connexion_medecin_reussie(identifiant_docteur,hash_motdepasse_docteur)) #On vérifie que la clef de connexion est valide
+
                     echanges_donnees.envoi(self.conn,clef_valide)
 
                 elif reponse == '02dCREACOMPTE': #Le docteur choisir de créer son compte
                     str_liste_types_docteur = str(lire_sql.liste_type_medecin()) #Le serveur envoie la liste des types de médecins
                     echanges_donnees.envoi(self.conn,str_liste_types_docteur)
                     #On réceptionne les données saisies par le docteur lors de son inscription
-                    nom_docteur = echanges_donnees.reception(self.conn)
-                    prenom_docteur = echanges_donnees.reception(self.conn)
-                    type_docteur = echanges_donnees.reception(self.conn)
-                    ville_docteur = echanges_donnees.reception(self.conn)
-                    rue_docteur = echanges_donnees.reception(self.conn)
-                    code_postal_docteur = echanges_donnees.reception(self.conn)
-                    telephone_docteur = echanges_donnees.reception(self.conn)
-                    identifiant_docteur = echanges_donnees.reception(self.conn)
-                    hash_motdepasse_docteur = echanges_donnees.reception(self.conn)
-                    #On inscrit effecivement le docteur dans la base de données
-                    exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,hash_motdepasse_docteur,hash_motdepasse_docteur)
 
-                    code_initialisation_inscription_edt_docteur = '02dINITINSCEDTDOC' #On valide au client le lancement de la fenêtre d'inscription de l'edt du docteur
-                    echanges_donnees.envoi(self.conn, code_initialisation_inscription_edt_docteur)
-                    #On réceptionne une string représentant une liste des horaires de début et de fin pour chaque jour, on les convertit directement en liste de deux string
-                    horaire_lundi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    horaire_mardi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    horaire_mercredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    horaire_jeudi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    horaire_vendredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    horaire_samedi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
-                    #On inscrit les rdv disponibles inscrits par le médecin dans la bdd
-                    edt_medecin_vide.edt_medecin_vide(identifiant_docteur,horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi)
+                    reponse = echanges_donnees.reception(self.conn)
 
-                    clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
+                    if reponse == '02dINVALIDDATA': #Si le docteur rentre une donnée invalide, son inscription n'est pas validée
+                        clef_valide = 'False'
+
+                    elif reponse == '02dSENDDATAINSCDOC': #Si les données sont valides, le processus continue
+                        nom_docteur = echanges_donnees.reception(self.conn)
+                        prenom_docteur = echanges_donnees.reception(self.conn)
+                        type_docteur = echanges_donnees.reception(self.conn)
+                        ville_docteur = echanges_donnees.reception(self.conn)
+                        rue_docteur = echanges_donnees.reception(self.conn)
+                        code_postal_docteur = echanges_donnees.reception(self.conn)
+                        telephone_docteur = echanges_donnees.reception(self.conn)
+                        identifiant_docteur = echanges_donnees.reception(self.conn)
+                        hash_motdepasse_docteur = echanges_donnees.reception(self.conn)
+                        #On inscrit effecivement le docteur dans la base de données
+                        exploitation_sql_medecin.inscription_medecin(prenom_docteur,nom_docteur,type_docteur,identifiant_docteur,telephone_docteur,rue_docteur,code_postal_docteur, ville_docteur,hash_motdepasse_docteur,hash_motdepasse_docteur)
+
+                        code_initialisation_inscription_edt_docteur = '02dINITINSCEDTDOC' #On valide au client le lancement de la fenêtre d'inscription de l'edt du docteur
+                        echanges_donnees.envoi(self.conn, code_initialisation_inscription_edt_docteur)
+                        #On réceptionne une string représentant une liste des horaires de début et de fin pour chaque jour, on les convertit directement en liste de deux string
+                        horaire_lundi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                        horaire_mardi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                        horaire_mercredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                        horaire_jeudi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                        horaire_vendredi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                        horaire_samedi = conversion_types.strlist_to_list(echanges_donnees.reception(self.conn))
+                        #On inscrit les rdv disponibles inscrits par le médecin dans la bdd
+                        edt_medecin_vide.edt_medecin_vide(identifiant_docteur,horaire_lundi, horaire_mardi, horaire_mercredi, horaire_jeudi, horaire_vendredi, horaire_samedi)
+
+                        clef_valide = 'True' #Le docteur vient de se créer un compte, il est donc bien connecté
+                    
+                    else: #Si le client renvoie autre chose, c'est un erreur
+                        raise types_exception.InvalidClientReponseError
                 
                 elif reponse == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
                     raise types_exception.ClientDisconnectedError

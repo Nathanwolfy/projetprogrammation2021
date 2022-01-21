@@ -28,7 +28,7 @@ if reponse == '01gINITCHOIX': #Validation du lancement de la fenêtre de choix d
         client_docteur.client_docteur(socket) #On démarre le client docteur
 
     elif not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-        stop_continuation.arret_processus(socket)
+        stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
 
     else: #Dans tous les autres cas, c'est un erreur
         raise types_exception.InvalidServerReponseError

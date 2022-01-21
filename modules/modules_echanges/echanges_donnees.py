@@ -35,6 +35,7 @@ def check_donnes_non_vides(donnees):
     """(tuple) -> (Bool)
     Fonction qui pour un tuple donné renvoie False si l'une de ses composantes est une string vide et True sinon.
     """
+    print(donnees)
     flag = True
     for k in range(len(donnees)):
         if donnees[k] == '':

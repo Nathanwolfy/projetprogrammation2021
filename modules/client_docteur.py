@@ -16,13 +16,12 @@ def client_docteur(socket):
             continuation = fenetre_connexion_docteur.continuation
 
             if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
+                stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
                         
             elif not creationcompte_docteur: #Le client choisit de rentrer son identifiant et mot de passe
                 identifiant = fenetre_connexion_docteur.identifiant_client
                 hash_motdepasse = hashage_mdp.hash_mdp(fenetre_connexion_docteur.motdepasse_client)
-                clef_docteur = identifiant + " " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client
-                clef_docteur = clef_docteur
+                clef_docteur = identifiant + " " + hash_motdepasse if identifiant != '' else "NULL " + hash_motdepasse #On récupère identifiants et mot de passe rentrés par le client, et on indique au serveur si aucune email n'a été rentré
 
                 envoi_clef_connexion = '02dSENDCLEF' #On envoie la réponse comme quoi le docteur se connecte et sa clef (mail+mdp) de connexion saisie
                 echanges_donnees.envoi(socket,envoi_clef_connexion)
@@ -41,7 +40,7 @@ def client_docteur(socket):
                 continuation = fenetre_inscription_docteur.continuation
 
                 if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                    stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
+                    stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
 
                 else: #Si non, le processus se déroule normalement
                     #On récupère les informations saisies par le docteur dans l'IHM
@@ -56,9 +55,14 @@ def client_docteur(socket):
                     hash_motdepasse_docteur = hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur)
 
                     if not echanges_donnees.check_donnes_non_vides((nom_docteur,prenom_docteur,type_docteur,ville_docteur,adresse_docteur,code_postal_docteur,numero_docteur,identifiant)) or hash_motdepasse_docteur == hashage_mdp.hash_mdp(''):
-                        stop_continuation.arret_processus(socket,types_exception.InvalidClientReponseError) #Si le docteur rentre une donnée vide, on arrête le processus ainsi que le thread associé
+                        print('aled')
+                        envoi_donnee_invalide = '02dINVALIDDATA'
+                        echanges_donnees.envoi(socket,envoi_donnee_invalide)
+                        clef_valide = 'False' #Si le docteur rentre une donnée vide, on ne valide pas son inscription
                     
                     else: #Dans tous les autres cas, il n'y a pas de problèmes.
+                        envoi_donnee_valide = '02dSENDDATAINSCDOC'
+                        echanges_donnees.envoi(socket,envoi_donnee_valide)
                         echanges_donnees.envoi(socket,nom_docteur)
                         echanges_donnees.envoi(socket,prenom_docteur)
                         echanges_donnees.envoi(socket,type_docteur)
@@ -76,8 +80,8 @@ def client_docteur(socket):
                             launcher.exec_fenetre(fenetre_inscription_edt_doc) #On lance l'inscription de l'emploi du temps du docteur
                             continuation = fenetre_inscription_edt_doc.continuation
 
-                            if not continuation: #Si le client ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
-                                stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
+                            if not continuation: #Si le docteur ne clique sur aucun bouton donc ferme la fenêtre, on envoie au serveur l'indication et on termine le script client
+                                stop_continuation.arret_processus(socket,types_exception.UserDisconnectedError())
 
                             else: #Si non, le processus se déroule normalement
                                 #On récuprère les horaires inscrit dans l'IHM par le docteur et on les envoie directement
@@ -89,9 +93,9 @@ def client_docteur(socket):
                                 echanges_donnees.envoi(socket,str(fenetre_inscription_edt_doc.samedi))                  
 
                         else: #Si le serveur renvoie autre chose, c'est une erreur, le client s'arrête
-                            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
+                            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
 
                         clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
                 
         else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
-            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError)
+            stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())

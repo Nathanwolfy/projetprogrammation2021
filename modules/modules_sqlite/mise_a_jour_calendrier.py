@@ -1,3 +1,4 @@
+'''Met à jour le calendrier en temps réel'''
 import sqlite3
 import time
 
@@ -17,6 +18,7 @@ def nb_jours_dans_un_mois(mois, annee):
         return 31
     return 30
 
+#La mise à jour du calendrier supprime les jours antérieurs à aujourd'hui
 now = time.localtime(time.time())
 actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) nb_jour mois annee
 nom_jour = JOURS[DAYS.index(actual_time[:3])]
@@ -32,12 +34,15 @@ if JOURS.index(nom_jour) == len(JOURS) - 1:
 else:
     nom_jour_suivant = JOURS[JOURS.index(nom_jour)+1]
 
-while nb_jour_suivant != nb_jour and mois_jour_suivant != mois_jour: #[Lundi 3 Janvier, Mardi 4 Janvier, Mercredi 5 Janvier, ...]
+#détermine la date dans un an
+while nb_jour_suivant != nb_jour and mois_jour_suivant != mois_jour: 
+    #nom du jour suivant
     if JOURS.index(nom_jour) == len(JOURS) - 1:
         nom_jour_suivant = "Lundi"
     else:
         indice = JOURS.index(nom_jour)
         nom_jour_suivant = JOURS[indice + 1]
+    #jour suivant
     if nb_jour_suivant < nb_jours_dans_un_mois(mois_jour_suivant, annee):
         nb_jour_suivant += 1
     else:
@@ -47,6 +52,8 @@ while nb_jour_suivant != nb_jour and mois_jour_suivant != mois_jour: #[Lundi 3 J
         else:
             mois_jour_suivant += 1
         nb_jour_suivant = 1
+        
+#représentation en chaîne de caractères pour pouvoir tester l'égalité des dates
 if nb_jour < 10:
     str_nb_jour = '0' + str(nb_jour)
 else:
@@ -74,7 +81,7 @@ rows = cursor.fetchall()
 id_1 = int(rows[0][0])
 id_2 = int(rows[-1][0])
 
-#supprime les jours avant la date d'aujourd'hui
+'''supprime les jours avant la date d'aujourd'hui'''
 cursor.execute('SELECT nom_jour FROM calendrier WHERE id_jour=?', (id_1,))
 nom_premier_jour = cursor.fetchone()[0]
 cursor.execute('SELECT nb_jour FROM calendrier WHERE id_jour=?', (id_1,))
@@ -83,6 +90,7 @@ cursor.execute('SELECT mois_jour FROM calendrier WHERE id_jour=?', (id_1,))
 mois_premier_jour = cursor.fetchone()[0]
 cursor.execute('SELECT annee FROM calendrier WHERE id_jour=?', (id_1,))
 annee_premier_jour = cursor.fetchone()[0]
+#représentation en chaîne de caractères pour pouvoir tester l'égalité
 if nb_premier_jour < 10:
     str_nb_premier_jour = '0' + str(nb_premier_jour)
 else:
@@ -94,17 +102,20 @@ else:
 premier_jour = nom_premier_jour + ' ' + str_nb_premier_jour + ' ' + str_mois_premier_jour + ' ' + str(annee_premier_jour)
 
 id_1 = id_1 - 1
-list_id = []
+list_id = [] #prend tous les identifiants des jours antérieurs à la date d'aujourd'hui
+#boucle qui commence au premier jour du calendrier et s'arrête à la date d'aujourd'hui
 while premier_jour != date_actuelle:
+    #nom du jour suivant
     if JOURS.index(nom_premier_jour) == len(JOURS) - 1:
         nom_premier_jour = "Lundi"
     else:
         indice = JOURS.index(nom_premier_jour)
         nom_premier_jour = JOURS[indice + 1]
-    if nb_premier_jour < nb_jours_dans_un_mois(mois_premier_jour, annee_premier_jour):
+    #jour suivant
+    if nb_premier_jour < nb_jours_dans_un_mois(mois_premier_jour, annee_premier_jour): #Si le jour n'est pas le dernier jour du mois
         nb_premier_jour += 1
         id_1 += 1
-        list_id.append((id_1,))
+        list_id.append((id_1,)) 
         if nb_premier_jour < 10:
             str_nb_premier_jour = '0' + str(nb_premier_jour)
         else:
@@ -114,7 +125,7 @@ while premier_jour != date_actuelle:
         else:
             str_mois_premier_jour = str(mois_premier_jour)
         premier_jour = nom_premier_jour + ' ' + str_nb_premier_jour + ' ' + str_mois_premier_jour + ' ' + str(annee_premier_jour)
-    else:
+    else: #Si le jour est le dernier jour du mois
         if mois_premier_jour == 12:
             mois_premier_jour = 1
             annee_premier_jour += 1
@@ -136,6 +147,7 @@ while premier_jour != date_actuelle:
 cursor.executemany('DELETE FROM calendrier WHERE id_jour=?', list_id)
 con.commit()
 
+'''ajoute les jours dans le calendrier jusqu'à la date dans un an'''
 cursor.execute('SELECT nom_jour FROM calendrier WHERE id_jour=?', (id_2,))
 nom_dernier_jour = cursor.fetchone()[0]
 cursor.execute('SELECT nb_jour FROM calendrier WHERE id_jour=?', (id_2,))
@@ -157,13 +169,15 @@ dernier_jour = nom_dernier_jour + ' ' + str_nb_dernier_jour + ' ' + str_mois_der
 
 #complète le calendrier pour qu'on puisse potentiellement prendre un rdv un an à l'avance 
 
-list_jour = []
+list_jour = [] #prend tous les jours entre le dernier jour du calendrier et la date dans un an
 while dernier_jour != date_dans_un_an:
+    #nom du jour suivant
     if JOURS.index(nom_dernier_jour) == len(JOURS) - 1:
         nom_dernier_jour = "Lundi"
     else:
         indice = JOURS.index(nom_dernier_jour)
         nom_dernier_jour = JOURS[indice + 1]
+    #jour suivant
     if nb_dernier_jour < nb_jours_dans_un_mois(mois_dernier_jour, annee_dernier_jour):
         nb_dernier_jour += 1
         id_2 += 1

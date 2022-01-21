@@ -1,0 +1,12 @@
+Lundi 22 01 2021 08 00 motif1 15
+Lundi 22 01 2021 08 15 vaccination 15
+Lundi 22 01 2021 08 30 podologue 30
+Lundi 22 01 2021 09 00 generaliste 30
+Lundi 22 01 2021 10 45 gynecologue 45
+Lundi 22 01 2021 14 30 vaccination 15
+Mardi 23 01 2021 08 30 gastro-enterologue 30
+Mercredi 24 01 2021 08 30 dentiste 15
+Mercredi 22 01 2021 08 45 dentiste 15
+Mercredi 24 01 2021 16 45 motif5 15
+Jeudi 25 01 2021 09 30 cardiologue 45
+Jeudi 25 01 2021 16 45 radiologie 45
