@@ -13,12 +13,12 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def __init__(self):
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
-        self.lundi = []                     
-        self.mardi = []
-        self.mercredi = []
-        self.jeudi = []
-        self.vendredi = []
-        self.samedi = []
+        self.lundi = []                     #Information envoyée au serveur par le docteur de ses horaires du lundi
+        self.mardi = []                     #Information envoyée au serveur par le docteur de ses horaires du mardi
+        self.mercredi = []                  #Information envoyée au serveur par le docteur de ses horaires du mercredi
+        self.jeudi = []                     #Information envoyée au serveur par le docteur de ses horaires du jeudi
+        self.vendredi = []                  #Information envoyée au serveur par le docteur de ses horaires du vendredi
+        self.samedi = []                    #Information envoyée au serveur par le docteur de ses horaires du samedi
 
 
     def setupUi(self, Form):                #Mise en place de l'IHM
@@ -159,8 +159,9 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationButton.released.connect(lambda: self.set_continuation(True))
+        self.ValidationButton.released.connect(lambda: self.set_continuation(True))         #L'utilisateur appuie sur Validation, self.continuation passe en True par la méthode set_continuation()
 
+        #Le bouton Validation renvoie les horaires pour lundi, mardi, mercredi, jeudi, vendredi, samedi rentrés dans les zones de texte LineEdit dans les listes self.lundi, self,.mardi, self.mercredi, self.jeudi, self.vendredi et self.samedi
         self.ValidationButton.released.connect(lambda: self.lundi.append(self.deblunlineEdit.text(), self.finlunlineEdit.text()))
         self.ValidationButton.released.connect(lambda: self.mardi.append(self.debmarlineEdit.text(), self.finmarlineEdit.text()))
         self.ValidationButton.released.connect(lambda: self.mercredi.append(self.debmerlineEdit.text(), self.finmerlineEdit.text()))
@@ -168,16 +169,16 @@ class Ui_Form(object):
         self.ValidationButton.released.connect(lambda: self.vendredi.append(self.debvenlineEdit.text(), self.finvenlineEdit.text()))
         self.ValidationButton.released.connect(lambda: self.samedi.append(self.debsamlineEdit.text(), self.finsamlineEdit.text()))
   
-        self.ValidationButton.released.connect(Form.close)
+        self.ValidationButton.released.connect(Form.close)      #L'utilisation du Validation ferme l'IHM
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self,valeur):
+    def set_continuation(self,valeur):                  #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):          #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))

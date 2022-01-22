@@ -54,3 +54,5 @@ def exec_fenetre(fenetre):
     mycustomwidget.setupUi(widget)
     widget.show()
     appS.exec()
+
+#Module permettant de lancer les différentes IHM dans lequel on importe tous les modules d'IHM codées en python

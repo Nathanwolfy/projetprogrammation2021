@@ -13,14 +13,15 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def __init__(self):
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
-        self.nom_patient = ''
-        self.prenom_patient = ''
-        self.jour_patient = ''
-        self.mois_patient = ''
-        self.annee_patient = ''
-        self.mail_patient = ''
-        self.motdepasse_patient = ''
-        self.numero_patient = ''
+        self.nom_patient = ''               #Information envoyée au serveur par le patient de son nom
+        self.prenom_patient = ''            #Information envoyée au serveur par le patient de son prénom
+        self.jour_patient = ''              #Information envoyée au serveur par le patient de son jour de naissance
+        self.mois_patient = ''              #Information envoyée au serveur par le patient de son mois de naissance
+        self.annee_patient = ''             #Information envoyée au serveur par le patient de son année de naissance
+        self.mail_patient = ''              #Information envoyée au serveur par le patient de son adresse mail
+        self.numero_patient = ''            #Information envoyée au serveur par le patient de son numéro
+        self.motdepasse_patient = ''        #Information envoyée au serveur par le patient de son mot de passe
+
 
 
     def setupUi(self, Form):                #Mise en place de l'IHM
@@ -85,8 +86,9 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))     #L'utilisateur appuie sur Validation, self.continuation passe en True par la méthode set_continuation()    
 
+        #Le bouton Validation renvoie le nom du patient, le prénom,la date naissance, le numéro, le mail et le mot de passe rentrés dans les zones de texte LineEdit au moyen de les méthodes set_nom_patient(), set_prenom_patient(), set_numero_patient(), set_mail_patient(), set_numero() et set_mot_de_passe_docteur()
         self.ValidationpushButton.released.connect(lambda: self.set_nom_patient(self.NomlineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_prenom_patient(self.PrenomlineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_date_patient(self.jourlineEdit.text(),self.moislineEdit.text(),self.anneelineEdit.text()))
@@ -94,34 +96,34 @@ class Ui_Form(object):
         self.ValidationpushButton.released.connect(lambda: self.set_mail_patient(self.AdresseMaillineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_motdepasse_patient(self.MdPlineEdit.text()))
 
-        self.ValidationpushButton.released.connect(Form.close) # type: ignore
+        self.ValidationpushButton.released.connect(Form.close)          #L'utilisation du Validation ferme l'IHM
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self,valeur):
+    def set_continuation(self,valeur):          #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
     
-    def set_nom_patient(self,valeur):
+    def set_nom_patient(self,valeur):           #Méthode permettant d'associer à self.nom_patient la valeur que l'on donne en argument
         self.nom_patient = valeur
 
-    def set_prenom_patient(self,valeur):
+    def set_prenom_patient(self,valeur):        #Méthode permettant d'associer à self.prenom_patient la valeur que l'on donne en argument
         self.prenom_patient = valeur
     
-    def set_date_patient(self,jour,mois,annee):
-        self.jour_patient,self.mois_patient,self.annee_patient = jour,mois,annee
+    def set_date_patient(self,jour,mois,annee): #Méthode permettant d'associer à self.jour_patient, self.mois_patient et self.annee_patient la valeur que l'on donne en argument
+        self.jour_patient, self.mois_patient, self.annee_patient = jour, mois, annee
 
-    def set_numero_patient(self,valeur):
+    def set_numero_patient(self,valeur):        #Méthode permettant d'associer à self.numero_patient la valeur que l'on donne en argument
         self.numero_patient = valeur
     
-    def set_mail_patient(self,valeur):
+    def set_mail_patient(self,valeur):          #Méthode permettant d'associer à self.mail_patient la valeur que l'on donne en argument
         self.mail_patient = valeur
     
-    def set_motdepasse_patient(self,valeur):
+    def set_motdepasse_patient(self,valeur):    #Méthode permettant d'associer à self.motdepasse_patient la valeur que l'on donne en argument
         self.motdepasse_patient = valeur
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):              #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label_2.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))

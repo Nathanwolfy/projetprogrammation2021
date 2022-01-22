@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
     def __init__(self,arg):
-        self.arg = arg
+        self.arg = arg                  #Liste d'informations récapitulatives envoyées [rendez-vous, heure, nom du docteur, ville, code postale, rue, numéro, adresse mail, informations données supplémentaires]
 
 
     def setupUi(self, Form):            #Mise en place de l'IHM
@@ -84,7 +84,7 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):              #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
@@ -106,4 +106,4 @@ class Ui_Form(object):
         self.ruemodiflabel.setText(_translate("Form", self.arg[5]))
         self.numeromodiflabel.setText(_translate("Form", self.arg[6]))
         self.adressemailmodiflabel.setText(_translate("Form", self.arg[7]))
-        self.infodonneesmodiflabel.setText(_translate("Form", self.arg[8]))
+        self.infodonneesmodiflabel.setText(_translate("Form", self.arg[8])) 

@@ -52,36 +52,36 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         
-        self.InscriptionButton.released.connect(lambda: self.set_continuation(True))        #L'utilisateur appuie sur Inscription, self.continuation passe en True par la fonction set_continuation()
-        self.ConnexionButton.released.connect(lambda: self.set_continuation(True))          #L'utilisateur appuie sur Connexion, self.continuation passe en True par la fonction set_continuation()
+        self.InscriptionButton.released.connect(lambda: self.set_continuation(True))        #L'utilisateur appuie sur Inscription, self.continuation passe en True par la Méthode set_continuation()
+        self.ConnexionButton.released.connect(lambda: self.set_continuation(True))          #L'utilisateur appuie sur Connexion, self.continuation passe en True par la Méthode set_continuation()
 
-        self.ConnexionButton.released.connect(lambda: self.set_identifiant_client(self.Identifiant_LineEdit.text()))        #Le bouton connexion renvoie l'identifiant rentré dans la zone de texte LineEdit au moyen de la fonction set_identifiant_client()
-        self.ConnexionButton.released.connect(lambda: self.set_motdepasse_client(self.Mdp_LineEdit.text()))                 #Le bouton connexion renvoie le mot de passe rentré dans la zone de texte LineEdit au moyen de la fonction set_motdepasse_client()
-        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(True))                                     #Le bouton inscription ernvoie le booléen True si il est séléctionné au moyen de la foncction set_creation_compte()
+        self.ConnexionButton.released.connect(lambda: self.set_identifiant_client(self.Identifiant_LineEdit.text()))        #Le bouton connexion renvoie l'identifiant rentré dans la zone de texte LineEdit au moyen de la Méthode set_identifiant_client()
+        self.ConnexionButton.released.connect(lambda: self.set_motdepasse_client(self.Mdp_LineEdit.text()))                 #Le bouton connexion renvoie le mot de passe rentré dans la zone de texte LineEdit au moyen de la Méthode set_motdepasse_client()
+        self.InscriptionButton.released.connect(lambda: self.set_creation_compte(True))                                     #Le bouton inscription renvoie le booléen True si il est séléctionné au moyen de la Méthode set_creation_compte()
 
         if self.arg != '':
             self.Identifiant_LineEdit.insert(self.arg)                                                                      #Si le serveur ouvre cet IHM avec en argument une str non vide, il est créé une zone de texte lui signalant qu'il y a un problème d'identifiant ou de mot de passe
 
-        self.ConnexionButton.released.connect(Form.close)
-        self.InscriptionButton.released.connect(Form.close) # type: ignore
+        self.ConnexionButton.released.connect(Form.close)                   #L'utilisation du Connexion ferme l'IHM
+        self.InscriptionButton.released.connect(Form.close)                 #L'utilisation du Inscription ferme l'IHM
         
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self, valeur):             #Fonction permettant d'associer à self.continuation la valeur que l'on donne en argument
+    def set_continuation(self, valeur):             #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
 
-    def set_identifiant_client(self,valeur):        #Fonction permettant d'associer à self.identifiant_client la valeur que l'on donne en argument
+    def set_identifiant_client(self,valeur):        #Méthode permettant d'associer à self.identifiant_client la valeur que l'on donne en argument
         self.identifiant_client = valeur
     
-    def set_motdepasse_client(self,valeur):         #Fonction permettant d'associer à self.motdepasse_client la valeur que l'on donne en argument
+    def set_motdepasse_client(self,valeur):         #Méthode permettant d'associer à self.motdepasse_client la valeur que l'on donne en argument
         self.motdepasse_client = valeur
 
-    def set_creation_compte(self,valeur):           #Fonction permettant d'associer à self.creation_compte la valeur que l'on donne en argument
+    def set_creation_compte(self,valeur):           #Méthode permettant d'associer à self.creation_compte la valeur que l'on donne en argument
         self.creation_compte = valeur
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):                  #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         if self.arg == '':

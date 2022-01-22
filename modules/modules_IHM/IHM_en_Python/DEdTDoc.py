@@ -14,10 +14,9 @@ import os
 
 class Ui_Form(object):
     def __init__(self, arg):
-        self.arg = arg
+        self.arg = arg[0]                   #Dictionnaire de tous les rendez-vous du médeccin qui s'est connecté pour chaque journée. Les clés sont les jours de la semaine et pour chaque clé les rendez-vous de la journée 
+        self.dicojour = [arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]]            #Pour chaque journée un dictionnaire et pour chaque dictionnaire une clé avec un rendez-vous de la journée avec en arguments le nom, le prenom, le motif du rendez-vous et il peut y avoir des informations supplémentaires si le patient en a rentré lors de sa prise de rendez-vous 
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
-        self.dicojour = [arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]]
-
 
     def setupUi(self, Form):                #Mise en place de l'IHM
         n = max((len(self.arg[0]), len(self.arg[1]), len(self.arg[2]), len(self.arg[3]), len(self.arg[4]), len(self.arg[5])))
@@ -43,7 +42,7 @@ class Ui_Form(object):
         self.EdTtableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.EdTtableWidget.setHorizontalHeaderItem(5, item)
-        for i in range(len(self.arg)):
+        for i in range(len(self.arg)):                  #Génération de l'emploi du temps
             for j in range(len(self.arg[i])):
                 item = QtWidgets.QTableWidgetItem(self.arg[i][j])
                 self.EdTtableWidget.setItem(j, i, item)
@@ -65,18 +64,20 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.FermepushButton.released.connect(lambda: self.set_continuation(True))
+        self.FermepushButton.released.connect(lambda: self.set_continuation(True))      #L'utilisateur appuie sur Ferme, self.continuation passe en True par la méthode set_continuation()
+
+        #Lorsque le médecin sélectionne un rendez-vous sur son emploi du temps, la méthode self.fichier eat lancée
         self.EdTtableWidget.clicked.connect(lambda: self.fichier(self.EdTtableWidget.selectedItems()[0].text(), self.dicojour[self.EdTtableWidget.selectedIndexes()[0].column()][self.EdTtableWidget.selectedItems()[0].text()]))
 
-        self.FermepushButton.released.connect(Form.close)
+        self.FermepushButton.released.connect(Form.close)               #L'utilisation du Ferme ferme l'IHM
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self,valeur):
+    def set_continuation(self,valeur):          #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
 
-    def fichier(self, horaire, liste ):
+    def fichier(self, horaire, liste ):         #Méthode qui ouvre un fichier texte avec des informations sur le patient dont le médecin a sélectionné le rendez-vous sur son emploi du temps interactif
         myFile = open("Informations.txt", "w+")
         myFile.write("Nom : "+liste[0]+'\n')
         myFile.write("Prénom : "+liste[1]+'\n')
@@ -87,7 +88,7 @@ class Ui_Form(object):
         os.startfile("Informations.txt")
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):                  #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         item = self.EdTtableWidget.horizontalHeaderItem(0)

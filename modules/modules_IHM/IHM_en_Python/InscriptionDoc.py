@@ -14,15 +14,15 @@ class Ui_Form(object):
     def __init__(self, arg):
         self.arg = arg
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
-        self.nom_docteur = ''
-        self.prenom_docteur = ''
-        self.type_docteur = ''
-        self.ville_docteur = ''
-        self.adresse_docteur = ''
-        self.code_postal_docteur = ''
-        self.numero_docteur = ''
-        self.mail_docteur = ''
-        self.mot_de_passe_docteur = ''
+        self.nom_docteur = ''               #Information envoyée au serveur par le docteur de son nom
+        self.prenom_docteur = ''            #Information envoyée au serveur par le docteur de son prénom
+        self.type_docteur = ''              #Information envoyée au serveur par le docteur de sa spécialité
+        self.ville_docteur = ''             #Information envoyée au serveur par le docteur de sa ville de pratique
+        self.adresse_docteur = ''           #Information envoyée au serveur par le docteur de son adresse
+        self.code_postal_docteur = ''       #Information envoyée au serveur par le docteur de son code postal
+        self.numero_docteur = ''            #Information envoyée au serveur par le docteur de son numéro
+        self.mail_docteur = ''              #Information envoyée au serveur par le docteur de son mail
+        self.mot_de_passe_docteur = ''      #Information envoyée au serveur par le docteur de son mot de passe
         
 
     def setupUi(self, Form):                #Mise en place de l'IHM
@@ -68,7 +68,7 @@ class Ui_Form(object):
         self.Praticien_comboBox.setGeometry(QtCore.QRect(180, 120, 201, 31))
         self.Praticien_comboBox.setObjectName("Praticien_comboBox")
         
-        for i in self.arg:
+        for i in self.arg:                  #Génération du menu deroulant avec les type de spécialitées pour un médecin
             self.Praticien_comboBox.addItem(i)
 
         self.TypePratiquelabel = QtWidgets.QLabel(Form)
@@ -99,8 +99,9 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))     #L'utilisateur appuie sur Validation, self.continuation passe en True par la méthode set_continuation()
     
+        #Le bouton Validation renvoie le nom du docteur, le prénom,la localisation, le numéro, le mail, le type de docteur et le mot de passe rentrés dans les zones de texte LineEdit au moyen de les méthodes set_nom_docteur(), set_prenom_docteur(), set_localisation_docteur(), set_numero_docteur(), set_mail_docteur(), set_type_docteur() et set_mot_de_passe_docteur()
         self.ValidationpushButton.released.connect(lambda: self.set_nom_docteur(self.NomlineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_prenom_docteur(self.PrenomlineEdit.text()))
         self.ValidationpushButton.released.connect(lambda: self.set_localisation_docteur(self.VillelineEdit.text(),self.AdresselineEdit.text(),self.CodePostallineEdit.text()))
@@ -109,37 +110,37 @@ class Ui_Form(object):
         self.ValidationpushButton.released.connect(lambda: self.set_type_docteur(self.Praticien_comboBox.currentText()))
         self.ValidationpushButton.released.connect(lambda: self.set_mot_de_passe_docteur(self.MdPlineEdit.text()))
 
-        self.ValidationpushButton.released.connect(Form.close) # type: ignore
+        self.ValidationpushButton.released.connect(Form.close)      #L'utilisation du Validation ferme l'IHM
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self,valeur):
+    def set_continuation(self,valeur):          #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
     
-    def set_nom_docteur(self,valeur):
+    def set_nom_docteur(self,valeur):           #Méthode permettant d'associer à self.nom_docteur la valeur que l'on donne en argument
         self.nom_docteur = valeur
     
-    def set_prenom_docteur(self,valeur):
+    def set_prenom_docteur(self,valeur):        #Méthode permettant d'associer à self.prenom_docteur la valeur que l'on donne en argument
         self.prenom_docteur = valeur
     
-    def set_localisation_docteur(self,ville,adresse,code_postal):
-        self.ville_docteur,self.adresse_docteur,self.code_postal_docteur = ville,adresse,code_postal
+    def set_localisation_docteur(self,ville,adresse,code_postal):       #Méthode permettant d'associer à self.ville_docteur, self.adresse_docteur et self.code_postal_docteur la valeur que l'on donne en argument
+        self.ville_docteur, self.adresse_docteur, self.code_postal_docteur = ville, adresse, code_postal
 
-    def set_numero_docteur(self,valeur):
+    def set_numero_docteur(self,valeur):        #Méthode permettant d'associer à self.numero_docteur la valeur que l'on donne en argument
         self.numero_docteur = valeur
     
-    def set_mail_docteur(self,valeur):
+    def set_mail_docteur(self,valeur):          #Méthode permettant d'associer à self.mail_docteur la valeur que l'on donne en argument
         self.mail_docteur = valeur
     
-    def set_type_docteur(self,valeur):
+    def set_type_docteur(self,valeur):          #Méthode permettant d'associer à self.type_docteur la valeur que l'on donne en argument
         self.type_docteur = valeur
     
-    def set_mot_de_passe_docteur(self,valeur):
+    def set_mot_de_passe_docteur(self,valeur):  #Méthode permettant d'associer à self.mot_de_passe_docteur la valeur que l'on donne en argument
         self.mot_de_passe_docteur = valeur
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):              #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Docteurlabel.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt; font-style:italic;\">Docteur</span></p></body></html>"))

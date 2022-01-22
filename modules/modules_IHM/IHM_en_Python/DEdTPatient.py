@@ -12,11 +12,11 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):          
     def __init__(self, arg):
-        self.dico = arg
+        self.dico = arg                     #Dictionnaire avec pour chaque médecin les rendez-vous disponible pour la journée sélectionnée
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
-        self.nom_docteur_rdv_choisi = ''
-        self.horaire_rdv_choisi = ''
-        self.infos_pour_docteur = ''
+        self.nom_docteur_rdv_choisi = ''    #Information envoyée au serveur par le patient du choix du nom du médecin choisi
+        self.horaire_rdv_choisi = ''        #Information envoyée au serveur par le patient du choix de l'horaire du rendez-vous
+        self.infos_pour_docteur = ''        #Information envoyée au serveur par le patient sur les informations qu'il souhaite donner au médecin
     
 
     def setupUi(self, Form):                #Mise en place de l'IHM
@@ -32,7 +32,7 @@ class Ui_Form(object):
         self.ListePraticens_listWidget.setGeometry(QtCore.QRect(20, 190, 251, 331))
         self.ListePraticens_listWidget.setObjectName("ListePraticens_listWidget")
 
-        for key in self.dico.keys():
+        for key in self.dico.keys():                   #Génération de la liste avec le nom des médecins différents disponibles
             self.ListePraticens_listWidget.addItem(key)
 
         self.Horaire_Label = QtWidgets.QLabel(Form)
@@ -54,18 +54,19 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))
+        self.ValidationpushButton.released.connect(lambda: self.set_continuation(True))         #L'utilisateur appuie sur Validation, self.continuation passe en True par la méthode set_continuation()
 
-        self.ValidationpushButton.released.connect(lambda: self.set_horaire_rdv_choisi(self.comboBox.currentText()))
-        self.ValidationpushButton.released.connect(lambda: self.set_infos_pour_docteur(self.InfolineEdit.text()))
+        self.ValidationpushButton.released.connect(lambda: self.set_horaire_rdv_choisi(self.comboBox.currentText()))        #L'utilisateur appuie sur Validation, self.horaire_rdv_choisi est mise à jour par la méthode set_horaire_rdv_choisi()
+        self.ValidationpushButton.released.connect(lambda: self.set_infos_pour_docteur(self.InfolineEdit.text()))           #L'utilisateur appuie sur Validation, self.infos_pour_docteur mise à jour par la méthode set_infos_pour_docteur()
         
-        self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)
+        self.ListePraticens_listWidget.currentTextChanged.connect(self.update_rdv_type_combobox)        #L'utilisateur qui sélectionne un médecin dans la liste va mettre à jour les types de rendez-vous dans le menu déroulant                 
 
-        self.ValidationpushButton.released.connect(Form.close)
+        self.ValidationpushButton.released.connect(Form.close)      #L'utilisation du Ferme ferme l'IHM
+
         QtCore.QMetaObject.connectSlotsByName(Form)
         
 
-    def update_rdv_type_combobox(self, docteur_type):
+    def update_rdv_type_combobox(self, docteur_type):           #Méthode permettant de mettre à jour la rdv_combobox
         self.nom_docteur_rdv_choisi = docteur_type
         self.comboBox.clear()
         if docteur_type in self.dico.keys():
@@ -73,17 +74,17 @@ class Ui_Form(object):
             for rdv in type_rdv:
                 self.comboBox.addItem(rdv)
 
-    def set_continuation(self,valeur):
+    def set_continuation(self,valeur):              #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur
     
-    def set_horaire_rdv_choisi(self,valeur):
+    def set_horaire_rdv_choisi(self,valeur):        #Méthode permettant d'associer à self.horaire_rdv_choisi la valeur que l'on donne en argument
         self.horaire_rdv_choisi = valeur
     
-    def set_infos_pour_docteur(self,valeur):
+    def set_infos_pour_docteur(self,valeur):        #Méthode permettant d'associer à self.infos_pour_docteur la valeur que l'on donne en argument
         self.infos_pour_docteur = valeur
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):                  #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Brand_Label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:16pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))

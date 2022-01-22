@@ -32,11 +32,11 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
-        self.DoctorButton.released.connect(lambda: self.set_continuation(True))     #L'utilisateur appuie sur Docteur, self.continuation passe en True par la fonction set_continuation()
-        self.PatientButton.released.connect(lambda: self.set_continuation(True))    #L'utilisateur appuie sur Patient, self.continuation passe en True par la fonction set_continuation()
+        self.DoctorButton.released.connect(lambda: self.set_continuation(True))     #L'utilisateur appuie sur Docteur, self.continuation passe en True par la Méthode set_continuation()
+        self.PatientButton.released.connect(lambda: self.set_continuation(True))    #L'utilisateur appuie sur Patient, self.continuation passe en True par la Méthode set_continuation()
         
-        self.DoctorButton.released.connect(lambda: self.set_choix('XXd'))           #Le serveur recoit une chaîne de caractère lui permettant de savoir que le bouton Docteur a été utilisé en modifiant self.choix au moyen de la fonction set_choix()
-        self.PatientButton.released.connect(lambda: self.set_choix('XXp'))          #Le serveur recoit une chaîne de caractère lui permettant de savoir que le bouton Patient a été utilisé en modifiant self.choix au moyen de la fonction set_choix()
+        self.DoctorButton.released.connect(lambda: self.set_choix('XXd'))           #Le serveur recoit une chaîne de caractère lui permettant de savoir que le bouton Docteur a été utilisé en modifiant self.choix au moyen de la Méthode set_choix()
+        self.PatientButton.released.connect(lambda: self.set_choix('XXp'))          #Le serveur recoit une chaîne de caractère lui permettant de savoir que le bouton Patient a été utilisé en modifiant self.choix au moyen de la Méthode set_choix()
 
         self.DoctorButton.released.connect(Form.close)                      #L'utilisation du bouton Docteur ferme l'IHM 
         self.PatientButton.released.connect(Form.close)                     #L'utilisation du bouton Patient ferme l'IHM
@@ -44,14 +44,14 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
-    def set_continuation(self, valeur):                     #Fonction permettant d'associer à self.continuation la valeur que l'on donne en argument
+    def set_continuation(self, valeur):                     #Méthode permettant d'associer à self.continuation la valeur que l'on donne en argument
         self.continuation = valeur                          
 
-    def set_choix(self, valeur):                            #Fonction permettant d'associer à self.choix_client la valeur que l'on donne en argument
+    def set_choix(self, valeur):                            #Méthode permettant d'associer à self.choix_client la valeur que l'on donne en argument
         self.choix_client = valeur
 
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form):              #Mise en forme de l'IHM
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; font-style:italic; text-decoration: underline;\">DoctoLibre</span></p></body></html>"))
