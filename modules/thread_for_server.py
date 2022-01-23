@@ -38,6 +38,7 @@ class ThreadForServer(threading.Thread):
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ") #On réceptionne la clef de connexion (email espacé d'un espace du mdp)
                     identifiant_patient, hash_motdepasse_patient = clef_connexion[0], clef_connexion[1]
+                    print(identifiant_patient, hash_motdepasse_patient)
 
                     if identifiant_patient == 'NULL': #Dans le cas où aucun email n'a été rentré, la clef est forcément fausse
                         clef_valide = 'False'
