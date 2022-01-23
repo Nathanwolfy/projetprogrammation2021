@@ -50,6 +50,14 @@ def return_edt(medecin):
     con = lsql.connection_bdd()
     cursor = con.cursor()
     edt = {}
+    #Chaque jour prend en info les horaires de rdv et à chaque horaire est associé le nom et prénom du patient, le motif, et une remarque s'il y en a une
+    lundi_ = {} #lundi est une variable définie après
+    mardi = {}
+    mercredi = {}
+    jeudi = {}
+    vendredi = {}
+    samedi = {}
+    journee = [lundi_, mardi, mercredi, jeudi, vendredi, samedi]
     #Renvoie l'emploi du temps de la semaine actuelle donc on a besoin de la date d'aujourd'hui
     now = time.localtime(time.time())
     actual_time = time.strftime("%a %d %m %Y", now) #nom_jour (english) jour mois annee
@@ -64,6 +72,7 @@ def return_edt(medecin):
     mois_i = lundi[1]
     annee_i = lundi[2]
     for i in range(6): #Pour une semaine (sans le dimanche)
+        le_jour_de_la_semaine = journee[i]
         cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=?', (medecin, jour_i, mois_i, annee_i)) #sélectionne les rendez-vous du jour de la semaine en fonction du médecin
         rows = cursor.fetchall() #Tous les rendez-vous d'un certain jour de la semaine
         liste_horaire = [] #prend les heures du début du rendez-vous
@@ -77,7 +86,19 @@ def return_edt(medecin):
         liste_creneau = [] #prend les créneaux : ex : [08:00-08:45, 15:15-16:30]
         for h in liste_horaire: #chaque h correspond à l'heure de début du rdv
             cursor.execute('SELECT * FROM edt WHERE medecin=? AND jour=? AND mois=? AND annee=? AND heure=? AND minute=?', (medecin, jour_i, mois_i, annee_i, h.heure, h.minute))
-            duree = int(cursor.fetchone()[8]) #le créneau dépend de la durée du rdv, donc il faut déterminer l'heure de fin du rdv
+            c = cursor.fetchone()
+            mail_patient = c[10]
+            cursor.execute('SELECT * FROM patients WHERE mail=?', [mail_patient])
+            c1 = cursor.fetchone() #on veut renvoyer le nom complet du patient
+            prenom_patient = c1[0]
+            nom_patient = c1[1]
+            motif = c[7]
+            if c[9] != None:
+                note = c[9]
+                le_jour_de_la_semaine[h] = ['motif : ' + motif, 'remarque : ' + note, 'patient : ' + prenom_patient + ' ' + nom_patient]
+            else:
+                le_jour_de_la_semaine[h] = ['motif : ' + motif, 'patient : ' + prenom_patient + ' ' + nom_patient]
+            duree = c[8] #le créneau dépend de la durée du rdv, donc il faut déterminer l'heure de fin du rdv
             #détermination de l'heure de fin du rdv
             duree_boucle = duree // 15 
             heure_i = h.heure
@@ -104,4 +125,4 @@ def return_edt(medecin):
                 mois_i += 1
             jour_i = 1
     con.close()
-    return edt
+    return (edt, lundi_, mardi, mercredi, jeudi, vendredi, samedi)
