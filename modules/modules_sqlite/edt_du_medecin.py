@@ -125,4 +125,4 @@ def return_edt(medecin):
                 mois_i += 1
             jour_i = 1
     con.close()
-    return edt
+    return (edt, lundi_, mardi, mercredi, jeudi, vendredi, samedi)
