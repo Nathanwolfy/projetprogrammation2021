@@ -55,7 +55,6 @@ def client_docteur(socket):
                     hash_motdepasse_docteur = hashage_mdp.hash_mdp(fenetre_inscription_docteur.mot_de_passe_docteur)
 
                     if not echanges_donnees.check_donnes_non_vides((nom_docteur,prenom_docteur,type_docteur,ville_docteur,adresse_docteur,code_postal_docteur,numero_docteur,identifiant)) or hash_motdepasse_docteur == hashage_mdp.hash_mdp(''):
-                        print('aled')
                         envoi_donnee_invalide = '02dINVALIDDATA'
                         echanges_donnees.envoi(socket,envoi_donnee_invalide)
                         clef_valide = 'False' #Si le docteur rentre une donnée vide, on ne valide pas son inscription
@@ -96,6 +95,14 @@ def client_docteur(socket):
                             stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
 
                         clef_valide = 'True' #Le docteur a créé son compte, il est donc bien identifié
-                
+
         else: #Si le serveur de valide pas le lancement de la connexion, le programme s'arrête
             stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
+        
+    confirmation_serveur = echanges_donnees.reception(socket) #On attend la confirmation du serveur pour le lancement de l'affichage de l'edt du docteur
+    if confirmation_serveur == '03dINITAFFEDTDOC': #Le serveur confirme le lancement de l'affichage de l'edt du docteur
+        str_edt_docteur = echanges_donnees.reception(socket)
+        print(str_edt_docteur)
+
+    else: #Si le serveur de valide pas le lancement de l'affichage de l'edt, le programme s'arrête
+        stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())

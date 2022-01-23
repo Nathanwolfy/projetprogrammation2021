@@ -6,7 +6,7 @@ Du côté client seule la réception de la requête de choix sera identique entr
 '''
 
 import threading
-from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt, edt_medecin_vide
+from .modules_sqlite import exploitation_sql_patient,exploitation_sql_medecin,lire_sql, rdv_dispo_pris, construction_edt, edt_medecin_vide, edt_du_medecin
 from .modules_echanges import echanges_donnees, conversion_types, types_exception
 
 FORMAT = 'utf-8'
@@ -218,6 +218,14 @@ class ThreadForServer(threading.Thread):
 
                 else: #Dans le cas où le client renvoie autre chose, c'est un erreur
                     raise types_exception.InvalidClientReponseError
+
+            #On récupère l'emploi du temps du docteur depuis la bdd
+            edt_docteur = edt_du_medecin.return_edt(identifiant_docteur)
+
+            code_initialisation_affichage_edt_doc = '03dINITAFFEDTDOC' #On initialise l'affichage de l'edt du docteur
+            echanges_donnees.envoi(self.conn,code_initialisation_affichage_edt_doc) 
+            echanges_donnees.envoi(self.conn, edt_docteur) #On fait suivre l'emploi du temps du docteur au client
+
 
         elif choix_client == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
             raise types_exception.ClientDisconnectedError

@@ -1,5 +1,6 @@
 import sqlite3
-import emploidutemps as e
+from . import emploidutemps as e
+from . import lire_sql as lsql
 import time
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
@@ -19,25 +20,16 @@ def nb_jours_dans_un_mois(mois, annee):
         return 31
     return 30
 
-def connection(bdd):
-    try:
-        connect = sqlite3.connect(bdd)
-        return connect
-    except Exception as e:
-        print(e)
-        print('La connexion n\'a pas pu être établie.')
-
-
 def nom_jour(jour, mois, annee):
     '''Cette fonction renvoie le nom du jour grâce à la base de données calendrier'''
-    con_1 = connection('calendrier.db')
+    con_1 = lsql.connection_bdd_calendrier()
     cursor_1 = con_1.cursor()
     cursor_1.execute('SELECT * FROM calendrier WHERE nb_jour=? AND mois_jour=? AND annee=?', (jour, mois, annee))
     req = cursor_1.fetchone()
     con_1.close()
     return req[1]
 
-con = connection('donnees.db')
+con = lsql.connection_bdd()
 cursor = con.cursor()
 
 def lundi_de_la_semaine(nom_jour, jour, mois, annee):
