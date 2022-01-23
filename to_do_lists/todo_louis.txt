@@ -1,5 +1,0 @@
-- fenêtre détails rdv
-EDTdocteur : arguments :  un dico par jour, clé: horaire et valeurs : motif et nom du patient
-après création compte, fenêtre Lundi mardi... pour rentrer heure de début et heure de fin
-
-=> pour tous : épurer, commenter, compacter le code au maximum et sauvegarder et supprimer les fichiers de test et/ou inutiles

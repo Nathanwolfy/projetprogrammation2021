@@ -1,2 +1,0 @@
-- edt docteur
-- sys path pour lancer avec un clic droit et que ça bug pas avec les bdd
