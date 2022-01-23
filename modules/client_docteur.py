@@ -1,3 +1,6 @@
+from re import L
+
+from modules.modules_sqlite.edt_du_medecin import lundi_de_la_semaine
 from .modules_echanges import conversion_types
 
 from .modules_IHM.IHM_en_Python import launcher
@@ -100,9 +103,28 @@ def client_docteur(socket):
             stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())
         
     confirmation_serveur = echanges_donnees.reception(socket) #On attend la confirmation du serveur pour le lancement de l'affichage de l'edt du docteur
+
     if confirmation_serveur == '03dINITAFFEDTDOC': #Le serveur confirme le lancement de l'affichage de l'edt du docteur
         str_edt_docteur = echanges_donnees.reception(socket)
-        print(str_edt_docteur)
+        str_lundi = echanges_donnees.reception(socket)
+        str_mardi = echanges_donnees.reception(socket)
+        str_mercredi = echanges_donnees.reception(socket)
+        str_jeudi = echanges_donnees.reception(socket)
+        str_vendredi = echanges_donnees.reception(socket)
+        str_samedi = echanges_donnees.reception(socket)
+        #Pour exploiter les données nous devons les convertir dans le bon type correspondant
+        edt_docteur = conversion_types.from_string_to_dict(str_edt_docteur)
+        lundi = conversion_types.from_string_to_dict(str_lundi)
+        mardi = conversion_types.from_string_to_dict(str_mardi)
+        mercredi = conversion_types.from_string_to_dict(str_mercredi)
+        jeudi = conversion_types.from_string_to_dict(str_jeudi)
+        vendredi = conversion_types.from_string_to_dict(str_vendredi)
+        samedi = conversion_types.from_string_to_dict(str_samedi)
+        fenetre_affichage_edt_doc = launcher.Erecap_herit((edt_docteur,lundi,mardi,mercredi,jeudi,vendredi,samedi))
+        launcher.exec_fenetre(fenetre_affichage_edt_doc)
+
+        #Une fois l'emploi du temps fermé on peut arrêter le processus et le Thread serveur associé
+        stop_continuation.arret_processus(socket,types_exception.ClientDisconnectedError)
 
     else: #Si le serveur de valide pas le lancement de l'affichage de l'edt, le programme s'arrête
         stop_continuation.arret_processus(socket,types_exception.InvalidServerReponseError())

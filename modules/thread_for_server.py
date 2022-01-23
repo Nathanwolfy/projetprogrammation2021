@@ -38,7 +38,6 @@ class ThreadForServer(threading.Thread):
                 if reponse == '02pSENDCLEF': #Le patient choisit d'envoyer sa clé de connexion
                     clef_connexion = echanges_donnees.reception(self.conn).split(" ") #On réceptionne la clef de connexion (email espacé d'un espace du mdp)
                     identifiant_patient, hash_motdepasse_patient = clef_connexion[0], clef_connexion[1]
-                    print(identifiant_patient, hash_motdepasse_patient)
 
                     if identifiant_patient == 'NULL': #Dans le cas où aucun email n'a été rentré, la clef est forcément fausse
                         clef_valide = 'False'
@@ -108,7 +107,7 @@ class ThreadForServer(threading.Thread):
                             heure = str(horaire_rdv_choisi[0])
                             minute = str(horaire_rdv_choisi[1])
                             
-                            construction_edt.construction_edt(nom_docteur_choisi_rdv, jour, mois, annee, heure, minute, type_rdv, notes_pour_docteur) #On ajoute le rdv dans la base de données
+                            construction_edt.construction_edt(nom_docteur_choisi_rdv, jour, mois, annee, heure, minute, type_rdv, notes_pour_docteur,identifiant_patient) #On ajoute le rdv dans la base de données
                             rdv_validé = True #Le rdv est effectivement validé
 
                         elif reponse_patient == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
@@ -219,12 +218,19 @@ class ThreadForServer(threading.Thread):
                 else: #Dans le cas où le client renvoie autre chose, c'est un erreur
                     raise types_exception.InvalidClientReponseError
 
-            #On récupère l'emploi du temps du docteur depuis la bdd
-            edt_docteur = str(edt_du_medecin.return_edt(identifiant_docteur))
+            #On récupère l'emploi du temps du docteur depuis la bdd et on les convertit en string pour les envoyer
+            edt_docteur,lundi,mardi,mercredi,jeudi,vendredi,samedi = edt_du_medecin.return_edt(identifiant_docteur)
+            str_edt_docteur,str_lundi,str_mardi,str_mercredi,str_jeudi,str_vendredi,str_samedi = str(edt_docteur),str(lundi),str(mardi),str(mercredi),str(jeudi),str(vendredi),str(samedi)
 
             code_initialisation_affichage_edt_doc = '03dINITAFFEDTDOC' #On initialise l'affichage de l'edt du docteur
             echanges_donnees.envoi(self.conn,code_initialisation_affichage_edt_doc) 
-            echanges_donnees.envoi(self.conn, edt_docteur) #On fait suivre l'emploi du temps du docteur au client
+            echanges_donnees.envoi(self.conn, str_edt_docteur) #On fait suivre l'emploi du temps du docteur au client ainsi que le détails de chaque jour
+            echanges_donnees.envoi(self.conn, str_lundi)
+            echanges_donnees.envoi(self.conn, str_mardi)
+            echanges_donnees.envoi(self.conn, str_mercredi)
+            echanges_donnees.envoi(self.conn, str_jeudi)
+            echanges_donnees.envoi(self.conn, str_vendredi)
+            echanges_donnees.envoi(self.conn, str_samedi)
 
 
         elif choix_client == 'XXgKILLTHREAD': #Dans le cas où le client ferme la fenêtre
