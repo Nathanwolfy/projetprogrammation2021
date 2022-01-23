@@ -1,5 +1,4 @@
 from . import profil as p
-from pathlib import Path
 import sqlite3
 
 
@@ -8,18 +7,15 @@ def connection_bdd():
     """cette fonction est utile pour la partie de nathan : il fait le lien
     entre serveur et client et a donc besoin de cette fonction pour se
     connecter a la base de donnee cote serveur"""
-    path_absolute = str(Path().resolve())
-    path_from_directory = "\\modules\\modules_sqlite\\donnees.db"
-    return sqlite3.connect(path_absolute + path_from_directory)
+    path = "./modules/modules_sqlite/donnees.db"
+    return sqlite3.connect(path)
 
 def connection_bdd_calendrier():
     """cette fonction possede exactement la meme utilite que la fonction
     ci dessus, la seule differenece reside dans le fichier ouvert, ici
     c'est calendrier.db"""
-    path_absolute = str(Path().resolve())
-    path_from_directory = "\\modules\\modules_sqlite\\calendrier.db"
-    print(path_absolute + path_from_directory)
-    return sqlite3.connect(path_absolute + path_from_directory)
+    path = "./modules/modules_sqlite/calendrier.db"
+    return sqlite3.connect(path)
 
 
 def bdd_recherche(table, string):
