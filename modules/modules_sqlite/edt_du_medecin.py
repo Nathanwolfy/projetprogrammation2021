@@ -50,7 +50,7 @@ def return_edt(medecin):
     con = lsql.connection_bdd()
     cursor = con.cursor()
     edt = {}
-    #Chaque jour prend en info les horaires de rdv et à chaque horaire associe le nom et prénom du patient, le motif, et une remarque s'il y en a
+    #Chaque jour prend en info les horaires de rdv et à chaque horaire est associé le nom et prénom du patient, le motif, et une remarque s'il y en a une
     lundi_ = {} #lundi est une variable définie après
     mardi = {}
     mercredi = {}
