@@ -44,14 +44,21 @@ def from_string_detailsedt_to_dict(string):
     """(str) -> (dict)
     Fonction qui pour une string associée de détails d'un rdv renvoie le dictionnaire correspondant.
     """
-    pass
+    if string == '{}':
+        return {}
+    else:
+        string = string.strip('{}')
+        string = string.strip('[]')
+        l = string.replace(': ','/').split('], ')
+        nouv_list = []
+        for elt in l:
+            liste = elt.replace("'",'').split('/[')
+            nouv_list += liste
 
-a = "{10:15: ['certificat medical', 'rdv pris', 'Edouard Guehenno'], 10:30: ['certificat medical', 'Aidez-moi svp', 'Laurent Bohn']}"
-a.strip('{}')
-print(a)
-l = a.replace(': ','/').split('], ')
-print(l)
-for elt in l:
-    elt.replace('[','')
-    elt.replace(']','')
-print(l)
+        dico = {}
+        if len(nouv_list) == 2:
+            dico[nouv_list[0]] = nouv_list[1].split(', ')
+        else:
+            for i in range(len(nouv_list)-2):
+                dico[nouv_list[2*i]] = nouv_list[2*i+1].split(', ')
+        return dico
