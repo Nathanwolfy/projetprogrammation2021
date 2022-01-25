@@ -8,14 +8,14 @@ def connection_bdd():
     entre serveur et client et a donc besoin de cette fonction pour se
     connecter a la base de donnee cote serveur"""
     path = "./modules/modules_sqlite/donnees.db"
-    return sqlite3.connect(path)
+    return sqlite3.connect(path, check_same_thread=False)
 
 def connection_bdd_calendrier():
     """cette fonction possede exactement la meme utilite que la fonction
     ci dessus, la seule differenece reside dans le fichier ouvert, ici
     c'est calendrier.db"""
     path = "./modules/modules_sqlite/calendrier.db"
-    return sqlite3.connect(path)
+    return sqlite3.connect(path, check_same_thread=False)
 
 
 def bdd_recherche(table, string):

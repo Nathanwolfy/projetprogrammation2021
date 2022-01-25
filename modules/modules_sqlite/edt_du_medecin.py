@@ -29,9 +29,6 @@ def nom_jour(jour, mois, annee):
     con_1.close()
     return req[1]
 
-con = lsql.connection_bdd()
-cursor = con.cursor()
-
 def lundi_de_la_semaine(nom_jour, jour, mois, annee):
     '''Cette fonction renvoie le lundi (jour, mois, annee) de la semaine'''
     indice = JOURS.index(nom_jour)
@@ -50,6 +47,8 @@ def lundi_de_la_semaine(nom_jour, jour, mois, annee):
 
 def return_edt(medecin):
     '''Cette fonction retourne l'emploi du temps de la semaine actuelle d'un medecin particulier '''
+    con = lsql.connection_bdd()
+    cursor = con.cursor()
     edt = {}
     #Renvoie l'emploi du temps de la semaine actuelle donc on a besoin de la date d'aujourd'hui
     now = time.localtime(time.time())
@@ -104,8 +103,5 @@ def return_edt(medecin):
             else:
                 mois_i += 1
             jour_i = 1
+    con.close()
     return edt
-                      
-
-con.close()
-

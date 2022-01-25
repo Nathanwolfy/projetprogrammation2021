@@ -220,7 +220,7 @@ class ThreadForServer(threading.Thread):
                     raise types_exception.InvalidClientReponseError
 
             #On récupère l'emploi du temps du docteur depuis la bdd
-            edt_docteur = edt_du_medecin.return_edt(identifiant_docteur)
+            edt_docteur = str(edt_du_medecin.return_edt(identifiant_docteur))
 
             code_initialisation_affichage_edt_doc = '03dINITAFFEDTDOC' #On initialise l'affichage de l'edt du docteur
             echanges_donnees.envoi(self.conn,code_initialisation_affichage_edt_doc) 
