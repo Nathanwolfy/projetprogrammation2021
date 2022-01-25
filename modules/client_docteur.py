@@ -114,6 +114,7 @@ def client_docteur(socket):
         str_samedi = echanges_donnees.reception(socket)
         #Pour exploiter les données nous devons les convertir dans le bon type correspondant
         edt_docteur = conversion_types.from_string_to_dict(str_edt_docteur)
+        print(str_jeudi)
         lundi = conversion_types.from_string_to_dict(str_lundi)
         mardi = conversion_types.from_string_to_dict(str_mardi)
         mercredi = conversion_types.from_string_to_dict(str_mercredi)

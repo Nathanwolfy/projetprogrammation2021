@@ -95,9 +95,9 @@ def return_edt(medecin):
             motif = c[7]
             if c[9] != None:
                 note = c[9]
-                le_jour_de_la_semaine[h] = ['motif : ' + motif, 'remarque : ' + note, 'patient : ' + prenom_patient + ' ' + nom_patient]
+                le_jour_de_la_semaine[h] = [motif,note,prenom_patient + ' ' + nom_patient]
             else:
-                le_jour_de_la_semaine[h] = ['motif : ' + motif, 'patient : ' + prenom_patient + ' ' + nom_patient]
+                le_jour_de_la_semaine[h] = [motif,prenom_patient + ' ' + nom_patient]
             duree = c[8] #le créneau dépend de la durée du rdv, donc il faut déterminer l'heure de fin du rdv
             #détermination de l'heure de fin du rdv
             duree_boucle = duree // 15 
