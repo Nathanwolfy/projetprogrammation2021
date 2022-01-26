@@ -118,11 +118,9 @@ def client_docteur(socket):
         mardi = conversion_types.from_string_detailsedt_to_dict(str_mardi)
         mercredi = conversion_types.from_string_detailsedt_to_dict(str_mercredi)
         jeudi = conversion_types.from_string_detailsedt_to_dict(str_jeudi)
-        print(str_jeudi)
-        print(jeudi)
         vendredi = conversion_types.from_string_detailsedt_to_dict(str_vendredi)
         samedi = conversion_types.from_string_detailsedt_to_dict(str_samedi)
-        fenetre_affichage_edt_doc = launcher.Erecap_herit((edt_docteur,lundi,mardi,mercredi,jeudi,vendredi,samedi))
+        fenetre_affichage_edt_doc = launcher.DEdTDoc_herit((edt_docteur,lundi,mardi,mercredi,jeudi,vendredi,samedi))
         launcher.exec_fenetre(fenetre_affichage_edt_doc)
 
         #Une fois l'emploi du temps fermé on peut arrêter le processus et le Thread serveur associé

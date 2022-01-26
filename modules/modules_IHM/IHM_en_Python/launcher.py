@@ -26,7 +26,7 @@ class DEdTPatient_herit(DEdTPatient.Ui_Form):
     def __init__(self,arg):
         super().__init__(arg)
 
-class DEdTDoc(DEdTDoc.Ui_Form):
+class DEdTDoc_herit(DEdTDoc.Ui_Form):
     def __init__(self,arg):
         super().__init__(arg)
 

@@ -8,12 +8,12 @@ import os
 
 class Ui_Form(object):
     def __init__(self, arg):
-        self.arg = arg[0]                   #Dictionnaire de tous les rendez-vous du médecin qui s'est connecté pour chaque journée. Les clefs sont les jours de la semaine et pour chaque clef les rendez-vous de la journée 
+        self.arg = arg[0]                #Dictionnaire de tous les rendez-vous du médecin qui s'est connecté pour chaque journée. Les clefs sont les jours de la semaine et pour chaque clef les rendez-vous de la journée 
         self.dicojour = [arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]]            #Pour chaque journée un dictionnaire et pour chaque dictionnaire une clef avec un rendez-vous de la journée avec en arguments le nom, le prenom, le motif du rendez-vous et il peut y avoir des informations supplémentaires si le patient en a rentré lors de sa prise de rendez-vous 
         self.continuation = False           #Information envoyée au serveur pour savoir si l'utilisateur a demandé la fermeture de l'application par la croix ou si il a utilisé un bouton permettant de continuer le processus d'utilisation (booléen)
 
     def setupUi(self, Form):                #Mise en place de l'IHM
-        n = max((len(self.arg[0]), len(self.arg[1]), len(self.arg[2]), len(self.arg[3]), len(self.arg[4]), len(self.arg[5])))
+        n = max([len(self.dicojour[i]) for i in range(1,len(self.dicojour))])
         Form.setObjectName("Form")
         Form.resize(714, 614)
         self.EdTtableWidget = QtWidgets.QTableWidget(Form)
@@ -36,9 +36,9 @@ class Ui_Form(object):
         self.EdTtableWidget.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.EdTtableWidget.setHorizontalHeaderItem(5, item)
-        for i in range(len(self.arg)):                  #Génération de l'emploi du temps
-            for j in range(len(self.arg[i])):
-                item = QtWidgets.QTableWidgetItem(self.arg[i][j])
+        for (i,jour) in enumerate(self.dicojour):   #Génération de l'emploi du temps
+            for (j,horaire) in enumerate(jour):
+                item = QtWidgets.QTableWidgetItem(horaire)
                 self.EdTtableWidget.setItem(j, i, item)
                 
         self.EdTtableWidget.horizontalHeader().setDefaultSectionSize(96)
@@ -73,12 +73,11 @@ class Ui_Form(object):
 
     def fichier(self, horaire, liste ):         #Méthode qui ouvre un fichier texte avec des informations sur le patient dont le médecin a sélectionné le rendez-vous sur son emploi du temps interactif
         myFile = open("Informations.txt", "w+")
-        myFile.write("Nom : "+liste[0]+'\n')
-        myFile.write("Prénom : "+liste[1]+'\n')
-        myFile.write("Motif : "+liste[2]+'\n')
+        myFile.write("Nom-prénom du patient : "+liste[2]+'\n')
+        myFile.write("Motif : "+liste[0]+'\n')
         myFile.write("Horaire : "+ horaire+'\n')
-        if liste[3] != '' :
-            myFile.write("Informations supplémentaires : "+liste[3]+'\n')
+        if liste[1] != '' :
+            myFile.write("Informations supplémentaires : "+liste[1]+'\n')
         os.startfile("Informations.txt")
 
 
