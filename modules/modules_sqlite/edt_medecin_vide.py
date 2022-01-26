@@ -16,8 +16,8 @@ def edt_medecin_vide(medecin, horaire_lundi, horaire_mardi, horaire_mercredi, ho
        
     #convertit le string en objet de classe Heure
     if heure_lundi_debut != "" and heure_lundi_fin != "":
-            horaire_lundi_debut = e.convert(heure_lundi_debut)
-            horaire_lundi_fin = e.convert(heure_lundi_fin)
+        horaire_lundi_debut = e.convert(heure_lundi_debut)
+        horaire_lundi_fin = e.convert(heure_lundi_fin)
     else:
         horaire_lundi_debut = None
         horaire_lundi_fin = None

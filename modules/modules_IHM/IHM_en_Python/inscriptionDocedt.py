@@ -157,12 +157,12 @@ class Ui_Form(object):
         self.ValidationButton.released.connect(lambda: self.set_continuation(True))         #L'utilisateur appuie sur Validation, self.continuation passe en True par la méthode set_continuation()
 
         #Le bouton Validation renvoie les horaires pour lundi, mardi, mercredi, jeudi, vendredi, samedi rentrés dans les zones de texte LineEdit dans les listes self.lundi, self,.mardi, self.mercredi, self.jeudi, self.vendredi et self.samedi
-        self.ValidationButton.released.connect(lambda: self.lundi.append(self.deblunlineEdit.text(), self.finlunlineEdit.text()))
-        self.ValidationButton.released.connect(lambda: self.mardi.append(self.debmarlineEdit.text(), self.finmarlineEdit.text()))
-        self.ValidationButton.released.connect(lambda: self.mercredi.append(self.debmerlineEdit.text(), self.finmerlineEdit.text()))
-        self.ValidationButton.released.connect(lambda: self.jeudi.append(self.debjeulineEdit.text(), self.finjeulineEdit.text()))
-        self.ValidationButton.released.connect(lambda: self.vendredi.append(self.debvenlineEdit.text(), self.finvenlineEdit.text()))
-        self.ValidationButton.released.connect(lambda: self.samedi.append(self.debsamlineEdit.text(), self.finsamlineEdit.text()))
+        self.ValidationButton.released.connect(lambda: self.lundi.extend((self.deblunlineEdit.text(), self.finlunlineEdit.text())))
+        self.ValidationButton.released.connect(lambda: self.mardi.extend((self.debmarlineEdit.text(), self.finmarlineEdit.text())))
+        self.ValidationButton.released.connect(lambda: self.mercredi.extend((self.debmerlineEdit.text(), self.finmerlineEdit.text())))
+        self.ValidationButton.released.connect(lambda: self.jeudi.extend((self.debjeulineEdit.text(), self.finjeulineEdit.text())))
+        self.ValidationButton.released.connect(lambda: self.vendredi.extend((self.debvenlineEdit.text(), self.finvenlineEdit.text())))
+        self.ValidationButton.released.connect(lambda: self.samedi.extend((self.debsamlineEdit.text(), self.finsamlineEdit.text())))
   
         self.ValidationButton.released.connect(Form.close)      #L'utilisation du Validation ferme l'IHM
 

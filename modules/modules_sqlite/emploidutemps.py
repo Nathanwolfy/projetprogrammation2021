@@ -155,3 +155,9 @@ class Edt: # Une semaine, juste besoin du lundi
     
     def __repr__(self):
         return str(self.edt)
+
+
+def convert(str_horaire):
+    liste = str_horaire.split(':')
+    heure,minute = int(liste[0]),int(liste[1])
+    return Heure(heure,minute)

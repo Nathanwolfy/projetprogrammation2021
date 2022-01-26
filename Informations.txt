@@ -1,4 +1,4 @@
 Nom-prénom du patient : Edouard Guehenno
 Motif : certificat medical
-Horaire   : 10:15
-Informations supplémentaires  : rdv pris
+Horaire : 10:15
+Informations supplémentaires : rdv pris
